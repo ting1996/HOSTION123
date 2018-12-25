@@ -1,0 +1,246 @@
+/*Header*/
+.header .nav{
+  z-index: 2;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+}
+
+.header ul{
+  margin: 0;
+  padding: 0;
+  background: #f46c1d;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.header ul li{
+  list-style: none;
+  /* padding-left: 15px;
+  padding-right: 15px; */
+  display: inline-block;
+  margin: 0 15px
+}
+
+.header ul a{
+  cursor: pointer;
+  text-decoration: none;
+  color: #fff;
+  padding: 12px;
+  display: block;
+  text-align: left;
+}
+
+/* .header ul ul li > a:after{
+  content: '\00bb';
+  font-weight: bold;
+  font-size: 18px;
+  opacity: 0;
+  float: right;
+  margin-right: 10px;
+  transition: 0.5s;
+}
+
+.header ul ul li:hover > a:after{
+  opacity: 1;
+  margin-right: -20px;
+} */
+
+.header ul a[id = "lable_button_nexttoicon"]{
+  margin-left: -35px;
+  padding-left: 50px;
+}
+
+/* .header ul a:hover {
+  
+} */
+
+.header ul img[id="hinh_login"]{
+  width: 40px;
+  height: 40px;
+  margin-top: 2px;
+  margin-bottom: -13px;
+  margin-right: -50px;
+  border-radius: 100%;
+  border: 1px solid #660000;
+}
+
+.header ul input[id="txttimkiem"]{
+  width: 250px;
+  height: 25px;
+  border: none;
+  border-radius: 2px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-right: 0;
+}
+
+.header ul img[id="btntimkiem"]{
+  width: 22px;
+  height: 22px;
+  margin-top: 0px;
+  margin-bottom: -6px;
+  margin-left: -15px;
+}
+
+.header ul img[id="btntimkiem"]:hover{
+  background-color: rgba(255, 46, 0, 0.2);
+}
+
+.header ul li:hover,
+.header ul li:focus {
+  background-color: rgba(255,255,255,0.3);
+}
+
+.header ul li:hover > ul,
+.header ul li:focus > ul{
+  /* display: block; */
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0%);
+}
+
+.header ul ul {
+  padding: 0;
+  /* display: none; */
+  position: absolute;
+  background: rgba(234, 134, 76, 0.85);
+  border-radius: 5px;
+  border: 1px solid #0000001a;
+  visibility: hidden;
+  width: 250px;
+  opacity: 0;
+  transform: translateY(-2em);
+  transition: 0.3s;
+  z-index: -1;
+}
+
+.header ul ul li{
+  display : list-item;
+}
+
+.header ul ul ul {
+  padding: 0;
+  position: absolute;
+  left: 250px;
+  margin-top: -44px;
+}
+
+#hinh_login2 {
+  padding-top: 8px;
+  width: 60px;
+  height: 60px;
+}
+
+#menu_full_name{
+  margin-top : -45px;
+  margin-left: 70px;
+  padding-bottom: 20px;
+  color: #fff;
+  font-size: 20px;
+}
+
+.header .sub_menu_user{
+  margin-left: -35px;
+}
+
+#btn1_menu ul, 
+#btn1_menu a {
+  text-align: left;
+}
+
+#texttenbang {
+  background-color: #8e001e;
+  border-radius: 10px;
+  padding: 7px;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-weight : bold;
+  font-family:Tahoma;
+}
+
+/*.sticky
+{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}*/
+
+/*Footer*/
+.footer {
+  display: block;
+  position: fixed;
+  z-index: 2;
+  width: 100%;
+  bottom: 0;
+}
+
+/* .footer .nav{
+} */
+
+.footer ul{
+  margin: 0;
+  background: #f46c1d;
+  color: #fff;
+  white-space: nowrap;
+  -webkit-columns: 1;
+  -moz-columns: 1;
+  columns: 1;
+}
+
+.footer li{
+  list-style: none;
+  padding: 3px;
+  display: inline-block;
+}
+
+/*#footer_show_sum {
+  padding: 2px;
+  background-color: #8e001e;
+  border-radius: 4px;
+}*/
+
+.footer .left {
+  margin-left: -30px;
+  float: left;
+}
+.footer .right {
+  margin-right: 10px;
+  float: right;
+}
+
+.footer .control {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  height: auto;
+  width: 100%;
+  background: #f46c1d;
+  color: white;
+  text-align: center;
+  font-size: medium;
+  transition: 0.2s;
+}
+
+.footer .control > div {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.footer .control > div > div > i {
+  background: rgba(255, 255, 255, 0.55);
+  width: 17px;
+  height: 17px;
+  margin: 2px 0;
+  border-radius: 50%;
+  color: #8e001e;
+  transition: 0.3s;
+}
+
+.footer .control > div > div:hover > i {
+  background: #fff;
+}

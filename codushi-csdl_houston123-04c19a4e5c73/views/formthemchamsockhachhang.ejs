@@ -1,0 +1,108 @@
+<div class="modal-themchamsockhachhang">
+  <div class="modal-content">
+    <div class="modal-header">
+      <!-- <span class="close">&times;</span> -->
+      <h2>Chăm Sóc Khách Hàng</h2>
+    </div>
+    <div class="modal-body">
+      <ul style="list-style-type:none">
+        <form id="myform_them_chamsockhachhang">
+          <li> 
+            <div>
+                <label for="Học Sinh Chưa Được Chăm Sóc" >Học Sinh Chưa Được Chăm Sóc: </label>
+                <input type="checkbox" name="Học Sinh Chưa Được Chăm Sóc" value="" style="width: auto; margin: auto; margin-left: 2px; margin-top: 3px;">                  
+              </div>
+          </li>
+          <li style="margin-top: 4px;">
+            <label for="User ID">User ID: </label><br>
+            <select name="User ID" class="khachhang_userid" style="margin-top: 2px; width: 100%;"></select>
+          </li>
+          <li style="margin-top: 4px;">
+            <label for="Ngày Chăm Sóc">Ngày Chăm Sóc: </label><br><input type="date" id="ngay_cham_soc" name="Ngày Chăm Sóc" min="">
+          </li>
+          <li style="margin-top: 4px;">
+            <label for="Ngày Kế Hoạch">Ngày Kế Hoạch: </label><br><input type="date" id="ngay_ke_hoach" name="Ngày Kế Hoạch" min="">
+          </li>
+          <script type="text/javascript">
+            n =  new Date();
+            y = n.getFullYear();
+            m = ("0" + (n.getMonth() + 1)).slice(-2);
+            d = ("0" + n.getDate()).slice(-2);
+            $('.modal-themchamsockhachhang #ngay_cham_soc').attr("min", y + "-" + m + "-" + d);
+            $('.modal-themchamsockhachhang #ngay_ke_hoach').attr("min", y + "-" + m + "-" + d);
+          </script>
+          <li style="margin-top: 4px;">
+            <label for="Tình Trạng Cuộc Gọi">Tình Trạng Cuộc Gọi: </label><br>
+            <select name="Tình Trạng Cuộc Gọi" class="khachhang_tinhtrangcuocgoi" style="margin-top: 2px; width: 100%;"></select>
+          </li>
+          <li><label for="Ý Kiến Của Phụ Huynh">Ý Kiến Của Phụ Huynh: </label><br>
+            <textarea rows="4" cols="50" name="Ý Kiến Của Phụ Huynh" maxlength="1000"></textarea>
+          </li>
+          <li><label for="Ý Kiến Của Nhân Viên Chăm Sóc">Ý Kiến Của Nhân Viên Chăm Sóc: </label><br>
+            <textarea rows="4" cols="50" name="Ý Kiến Của Nhân Viên Chăm Sóc" maxlength="1000"></textarea>
+          </li>
+          <li>
+            <div>
+              <label for="Yêu Cầu Quản Lý Phản Hồi" >Yêu Cầu Quản Lý Phản Hồi: </label>
+              <input type="checkbox" name="Yêu Cầu Quản Lý Phản Hồi" value="" style="width: auto; margin: auto; margin-left: 2px; margin-top: 3px;">
+              <script type="text/javascript">
+                $('.modal-themchamsockhachhang input[name="Yêu Cầu Quản Lý Phản Hồi"]').on( 'change' , function () {
+                  if ($(this).is(':checked')) {
+                    $('#khachhang_quanly_li').show();
+                  } else {
+                    $('#khachhang_quanly_li').hide();
+                  }
+                });
+              </script>
+            </div>
+          </li>
+          <li id="khachhang_quanly_li" style="border: 1px solid #ccc; border-radius: 4px; padding: 4px;" hidden>
+            <label for="Quản Lý">Quản Lý: </label><br>
+            <select name="Quản Lý" class="khachhang_quanly" style="text-align: center; position: absolute; width: 440px;" onmousedown='if (this.options.length > 8) { this.size=8; }'  onchange='this.size=0;' onblur='this.size=0;'></select>
+            <div style="margin-top: 35px;"></div>
+          </li>
+          <li>
+            <div>
+              <label for="Yêu Cầu Giáo Viên Phản Hồi" >Yêu Cầu Giáo Viên Phản Hồi: </label>
+              <input type="checkbox" name="Yêu Cầu Giáo Viên Phản Hồi" value="" style="width: auto; margin: auto; margin-left: 2px; margin-top: 3px;">
+              <script type="text/javascript">
+                $('.modal-themchamsockhachhang input[name="Yêu Cầu Giáo Viên Phản Hồi"]').on( 'change' , function () {
+                  if ($(this).is(':checked')) {
+                    $('#khachhang_giaovien_li').show();
+                  } else {
+                    $('#khachhang_giaovien_li').hide();
+                  }
+                });
+              </script>
+            </div>
+          </li>
+          <li id="khachhang_giaovien_li" style="border: 1px solid #ccc; border-radius: 4px; padding: 4px;" hidden>
+            <label for="Giáo Viên">Giáo Viên: </label><br>
+            <select name="Giáo Viên" class="khachhang_giaovien" style="text-align: center; position: absolute; width: 440px;" onmousedown='if (this.options.length > 8) { this.size=8; }'  onchange='this.size=0;' onblur='this.size=0;'></select>
+            <div style="margin-top: 35px;"></div>
+          </li>
+          <li>
+            <label for="Mức Độ Ưu Tiên">Mức Độ Ưu Tiên: </label><br><select name="Mức Độ Ưu Tiên">
+              <option value="Không Cần">Không Cần</option>
+              <option value="Cần">Cần</option>
+              <option value="Khẩn Cấp">Khẩn Cấp</option>
+            </select>
+          </li>
+          <li>
+            <p> 
+              (*) Học Sinh Chưa Được Chăm Sóc: lọc danh sách học sinh chưa được chăm sóc trong tháng. </br>
+              (**) Yêu Cầu Giáo Viên Phản Hồi: hiển thị danh sách giáo viên đang dạy học sinh và yêu cầu giáo viên phản hồi. </br>
+              (***) Quản lý chỉ được phép sửa nội dung mà mình phản hồi.
+            </p>
+          </li>
+        </form>
+      </ul>
+    </div>
+    <div class="modal-footer">
+      <input type="button" name="cancel_register" value="Hủy" class="btncancelregister" id="btncancelregister">
+      <input type="button" name="submit_register" value="Đồng Ý" class="btncompletedregister" id="btncompletedregister">
+    </div>
+  </div>
+  <div class="daithem">
+  </div>
+</div>

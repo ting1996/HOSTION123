@@ -276,7 +276,7 @@ class Calendar extends React.Component{
 
           for (let index = startrow; index < endrow; index++) {
             if(rowscallback[index] != null)
-              rowscallback[index][index][val['Thứ']] = val['Mã Lớp'];
+              rowscallback[index][index][val['Thứ']] = val['Mã Lớp']+'!'+(endrow-startrow);
           }
           rowscallback[startrow][startrow][val['Thứ']] = val['Mã Lớp'] + '!'+(endrow-startrow)+'!'+draggable+'!';
         }
@@ -296,7 +296,7 @@ class Calendar extends React.Component{
         console.log(v.thoiluongday+v.giobatdauchuyentoi)
         for(let index = v.giobatdauchuyentoi;index<(parseInt(v.thoiluongday)+parseInt(v.giobatdauchuyentoi));index++){
           if(rowscallback[index] != null)
-                rowscallback[index][index][ngaychuyentoi.getDay()+1] = v.malop;
+                rowscallback[index][index][ngaychuyentoi.getDay()+1] = v.malop+ '!'+v.thoiluongday;
         }
         rowscallback[v.giobatdauchuyentoi][v.giobatdauchuyentoi][ngaychuyentoi.getDay()+1] = v.malop + '!'+v.thoiluongday+'!true!';
       }
@@ -555,6 +555,8 @@ class Calendar extends React.Component{
   }
   dragStart(e)
   {
+    console.log(e.target.dataset.v.split('!'));
+    console.log(e.target.dataset.v.split('!')[1],"e.target.dataset.v.split('!')[1]");
      for(let i = 0;i<e.target.dataset.v.split('!')[1];i++)
      {
          let temp = document.createElement("TR");
@@ -582,8 +584,23 @@ class Calendar extends React.Component{
      let temp = document.createElement("DIV");
      e.dataTransfer.setDragImage(temp, 0, 0);
      let lenght = e.target.dataset.v.split('!')[1];
+     let rows = this.state.rows;
      let locatex = parseInt(e.target.dataset.locatex);
      let locatey = parseInt(e.target.dataset.locatey);
+     
+     if(!rows[locatex][locatex][locatey].endsWith("!"))
+      {
+        console.log("true");
+        
+          while(rows[locatex-1][locatex-1][locatey].split("!")[0]==e.target.dataset.v.split('!')[0])
+        {
+          locatex--;
+          if(rows[locatex][locatex][locatey].endsWith("!"))
+            break;
+        }
+      }
+     console.log(locatex,"locatex");
+     
      setTimeout(function(){ 
      let rowscallback = [...this.state.rows];
      let _rowsbackup = JSON.parse(JSON.stringify(rowscallback));
@@ -719,7 +736,7 @@ class Calendar extends React.Component{
                           [style.rowisbusy]: 'rowisbusy',
                         });
                         value = null;
-                        draggable = "false";
+                        draggable = "true";
                         if(v.endsWith('@'))
                         {
                           yourclass = classnames({

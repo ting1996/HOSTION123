@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Quản lý học sinh | Đăng nhập </title>
+    <script src="lib/jquery.js"></script>
+    <script src="login/xuly.js"></script>
+    <!-- <script src="register/xuly_dangky.js"></script> -->
+    <link rel="stylesheet" type="text/css" href="login/layout_login.css">
+    <!-- <link rel="stylesheet" type="text/css" href="register/style_dangky.css"> -->
+    <link REL="shortcut icon" HREF="img/icon.ico">
+    <script>
+      if ( window.location.protocol == 'http:' ) {
+        var router = window.location.href.toString();
+        router = router.replace('http', 'https');
+        window.location.href = router;
+      }
+    </script>
+  </head>
+  <body>
+    <div class ="container">
+      <div class="hinhloadingContainer">
+        <div class="hinhloading">
+          <img src="img/houstonlogo.png"/>
+          <div class="waitting">
+          </div>
+        </div>
+      </div>
+      <form class="form-input" method="POST" action="/">
+        <input class="input" type="text" name="txtusername" placeholder="Nhập tên đăng nhập" id="txtusername" autocomplete="on"><br/>
+        <input class="input" type="password" name="txtpassword" placeholder="Nhập mật khẩu" id="txtpassword" autocomplete="on"><br/>
+        <input class="button" type="submit" name="submit" value="Đăng Nhập" id="btnLogin">       
+      </form><br>
+      <div class="forgotPassword">
+        <a href="#">Quên mật khẩu ?</a>
+      </div>
+    </div>
+  </body>
+</html>

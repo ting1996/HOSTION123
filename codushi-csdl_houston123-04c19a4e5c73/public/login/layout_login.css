@@ -1,0 +1,114 @@
+html {
+  /*background-color: green;*/
+  background: url("../img/bg.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+body {
+  display: flex;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+.container {
+  width:  500px;
+  text-align: center;
+  background-color: rgba(52, 73, 94, 0.7);
+  border-radius: 4px;
+}
+
+.hinhloadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -66px;
+  margin-bottom: 20px;
+}
+
+.container .hinhloading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 120px;
+}
+
+.container img:nth-child(1) {
+  width: 100%;
+  height: 100%;
+}
+
+.hinhloading div {
+  display: none;
+  position: absolute;
+  width: 120px;
+  height: 120px;  
+  border: 10px solid #f3f3f300;
+  border-radius: 100%;
+  border-top: 10px solid #d8680d;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.container .input {
+  height: 45px;
+  width: calc(100% - 160px);
+  font-size: 18px;
+  margin-bottom: 30px;
+  padding-left: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.container .button {
+  padding: 15px 25px;
+  width: calc(100% - 138px);
+  color: #fff;
+  background-color: #7c7e82;
+  border: none;
+  border-radius: 4px;
+  border-bottom: 4px solid #3b3b3d;
+}
+
+.container .button:hover {
+  background-color: #6b2102;
+  border-bottom: 4px solid #3d1200;
+}
+
+.container .forgotPassword {
+  margin-bottom: 20px;
+}
+
+.container a {
+  text-decoration: none;
+  color: white;
+}
+
+.container a:hover {
+  color: coral;
+  font-weight: bold;
+}
+
+@media only screen and (max-width: 500px) {
+  .container {
+    width:  100%;
+    margin: 0px 10px;
+  }
+}

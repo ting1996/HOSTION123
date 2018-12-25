@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Quản lý học sinh | Trang Chủ </title>    
+    <script src="lib/jquery.js"></script>
+    <script src="lib/jquery.cookie.js"></script>
+    <script src="socket.io/socket.io.js"></script>
+    <script src="lib/select2/select2.min.js"></script>
+    <script src="lib/n2vi.min.js"></script>
+    <script src="lib/webcam.min.js"></script>
+    <!-- <script src="lib/mudim.js"></script> -->
+    <link rel="shortcut icon" href="img/icon.ico">
+    <link rel="stylesheet" href="lib/select2/select2.min.css"/>
+    <link rel="stylesheet" href="lib/react-select/react-select.css">
+    <link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="home/style_home.css">
+    <link rel="stylesheet" type="text/css" href="home/style_header_footer.css">
+    <link rel="stylesheet" type="text/css" href="home/style_menu_right.css">
+    <link rel="stylesheet" type="text/css" href="home/style_them.css">
+    <link rel="stylesheet" type="text/css" href="home/style_phieuthu.css">
+    <script>
+      if ( window.location.protocol == 'http:' ) {
+        var router = window.location.href.toString();
+        router = router.replace('http', 'https');
+        window.location.href = router;
+      }
+      window.addEventListener('keydown', (event) => {
+          const keyCode = event.which;
+          if (event.shiftKey
+              && event.ctrlKey
+              && (keyCode == 9 || keyCode == 73 || keyCode == 105)) {
+                  event.preventDefault();
+          }
+      });
+    </script>
+  </head>
+  <body>
+    <div class="backgroundimg"></div>
+    <div class="khuvuc" display="none" value="<%= khuvuc %>"></div>
+    <div class="permission" display="none" value="<%= permission %>" content="<%= loaiquanly %>"></div>
+    <% include menurightclick%>
+    <% include loading%>
+    <% include successed%>
+    <% include khuvucselection%>
+    <% include doimatkhau%>
+    <% if (permission == 'admin') { %>
+      <% include formthemgiaovien%>
+      <% include formthemquanly%>
+      <% include formthemchamsockhachhang%>
+    <% } %>
+    <% if (permission == 'mod' || permission == 'smod' || permission == 'assistantsmod' || permission == 'ssmod') { %>
+      <% include formthemgiaovien%>
+      <% include formthemquanly%>
+      <% include formthemchamsockhachhang%>
+    <% } %>
+    <% if (permission == 'modcl' || permission == 'modtpcl') { %>
+      <% include formthemgiaovien%>
+      <% include formthemquanly%>
+    <% } %>
+    <% if (permission == 'modmar' || permission == 'modtpmar') { %>
+      <% include formthemquanly%>
+      <% include formthemchamsockhachhang%>
+    <% } %>
+    <% if (permission== 'marketer' || permission== 'cskh' || permission== 'tbmanhvan' || permission== 'tbmvanhoa') { %>
+      <% include formthemchamsockhachhang%>
+    <% } %>
+    <% if (permission == 'giaovien') { %>
+    <% } %>
+
+    <!-- container -->
+    <!-- <div class="container"> -->
+      <!-- Nội dung chính -->
+      <section class="background_thead">
+      </section>
+      <div class="dulieu" style="display: none;">
+      </div>
+
+      <!-- head -->
+      <div class="header" style="display: none;">
+        <div class="nav">
+          <ul class="menu">
+            <li>
+              <p class="khuvuc_text" style="
+                position: absolute;
+                top: 0;
+                left: 0;
+                margin: 0;
+                padding: 15px;
+                color: #8e001e;
+                font-weight: bold;
+                font-family: Tahoma;
+                text-transform: uppercase;">unknow
+            </p>
+            </li>
+            <li><input type="text" name="txttimkiem" id="txttimkiem" placeholder="Tìm nhanh"></li>
+            <!-- <li><img id="btntimkiem" src="img/search.png"></li> -->
+            <li><div id="texttenbang" value=""></div></li>
+            <li>
+              <a id="btn1_menu"><i class="fa fa-bars fa-lg" aria-hidden="true">&nbsp</i>Danh Sách</a>
+              <ul>
+                <% if (permission == 'admin') { %>
+                  <li><a id="sub_btn1_users" href="javascript:void(0)"><i class="fa fa-user fa-lg" aria-hidden="true">&nbsp</i>Users</a>
+                    <ul>
+                      <li><a id="sub_users_hocsinhdanghi" href="javascript:void(0)"><i class="fa fa-user-times fa-lg" aria-hidden="true">&nbsp</i>Học Sinh Đã Nghỉ</a></li>
+                      <li><a id="sub_users_hocsinhhocthu" href="javascript:void(0)"><i class="fa fa-user-o fa-lg" aria-hidden="true">&nbsp</i>Học Sinh Học Thử</a></li>
+                    </ul>
+                  </li>
+                  <li><a id="sub_btn1_quanly" href="javascript:void(0)"><i class="fa fa-user fa-lg" aria-hidden="true">&nbsp</i>Quản Lý</a></li>
+                  <li><a id="sub_btn1_giaovien" href="javascript:void(0)"><i class="fa fa-user fa-lg" aria-hidden="true">&nbsp</i>Giáo Viên</a></li>
+                  <li><a id="sub_btn1_marketing" href="javascript:void(0)"><i class="fa fa-area-chart fa-lg" aria-hidden="true">&nbsp</i>Marketing</a>
+                    <ul>
+                      <li><a id="sub_marketing_dituvan" href="javascript:void(0)"><i class="fa fa-handshake-o fa-lg" aria-hidden="true">&nbsp</i>Đi Tư Vấn</a></li>
+                      <li><a id="sub_marketing_goidientuvan" href="javascript:void(0)"><i class="fa fa-phone fa-lg" aria-hidden="true">&nbsp</i>Gọi Điện Tư Vấn</a></li>
+                      <li><a id="sub_marketing_dulieutruongtiemnang" href="javascript:void(0)"><i class="fa fa-database fa-lg" aria-hidden="true">&nbsp</i>Data Tổng</a></li>
+                      <li><a id="sub_marketing_goidiendulieu" href="javascript:void(0)"><i class="fa fa-phone fa-lg" aria-hidden="true">&nbsp</i>Gọi Data</a></li>
+                      <li><a id="sub_marketing_phattoroi" href="javascript:void(0)"><i class="fa fa-file-text-o fa-lg" aria-hidden="true">&nbsp</i>Phát Tờ Rơi</a></li>
+                      <li><a id="sub_marketing_treobangron" href="javascript:void(0)"><i class="fa fa-bookmark-o fa-lg" aria-hidden="true">&nbsp</i>Treo Băng Rôn</a></li>                      
+                      <li><a id="sub_marketing_truongtrinhphatdong" href="javascript:void(0)"><i class="fa fa-smile-o fa-lg" aria-hidden="true">&nbsp</i>Chương Trình Phát Động</a></li>
+                    </ul>
+                  </li>
+                  <li><a id="sub_btn1_cskhachhang" href="javascript:void(0)"><i class="fa fa-briefcase fa-lg" aria-hidden="true">&nbsp</i>Chăm Sóc Khách Hàng</a>
+                    <ul>
+                      <li><a id="sub_cskhachhang_phanhoicskh" href="javascript:void(0)"><i class="fa fa-child fa-lg" aria-hidden="true">&nbsp</i>Sổ Liên Lạc</a></li>
+                      <li><a id="sub_cskhachhang_dangkyhangngay" href="javascript:void(0)"><i class="fa fa-database fa-lg" aria-hidden="true">&nbsp</i>Đăng Ký Hàng Ngày</a></li>
+                      <li><a id="sub_cskhachhang_goidangkyhangngay" href="javascript:void(0)"><i class="fa fa-phone fa-lg" aria-hidden="true">&nbsp</i>Gọi Đăng Ký Hàng Ngày</a></li>
+                      <li><a id="sub_cskhachhang_cskhcu" href="javascript:void(0)"><i class="fa fa-phone fa-lg" aria-hidden="true">&nbsp</i>Chăm Sóc Khách Hàng (Cũ)</a></li>
+                    </ul>
+                  </li>
+                  <li><a id="sub_btn1_lophoc" href="javascript:void(0)"><i class="fa fa-users fa-lg" aria-hidden="true">&nbsp</i>Lớp Học</a></li>
+                  <li>
+                    <a id="sub_btn1_hoadon" href="javascript:void(0)"><i class="fa fa-credit-card fa-lg" aria-hidden="true">&nbsp</i>Hóa Đơn</a>
+                    <ul>
+                      <li><a id="sub_hoadon_hoadondahuy" href="javascript:void(0)"><i class="fa fa-trash-o fa-lg" aria-hidden="true">&nbsp</i>Hóa Đơn Đã Hủy</a></li>
+                    </ul>
+                  </li>
+                <% } %>
+                <% if (permission == 'mod' || permission == 'smod' || permission == 'assistantsmod' || permission == 'ssmod') { %>
+                  <li><a id="sub_btn1_users" href="javascript:void(0)"><i class="fa fa-user fa-lg" aria-hidden="true">&nbsp</i>Users</a>
+                    <ul>
+                      <li><a id="sub_users_hocsinhdanghi" href="javascript:void(0)"><i class="fa fa-user-times fa-lg" aria-hidden="true">&nbsp</i>Học Sinh Đã Nghỉ</a></li>
+                      <li><a id="sub_users_hocsinhhocthu" href="javascript:void(0)"><i class="fa fa-user-o fa-lg" aria-hidden="true">&nbsp</i>Học Sinh Học Thử</a></li>
+                    </ul>
+                  </li>
+                  <li><a id="sub_btn1_quanly" href="javascript:void(0)"><i class="fa fa-user fa-lg" aria-hidden="true">&nbsp</i>Quản Lý</a></li>
+                  <li><a id="sub_btn1_giaovien" href="javascript:void(0)"><i class="fa fa-user fa-lg" aria-hidden="true">&nbsp</i>Giáo Viên</a></li>
+                  <li><a id="sub_btn1_marketing" href="javascript:void(0)"><i class="fa fa-area-chart fa-lg" aria-hidden="true">&nbsp</i>Marketing</a>
+                    <ul>
+                      <li><a id="sub_marketing_dituvan" href="javascript:void(0)"><i class="fa fa-handshake-o fa-lg" aria-hidden="true">&nbsp</i>Đi Tư Vấn</a></li>
+                      <li><a id="sub_marketing_goidientuvan" href="javascript:void(0)"><i class="fa fa-phone fa-lg" aria-hidden="true">&nbsp</i>Gọi Điện Tư Vấn</a></li>
+                      <li><a id="sub_marketing_dulieutruongtiemnang" href="javascript:void(0)"><i class="fa fa-database fa-lg" aria-hidden="true">&nbsp</i>Data Tổng</a></li>
+                      <li><a id="sub_marketing_goidiendulieu" href="javascript:void(0)"><i class="fa fa-phone fa-lg" aria-hidden="true">&nbsp</i>Gọi Data</a></li>
+                      <li><a id="sub_marketing_phattoroi" href="javascript:void(0)"><i class="fa fa-file-text-o fa-lg" aria-hidden="true">&nbsp</i>Phát Tờ Rơi</a></li>
+                      <li><a id="sub_marketing_treobangron" href="javascript:void(0)"><i class="fa fa-bookmark-o fa-lg" aria-hidden="true">&nbsp</i>Treo Băng Rôn</a></li>                      
+                      <li><a id="sub_marketing_truongtrinhphatdong" href="javascript:void(0)"><i class="fa fa-smile-o fa-lg" aria-hidden="true">&nbsp</i>Chương Trình Phát Động</a></li>
+                    </ul>
+                  </li>
+                  <li><a id="sub_btn1_cskhachhang" href="javascript:void(0)"><i class="fa fa-briefcase fa-lg" aria-hidden="true">&nbsp</i>Chăm Sóc Khách Hàng</a>
+                    <ul>
+                      <li><a id="sub_cskhachhang_phanhoicskh" href="javascript:void(0)"><i class="fa fa-child fa-lg" aria-hidden="true">&nbsp</i>Sổ Liên Lạc</a></li>
+                      <li><a id="sub_cskhachhang_dangkyhangngay" href="javascript:void(0)"><i class="fa fa-database fa-lg" aria-hidden="true">&nbsp</i>Đăng Ký Hàng Ngày</a></li>
+                      <li><a id="sub_cskhachhang_goidangkyhangngay" href="javascript:void(0)"><i class="fa fa-phone fa-lg" aria-hidden="true">&nbsp</i>Gọi Đăng Ký Hàng Ngày</a></li>
+                      <li><a id="sub_cskhachhang_cskhcu" href="javascript:void(0)"><i class="fa fa-phone fa-lg" aria-hidden="true">&nbsp</i>Chăm Sóc Khách Hàng (Cũ)</a></li>
+                    </ul>
+                  </li>
+                  <li><a id="sub_btn1_lophoc" href="javascript:void(0)"><i class="fa fa-users fa-lg" aria-hidden="true">&nbsp</i>Lớp Học</a></li>
+                  <li>
+                    <a id="sub_btn1_hoadon" href="javascript:void(0)"><i class="fa fa-credit-card fa-lg" aria-hidden="true">&nbsp</i>Hóa Đơn</a>
+                    <ul>
+                      <li><a id="sub_hoadon_hoadondahuy" href="javascript:void(0)"><i class="fa fa-trash-o fa-lg" aria-hidden="true">&nbsp</i>Hóa Đơn Đã Hủy</a></li>
+                    </ul>
+                  </li>
+                <% } %>
+                <% if (permission == 'modcl' || permission == 'modmar') { %>
+                <% } %>
+                <% if (permission == 'modcl' || permission == 'modtpcl') { %>
+                  <li><a id="sub_btn1_users" href="javascript:void(0)"><i class="fa fa-user fa-lg" aria-hidden="true">&nbsp</i>Users</a>
+                    <ul>
+                      <li><a id="sub_users_hocsinhdanghi" href="javascript:void(0)"><i class="fa fa-user-times fa-lg" aria-hidden="true">&nbsp</i>Học Sinh Đã Nghỉ</a></li>
+                      <li><a id="sub_users_hocsinhhocthu" href="javascript:void(0)"><i class="fa fa-user-o fa-lg" aria-hidden="true">&nbsp</i>Học Sinh Học Thử</a></li>
+                    </ul>
+                  </li>
+                  <li><a id="sub_btn1_quanly" href="javascript:void(0)"><i class="fa fa-user fa-lg" aria-hidden="true">&nbsp</i>Quản Lý</a></li>
+                  <li><a id="sub_btn1_giaovien" href="javascript:void(0)"><i class="fa fa-user fa-lg" aria-hidden="true">&nbsp</i>Giáo Viên</a></li>
+                  <li><a id="sub_btn1_cskhachhang" href="javascript:void(0)"><i class="fa fa-briefcase fa-lg" aria-hidden="true">&nbsp</i>Chăm Sóc Khách Hàng</a>
+                    <ul>
+                        <li><a id="sub_cskhachhang_phanhoicskh" href="javascript:void(0)"><i class="fa fa-child fa-lg" aria-hidden="true">&nbsp</i>Sổ Liên Lạc</a></li>
+                    </ul>
+                  </li>
+                  <li><a id="sub_btn1_lophoc" href="javascript:void(0)"><i class="fa fa-users fa-lg" aria-hidden="true">&nbsp</i>Lớp Học</a></li>
+                <% } %>
+                <% if (permission == 'modmar' || permission == 'modtpmar') { %>
+                  <li><a id="sub_btn1_users" href="javascript:void(0)"><i class="fa fa-user fa-lg" aria-hidden="true">&nbsp</i>Users</a>
+                    <ul>
+                      <li><a id="sub_users_hocsinhdanghi" href="javascript:void(0)"><i class="fa fa-user-times fa-lg" aria-hidden="true">&nbsp</i>Học Sinh Đã Nghỉ</a></li>
+                      <li><a id="sub_users_hocsinhhocthu" href="javascript:void(0)"><i class="fa fa-user-o fa-lg" aria-hidden="true">&nbsp</i>Học Sinh Học Thử</a></li>
+                    </ul>
+                  </li>
+                  <li><a id="sub_btn1_quanly" href="javascript:void(0)"><i class="fa fa-user fa-lg" aria-hidden="true">&nbsp</i>Quản Lý</a></li>
+                  <li><a id="sub_btn1_marketing" href="javascript:void(0)"><i class="fa fa-area-chart fa-lg" aria-hidden="true">&nbsp</i>Marketing</a>
+                    <ul>
+                      <li><a id="sub_marketing_dituvan" href="javascript:void(0)"><i class="fa fa-handshake-o fa-lg" aria-hidden="true">&nbsp</i>Đi Tư Vấn</a></li>
+                      <li><a id="sub_marketing_goidientuvan" href="javascript:void(0)"><i class="fa fa-phone fa-lg" aria-hidden="true">&nbsp</i>Gọi Điện Tư Vấn</a></li>
+                      <li><a id="sub_marketing_dulieutruongtiemnang" href="javascript:void(0)"><i class="fa fa-database fa-lg" aria-hidden="true">&nbsp</i>Data Tổng</a></li>
+                      <li><a id="sub_marketing_goidiendulieu" href="javascript:void(0)"><i class="fa fa-phone fa-lg" aria-hidden="true">&nbsp</i>Gọi Data</a></li>
+                      <li><a id="sub_marketing_phattoroi" href="javascript:void(0)"><i class="fa fa-file-text-o fa-lg" aria-hidden="true">&nbsp</i>Phát Tờ Rơi</a></li>
+                      <li><a id="sub_marketing_treobangron" href="javascript:void(0)"><i class="fa fa-bookmark-o fa-lg" aria-hidden="true">&nbsp</i>Treo Băng Rôn</a></li>                      
+                      <li><a id="sub_marketing_truongtrinhphatdong" href="javascript:void(0)"><i class="fa fa-smile-o fa-lg" aria-hidden="true">&nbsp</i>Chương Trình Phát Động</a></li>
+                    </ul>
+                  </li>
+                  <li><a id="sub_btn1_cskhachhang" href="javascript:void(0)"><i class="fa fa-briefcase fa-lg" aria-hidden="true">&nbsp</i>Chăm Sóc Khách Hàng</a>
+                    <ul>
+                      <li><a id="sub_cskhachhang_phanhoicskh" href="javascript:void(0)"><i class="fa fa-child fa-lg" aria-hidden="true">&nbsp</i>Sổ Liên Lạc</a></li>
+                      <li><a id="sub_cskhachhang_dangkyhangngay" href="javascript:void(0)"><i class="fa fa-database fa-lg" aria-hidden="true">&nbsp</i>Đăng Ký Hàng Ngày</a></li>
+                      <li><a id="sub_cskhachhang_goidangkyhangngay" href="javascript:void(0)"><i class="fa fa-phone fa-lg" aria-hidden="true">&nbsp</i>Gọi Đăng Ký Hàng Ngày</a></li>
+                      <li><a id="sub_cskhachhang_cskhcu" href="javascript:void(0)"><i class="fa fa-phone fa-lg" aria-hidden="true">&nbsp</i>Chăm Sóc Khách Hàng (Cũ)</a></li>
+                    </ul>
+                  </li>
+                <% } %>
+                <% if (permission== 'marketer' || permission== 'cskh' || permission== 'tbmanhvan' || permission== 'tbmvanhoa') { %>
+                  <% if (permission== 'tbmanhvan' || permission== 'tbmvanhoa') { %>
+                    <li><a id="sub_btn1_users" href="javascript:void(0)"><i class="fa fa-user fa-lg" aria-hidden="true">&nbsp</i>Users</a>
+                      <ul>
+                        <li><a id="sub_users_hocsinhdanghi" href="javascript:void(0)"><i class="fa fa-user-times fa-lg" aria-hidden="true">&nbsp</i>Học Sinh Đã Nghỉ</a></li>
+                        <li><a id="sub_users_hocsinhhocthu" href="javascript:void(0)"><i class="fa fa-user-o fa-lg" aria-hidden="true">&nbsp</i>Học Sinh Học Thử</a></li>
+                      </ul>
+                    </li>
+                    <li><a id="sub_btn1_cskhachhang" href="javascript:void(0)"><i class="fa fa-briefcase fa-lg" aria-hidden="true">&nbsp</i>Chăm Sóc Khách Hàng</a>
+                      <ul>
+                          <li><a id="sub_cskhachhang_phanhoicskh" href="javascript:void(0)"><i class="fa fa-child fa-lg" aria-hidden="true">&nbsp</i>Sổ Liên Lạc</a></li>
+                      </ul>
+                    </li>
+                    <li><a id="sub_btn1_lophoc" href="javascript:void(0)"><i class="fa fa-users fa-lg" aria-hidden="true">&nbsp</i>Lớp Học</a></li>
+                  <% } %>
+                  <% if (permission== 'marketer') { %>
+                    <li><a id="sub_btn1_marketing" href="javascript:void(0)"><i class="fa fa-area-chart fa-lg" aria-hidden="true">&nbsp</i>Marketing</a>
+                      <ul>
+                        <li><a id="sub_marketing_dituvan" href="javascript:void(0)"><i class="fa fa-handshake-o fa-lg" aria-hidden="true">&nbsp</i>Đi Tư Vấn</a></li>
+                        <li><a id="sub_marketing_goidientuvan" href="javascript:void(0)"><i class="fa fa-phone fa-lg" aria-hidden="true">&nbsp</i>Gọi Điện Tư Vấn</a></li>
+                        <li><a id="sub_marketing_dulieutruongtiemnang" href="javascript:void(0)"><i class="fa fa-database fa-lg" aria-hidden="true">&nbsp</i>Data Tổng</a></li>
+                        <li><a id="sub_marketing_goidiendulieu" href="javascript:void(0)"><i class="fa fa-phone fa-lg" aria-hidden="true">&nbsp</i>Gọi Data</a></li>
+                        <li><a id="sub_marketing_phattoroi" href="javascript:void(0)"><i class="fa fa-file-text-o fa-lg" aria-hidden="true">&nbsp</i>Phát Tờ Rơi</a></li>
+                        <li><a id="sub_marketing_treobangron" href="javascript:void(0)"><i class="fa fa-bookmark-o fa-lg" aria-hidden="true">&nbsp</i>Treo Băng Rôn</a></li>                      
+                        <li><a id="sub_marketing_truongtrinhphatdong" href="javascript:void(0)"><i class="fa fa-smile-o fa-lg" aria-hidden="true">&nbsp</i>Chương Trình Phát Động</a></li>
+                      </ul>
+                    </li>
+                  <% } %>
+                  <% if (permission== 'cskh') { %>
+                    <li><a id="sub_btn1_users" href="javascript:void(0)"><i class="fa fa-user fa-lg" aria-hidden="true">&nbsp</i>Users</a>
+                      <ul>
+                        <li><a id="sub_users_hocsinhdanghi" href="javascript:void(0)"><i class="fa fa-user-times fa-lg" aria-hidden="true">&nbsp</i>Học Sinh Đã Nghỉ</a></li>
+                        <li><a id="sub_users_hocsinhhocthu" href="javascript:void(0)"><i class="fa fa-user-o fa-lg" aria-hidden="true">&nbsp</i>Học Sinh Học Thử</a></li>
+                      </ul>
+                    </li>
+                    <li><a id="sub_btn1_cskhachhang" href="javascript:void(0)"><i class="fa fa-briefcase fa-lg" aria-hidden="true">&nbsp</i>Chăm Sóc Khách Hàng</a>
+                      <ul>
+                        <li><a id="sub_cskhachhang_phanhoicskh" href="javascript:void(0)"><i class="fa fa-child fa-lg" aria-hidden="true">&nbsp</i>Sổ Liên Lạc</a></li>
+                        <li><a id="sub_cskhachhang_dangkyhangngay" href="javascript:void(0)"><i class="fa fa-database fa-lg" aria-hidden="true">&nbsp</i>Đăng Ký Hàng Ngày</a></li>
+                        <li><a id="sub_cskhachhang_goidangkyhangngay" href="javascript:void(0)"><i class="fa fa-phone fa-lg" aria-hidden="true">&nbsp</i>Gọi Đăng Ký Hàng Ngày</a></li>
+                        <li><a id="sub_cskhachhang_cskhcu" href="javascript:void(0)"><i class="fa fa-phone fa-lg" aria-hidden="true">&nbsp</i>Chăm Sóc Khách Hàng (Cũ)</a></li>
+                      </ul>
+                    </li>
+                  <% } %>
+                <% } %>
+                <% if (permission == 'giaovien') { %>
+                  <li><a id="sub_btn1_cskhachhang" href="javascript:void(0)"><i class="fa fa-briefcase fa-lg" aria-hidden="true">&nbsp</i>Chăm Sóc Khách Hàng</a>
+                    <ul>
+                        <li><a id="sub_cskhachhang_phanhoicskh" href="javascript:void(0)"><i class="fa fa-child fa-lg" aria-hidden="true">&nbsp</i>Sổ Liên Lạc</a></li>
+                    </ul>
+                  </li>
+                  <li><a id="sub_btn1_lophoc" href="javascript:void(0)"><i class="fa fa-users fa-lg" aria-hidden="true">&nbsp</i>Lớp Học</a></li>
+                <% } %>
+                <% if (permission == 'thuquy') { %>
+                  <li><a id="sub_btn1_users" href="javascript:void(0)"><i class="fa fa-user fa-lg" aria-hidden="true">&nbsp</i>Users</a>
+                    <ul>
+                      <li><a id="sub_users_hocsinhdanghi" href="javascript:void(0)"><i class="fa fa-user-times fa-lg" aria-hidden="true">&nbsp</i>Học Sinh Đã Nghỉ</a></li>
+                      <li><a id="sub_users_hocsinhhocthu" href="javascript:void(0)"><i class="fa fa-user-o fa-lg" aria-hidden="true">&nbsp</i>Học Sinh Học Thử</a></li>
+                    </ul>
+                  </li>
+                  <li><a id="sub_btn1_cskhachhang" href="javascript:void(0)"><i class="fa fa-briefcase fa-lg" aria-hidden="true">&nbsp</i>Chăm Sóc Khách Hàng</a>
+                    <ul>
+                      <li><a id="sub_cskhachhang_phanhoicskh" href="javascript:void(0)"><i class="fa fa-child fa-lg" aria-hidden="true">&nbsp</i>Sổ Liên Lạc</a></li>
+                      <li><a id="sub_cskhachhang_dangkyhangngay" href="javascript:void(0)"><i class="fa fa-database fa-lg" aria-hidden="true">&nbsp</i>Đăng Ký Hàng Ngày</a></li>
+                      <li><a id="sub_cskhachhang_goidangkyhangngay" href="javascript:void(0)"><i class="fa fa-phone fa-lg" aria-hidden="true">&nbsp</i>Gọi Đăng Ký Hàng Ngày</a></li>
+                      <li><a id="sub_cskhachhang_cskhcu" href="javascript:void(0)"><i class="fa fa-phone fa-lg" aria-hidden="true">&nbsp</i>Chăm Sóc Khách Hàng (Cũ)</a></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <a id="sub_btn1_hoadon" href="javascript:void(0)"><i class="fa fa-credit-card fa-lg" aria-hidden="true">&nbsp</i>Hóa Đơn</a>
+                    <ul>
+                      <li><a id="sub_hoadon_hoadondahuy" href="javascript:void(0)"><i class="fa fa-trash-o fa-lg" aria-hidden="true">&nbsp</i>Hóa Đơn Đã Hủy</a></li>
+                    </ul>
+                  </li>
+                <% } %>
+                <% if (permission == 'ketoan') { %>
+                  <li><a id="sub_btn1_users" href="javascript:void(0)"><i class="fa fa-user fa-lg" aria-hidden="true">&nbsp</i>Users</a>
+                    <ul>
+                      <li><a id="sub_users_hocsinhdanghi" href="javascript:void(0)"><i class="fa fa-user-times fa-lg" aria-hidden="true">&nbsp</i>Học Sinh Đã Nghỉ</a></li>
+                      <li><a id="sub_users_hocsinhhocthu" href="javascript:void(0)"><i class="fa fa-user-o fa-lg" aria-hidden="true">&nbsp</i>Học Sinh Học Thử</a></li>
+                    </ul>
+                  </li>
+                  <li><a id="sub_btn1_cskhachhang" href="javascript:void(0)"><i class="fa fa-briefcase fa-lg" aria-hidden="true">&nbsp</i>Chăm Sóc Khách Hàng</a>
+                    <ul>
+                      <li><a id="sub_cskhachhang_phanhoicskh" href="javascript:void(0)"><i class="fa fa-child fa-lg" aria-hidden="true">&nbsp</i>Sổ Liên Lạc</a></li>
+                      <li><a id="sub_cskhachhang_dangkyhangngay" href="javascript:void(0)"><i class="fa fa-database fa-lg" aria-hidden="true">&nbsp</i>Đăng Ký Hàng Ngày</a></li>
+                      <li><a id="sub_cskhachhang_goidangkyhangngay" href="javascript:void(0)"><i class="fa fa-phone fa-lg" aria-hidden="true">&nbsp</i>Gọi Đăng Ký Hàng Ngày</a></li>
+                      <li><a id="sub_cskhachhang_cskhcu" href="javascript:void(0)"><i class="fa fa-phone fa-lg" aria-hidden="true">&nbsp</i>Chăm Sóc Khách Hàng (Cũ)</a></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <a id="sub_btn1_hoadon" href="javascript:void(0)"><i class="fa fa-credit-card fa-lg" aria-hidden="true">&nbsp</i>Hóa Đơn</a>
+                    <ul>
+                      <li><a id="sub_hoadon_hoadondahuy" href="javascript:void(0)"><i class="fa fa-trash-o fa-lg" aria-hidden="true">&nbsp</i>Hóa Đơn Đã Hủy</a></li>
+                    </ul>
+                  </li>
+                <% } %>
+              </ul>
+            </li>
+            <li><a id="btn2_menu"><i class="fa fa-cogs fa-lg" aria-hidden="true">&nbsp</i>Công Cụ</a>
+              <ul>
+                  <li><a id="sub_btn2_quanlycongviec" href="javascript:void(0)"><i class="fa fa-tasks fa-lg" aria-hidden="true">&nbsp</i>Quản Lý Công Việc</a>
+                    <ul>
+                      <li><a id="sub_quanlycongviec_giao" href="javascript:void(0)"><i class="fa fa-share-square-o fa-lg" aria-hidden="true">&nbsp</i>Công Việc Giao</a></li>
+                      <li><a id="sub_quanlycongviec_nhan" href="javascript:void(0)"><i class="fa fa-check-square-o fa-lg" aria-hidden="true">&nbsp</i>Công Việc Nhận</a></li>
+                    </ul>
+                  </li>
+                <% if (permission == 'admin') { %>                  
+                  <li><a id="sub_btn2_ghidanh" href="javascript:void(0)"><i class="fa fa-user-plus fa-lg" aria-hidden="true">&nbsp</i>Ghi Danh</a></li>
+                  <li><a id="sub_btn2_diemdanh" href="javascript:void(0)">Điểm Danh</a></li>
+                  <li><a id="sub_btn2_bieuphi" href="javascript:void(0)"><i class="fa fa-usd fa-lg" aria-hidden="true">&nbsp</i>Biểu Phí Dịch Vụ</a></li>
+                  <li><a id="sub_btn2_nohocphi" href="javascript:void(0)"><i class="fa fa-th-list fa-lg" aria-hidden="true">&nbsp</i>Nợ Học Phí</a></li>
+                  <li><a id="sub_btn2_hotline" href="javascript:void(0)"><i class="fa fa-phone fa-lg" aria-hidden="true">&nbsp</i>Đường Dây Nóng</a></li>
+                  <li><a id="sub_btn2_xuatfileexcel" href="javascript:void(0)"><i class="fa fa-file-excel-o fa-lg" aria-hidden="true">&nbsp</i>Xuất File Excel</a></li>
+                  <li><a id="sub_btn2_nhapfileexcel" href="javascript:void(0)"><i class="fa fa-file-excel-o fa-lg" aria-hidden="true">&nbsp</i>Nhập File Excel</a></li>
+                <% } %>
+                <% if (permission == 'mod' || permission == 'smod' || permission == 'assistantsmod' || permission == 'ssmod' || permission == 'modtpcl' || permission == 'modtpmar' || permission == 'modcl' || permission == 'modmar') { %>
+                  <% if (permission != 'modtpcl' && permission != 'modtpmar' && permission != 'modcl' && permission != 'modmar') { %>
+                    <li><a id="sub_btn2_ghidanh" href="javascript:void(0)"><i class="fa fa-user-plus fa-lg" aria-hidden="true">&nbsp</i>Ghi Danh</a></li>
+                  <% } %>
+                    <li><a id="sub_btn2_diemdanh" href="javascript:void(0)">Điểm Danh</a></li>
+                  <% if (permission == 'mod' || permission == 'smod' || permission == 'ssmod') { %>
+                    <li><a id="sub_btn2_bieuphi" href="javascript:void(0)"><i class="fa fa-usd fa-lg" aria-hidden="true">&nbsp</i>Biểu Phí Dịch Vụ</a></li>
+                    <li><a id="sub_btn2_nohocphi" href="javascript:void(0)"><i class="fa fa-th-list fa-lg" aria-hidden="true">&nbsp</i>Nợ Học Phí</a></li>
+                  <% } %>
+                  <% if (permission == 'mod' || permission == 'smod' || permission == 'assistantsmod' || permission == 'ssmod' || permission == 'modmar' || permission == 'modtpmar') { %>
+                    <li><a id="sub_btn2_hotline" href="javascript:void(0)"><i class="fa fa-phone fa-lg" aria-hidden="true">&nbsp</i>Đường Dây Nóng</a></li>
+                  <% } %>
+                  <% if (permission == 'mod' || permission == 'smod' || permission == 'ssmod' || permission == 'assistantsmod' || permission == 'modmar' || permission == 'modcl') { %>
+                    <li><a id="sub_btn2_xuatfileexcel" href="javascript:void(0)"><i class="fa fa-file-excel-o fa-lg" aria-hidden="true">&nbsp</i>Xuất File Excel</a></li>
+                  <% } %>
+                  <% if (permission == 'mod' || permission == 'smod' || permission == 'ssmod') { %>
+                    <li><a id="sub_btn2_nhapfileexcel" href="javascript:void(0)"><i class="fa fa-file-excel-o fa-lg" aria-hidden="true">&nbsp</i>Nhập File Excel</a></li>
+                  <% } %>
+                <% } %>
+                <% if (permission== 'marketer' || permission== 'cskh' || permission== 'tbmanhvan' || permission== 'tbmvanhoa') { %>
+                    <li><a id="sub_btn2_diemdanh" href="javascript:void(0)">Điểm Danh</a></li>
+                    <% if (permission== 'marketer') { %>
+                    <% } %>
+                    <% if (permission== 'cskh') { %>
+                      <li><a id="sub_btn2_hocsinhcanchamsoc" href="javascript:void(0)">Học Sinh Cần Chăm Sóc</a></li>
+                    <% } %>
+                <% } %>
+                <% if (permission == 'giaovien') { %>
+                    <li><a id="sub_btn2_thoikhoabieu" href="javascript:void(0)">Thời Khóa Biểu</a></li>
+                <% } %>
+                <% if (permission == 'thuquy') { %>
+                  <li><a id="sub_btn2_ghidanh" href="javascript:void(0)"><i class="fa fa-user-plus fa-lg" aria-hidden="true">&nbsp</i>Ghi Danh</a></li>
+                  <li><a id="sub_btn2_nohocphi" href="javascript:void(0)"><i class="fa fa-th-list fa-lg" aria-hidden="true">&nbsp</i>Nợ Học Phí</a></li>
+                  <li><a id="sub_btn2_xuatfileexcel" href="javascript:void(0)"><i class="fa fa-file-excel-o fa-lg" aria-hidden="true">&nbsp</i>Xuất File Excel</a></li>
+                <% } %>
+                <% if (permission == 'ketoan') { %>
+                  <li><a id="sub_btn2_ghidanh" href="javascript:void(0)"><i class="fa fa-user-plus fa-lg" aria-hidden="true">&nbsp</i>Ghi Danh</a></li>
+                  <li><a id="sub_btn2_nohocphi" href="javascript:void(0)"><i class="fa fa-th-list fa-lg" aria-hidden="true">&nbsp</i>Nợ Học Phí</a></li>
+                  <li><a id="sub_btn2_xuatfileexcel" href="javascript:void(0)"><i class="fa fa-file-excel-o fa-lg" aria-hidden="true">&nbsp</i>Xuất File Excel</a></li>
+                <% } %>
+              </ul>
+            </li>
+
+            <!-- Thêm button vao day -->
+            <!-- img/hinhupload/<%= urlhinh %>  -->
+            <li><img src="http://houstontanvinhhiep.ddns.net:5005/Public/img/avatar/<%= urlhinh %>" id="hinh_login"></li>
+            <li><a id="lable_button_nexttoicon" value="<%= username %>"><%= fullname %></a>
+              <ul class="sub_menu_user">
+                <li style="text-align: left;">
+                  <img src="" id="hinh_login2">
+                  <div id="menu_full_name"><%= fullname %></div>
+                  <script>
+                    $('#hinh_login2').attr('src', $('#hinh_login').attr('src').split(' '));
+                  </script>
+                </li>
+                <% if (permission == 'admin') { %>
+                  <li>
+                    <a id="btncalendarsettup" href="javascript:void(0)"><i class="fa fa-calendar-check-o fa-lg" aria-hidden="true">&nbsp</i>Cài đặt Google Calendar</a>
+                  </li>  
+                  <li>
+                    <a id="trangchu_quanlymod" href="javascript:void(0)"><i class="fa fa-user fa-lg" aria-hidden="true">&nbsp</i>Quản Lý Mod</a>
+                  </li>
+                  <li>
+                    <a id="btnspecial_tools" href="javascript:void(0)">Special Tools</a>
+                  </li>
+                <% } %>
+                <li>
+                    <a id="trangchu_thongtincanhan" href="javascript:void(0)"><i class="fa fa-id-card-o fa-lg" aria-hidden="true">&nbsp</i>Thông Tin Cá Nhân</a>
+                </li>
+                <li>
+                  <a id="trangchu_doimatkhau" href="javascript:void(0)"><i class="fa fa-wrench fa-lg" aria-hidden="true">&nbsp</i>Đổi Mật Khẩu</a>
+                  <script type="text/javascript">
+                    $('#trangchu_doimatkhau').on( 'click' , function () {
+                      $('.doimatkhau input[type="password"]')[0].value = '';
+                      $('.doimatkhau input[type="password"]')[1].value = '';
+                      $('.doimatkhau input[type="password"]')[2].value = '';
+                      $('.doimatkhau').show();
+                    } );
+                  </script>
+                </li>
+                <li><a href="/dangxuat"><i class="fa fa-sign-out fa-lg" aria-hidden="true">&nbsp</i>Đăng xuất</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- React tools -->
+      <div id="filterhouston-react"></div>
+      <div id="alert-notification-react"></div>
+      <div id="home-react"></div>
+      <div id="connect-info-react"></div>
+      <!-- React Form -->
+      <div id="form-react"></div>
+      <div id="body-react"></div>
+      <!-- Calendar setting -->
+      <div id="calendarsettup-react"></div>
+      <!-- React Notification -->
+      <div id="form-system-notification"></div>
+      <div id="notification-react"></div>
+      
+      <!-- module reacjs render in server -->
+      <script src="bundle.js"></script>
+    <!-- </div> -->
+  </body>
+</html>

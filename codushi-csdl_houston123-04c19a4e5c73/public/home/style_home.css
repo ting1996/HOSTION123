@@ -1,0 +1,376 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+
+body
+{
+  background: rgba(132, 132, 132, 0.2);
+  margin: 0;
+  padding: 0;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.backgroundimg {
+  background: url("../img/wallpaper.jpg") no-repeat center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.1;
+}
+
+.dulieu {
+  padding-top: 60px; /* 55px */
+  padding-bottom: 25px;
+}
+
+.background_thead, .dulieu thead div{
+  top: calc(60px - 13px);
+}
+
+.dulieu table{
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.dulieu thead {
+  height: 0px;
+  background-color: transparent;
+  color: transparent;
+  white-space: nowrap;
+}
+
+.dulieu thead div{
+  background-color: transparent;
+  position: fixed;
+  color: black;
+  border-left: 1px solid #636363;
+  margin-left: -2px;
+  padding-top: 9px;
+  padding-bottom: 8px;
+}
+
+.background_thead{
+  display: none;
+  position: fixed;
+  background-color: #ffe7b8;
+  height: 35px;
+  width: 100%;
+}
+
+.dulieu tbody {
+  background-color: rgb(173, 173, 173);
+}
+
+.dulieu tbody tr:nth-child(even){
+  background-color: #f2f2f2;
+}
+
+.dulieu tbody tr:hover {
+  color: white;
+  background-color: #3399ff;
+}
+
+.dulieu td{
+  padding: 4px;
+  word-wrap : break-word;
+  word-break: break-all;
+}
+
+.dulieu td, th{
+  border-left: 1px solid #636363;
+  border-right: 1px solid #636363;
+}
+
+.dulieu tbody td img{
+  height: 100%;
+  width: 100%;
+  max-height: 80px;
+  max-width: 65px;
+}
+
+.dulieu .isleave {
+  color: white;
+  background-color: rgba(255, 52, 52, 0.4) !important;
+}
+
+.dulieu .tableisseleced {
+  color: white;
+  background-color: #3399ff !important;
+}
+
+.loading,
+.loading2 {
+  top: 0;
+  left: 0;
+  display: none;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+}
+
+.loading {
+  display: block;
+}
+
+.loading .backgroundloading,
+.loading2 .backgroundloading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -100px;
+  margin-left: -100px;
+  width: 200px;
+  height: 200px;
+}
+
+.loading .backgroundloading img,
+.loading2 .backgroundloading img {
+  height: 100%;
+  width: 100%;
+}
+
+.successed_function {
+  top: 0;
+  left: 0;
+  display: none;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+@-webkit-keyframes animatetop {
+    from {opacity:0}
+    to {opacity:1}
+}
+
+@keyframes animatetop {
+    from {opacity:0}
+    to {opacity:1}
+}
+
+.successed_function .backgroundloading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+  width: 100px;
+  height: 100px;
+}
+
+.successed_function .backgroundloading img  {
+  height: 100%;
+  width: 100%;
+}
+
+.khuvucselection {
+  top: 0;
+  left: 0;
+  display: none;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+}
+
+.khuvucselection .backgroundloading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -150px;
+  margin-left: -250px;
+  width: 500px;
+  height: 300px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation: mymove 2s; /* Safari 4.0 - 8.0 */
+  animation: mymove 2s;
+}
+
+/* Add Animation */
+@-webkit-keyframes mymove {
+    from {top:-300px; opacity:0}
+    to {top:50%; opacity:1}
+}
+
+@keyframes mymove {
+    from {top:-300px; opacity:0}
+    to {top:50%; opacity:1}
+}
+
+.khuvucselection .header {
+  top : 0;
+  position: absolute;
+  width: 100%;
+  height: 50px;
+  background-color: #c6552b;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+}
+
+.khuvucselection .header h2{
+  margin-top: 10px;
+  color: white;
+  text-align: center;
+}
+
+.khuvucselection .body {
+  top : 50px;
+  position: absolute;
+  width: 100%;
+  height: 230px;
+  background-color: rgba(249, 231, 224, 0.6);
+}
+
+.khuvucselection .body button {
+  position: absolute;
+  text-align: center;
+  white-space: nowrap;
+  margin: auto;
+  border: none;
+  background-color: transparent;
+  border-radius: 100%;
+  margin-top: 50px;
+  height: 100px;
+  width: 100px;
+}
+
+.khuvucselection .body button:hover {
+  background-color: rgba(142, 0, 30, 0.7);
+  height: 115px;
+  width: 115px;
+  left: -5px;
+  top: -5px;
+}
+
+.khuvucselection .body img {
+  height: 100%;
+  width: 100%;
+}
+
+.khuvucselection .footer {
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+  height: 20px;
+  background-color: #c6552b;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+/*Doi mat khau*/
+
+.doimatkhau {
+  top: 0;
+  left: 0;
+  display: none;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+}
+
+.doimatkhau .backgroundloading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -150px;
+  margin-left: -250px;
+  width: 500px;
+  height: 300px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation: mymove 0.5s ease-out; /* Safari 4.0 - 8.0 */
+  animation: mymove 0.5s ease-out;
+}
+
+/* Add Animation */
+@-webkit-keyframes mymove {
+    from {top:-300px; opacity:0}
+    to {top:50%; opacity:1}
+}
+
+@keyframes mymove {
+    from {top:-300px; opacity:0}
+    to {top:50%; opacity:1}
+}
+
+.doimatkhau .header {
+  top : 0;
+  position: absolute;
+  width: 100%;
+  height: 50px;
+  background-color: #c6552b;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+}
+
+.doimatkhau .header h2{
+  margin-top: 10px;
+  color: white;
+  text-align: center;
+}
+
+.doimatkhau .body {
+  top : 50px;
+  position: absolute;
+  width: 100%;
+  height: 230px;
+  background-color: rgb(249, 231, 224);
+  text-align: left;
+  font-size: 16px;
+}
+
+.doimatkhau .body p {
+  display: inline-flex;
+  margin-left: 20px;
+}
+
+.doimatkhau .body input[type="password"] {
+  display: inline-flex;
+  padding: 5px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  margin-left: 5px;
+  border: none;
+  background: transparent;
+  border-bottom: 1px solid #5e5e5e;
+}
+
+.doimatkhau .body input[type="button"] {
+  margin-top: 5px;
+  border-radius: 8px;
+  padding: 10px;
+  width: 100px;
+  color: #fff;
+  background-color: #7c7e82;
+  border: none;
+  border-radius: 4px;
+  border-bottom: 4px solid #3b3b3d;
+}
+
+.doimatkhau .body input[type="button"]:hover {
+  background-color: #6b2102;
+  border-bottom: 4px solid #3d1200;
+}
+
+.doimatkhau .footer {
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+  height: 20px;
+  background-color: #c6552b;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+}

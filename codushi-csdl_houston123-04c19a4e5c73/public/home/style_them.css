@@ -1,0 +1,204 @@
+/* Form Register */
+.modal-themuser,
+.modal-themgiaovien,
+.modal-themlophoc,
+.modal-themquanly,
+.modal-themchamsockhachhang,
+.modal-themmarketting,
+.modal-danhsachhocsinhtronglop,
+.modal-suadanhsachlophoc,
+.modal-quanlymod {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 3; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: 0 auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 500px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+
+.modal-header {
+  text-align: center;
+  padding: 2px 16px;
+  height: 50px;
+  background-color: #f46c1d;
+  color: white;
+}
+
+.modal-header h2{
+  margin-top: 10px;
+}
+
+.modal-body {
+  padding: 2px 16px;
+  text-align: left;
+  font-size: 16px;
+}
+
+.modal-body ul{
+  padding: 0;
+}
+
+.modal-body img{
+  border: 2px solid #969696;
+  width: 80px;
+  height: 120px;
+  margin-left: 180px;
+}
+
+.modal-body input, select{
+  width: 100%;
+  padding: 4px;
+  margin-top: 2px;
+  margin-bottom: 4px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.modal-body input[type="checkbox"]:disabled {
+  display: none;
+}
+
+.modal-body textarea{
+  padding: 4px;
+  width: 100%;
+  height: 100px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: none;
+  font-size: 16px;
+}
+
+/*Đăng kí môn học*/
+.modal-body div.chonmonhocdangky {
+  margin-top: 10px;
+}
+
+.modal-body div.chonmonhocdangky input{
+  width: auto;
+  margin: auto;
+  margin-top: 10px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+/*Kết thúc*/
+
+.modal-body div.chonhocsinhcholop{
+	margin-top: 10px;
+	height: 300px;
+  overflow-y: scroll;
+  width: 100%;
+}
+
+.modal-body div.chonhocsinhcholop ul{
+  float: left;
+  white-space: nowrap;
+  list-style-type: none;
+	width: 46%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  overflow-x: scroll;
+}
+
+.modal-body div.chonhocsinhcholop a{
+  padding: 4px;
+  text-decoration: none;
+  color: black;
+}
+
+.modal-body div.chonhocsinhcholop a:hover{
+  background-color: #969696;
+}
+
+.modal-footer {
+  padding: 10px 16px;
+  background-color: #f46c1d;
+  height: 35px;
+}
+
+.btncompletedregister {
+  float: right;
+  padding: 6px 25px;
+  color: #fff;
+  background-color: #7c7e82;
+  border: none;
+  border-radius: 4px;
+  border-bottom: 4px solid #3b3b3d;
+}
+
+.btncompletedregister:hover {
+  background-color: #6b2102;
+  border-bottom: 4px solid #3d1200;
+}
+
+.btncancelregister {
+  float: right;
+  padding: 6px 25px;
+  color: #fff;
+  background-color: #7c7e82;
+  border: none;
+  border-radius: 4px;
+  border-bottom: 4px solid #3b3b3d;
+  margin-left: 10px;
+}
+
+.btncancelregister:hover {
+  background-color: #6b2102;
+  border-bottom: 4px solid #3d1200;
+}
+
+.daithem {
+  background-color: rgba(255, 99, 71, 0);
+  height: 200px;
+}
+
+/**
+*Layout them lop hoc & houston calendar
+*/
+
+.modal-themlophoc #main {
+  width: 100%;
+  height: 100%;
+  display: -webkit-flex;
+  display: flex;
+}
+
+.modal-themlophoc #main div:nth-of-type(1) {flex-grow: 1;}
+.modal-themlophoc #main div:nth-of-type(2) {
+  margin-left: 5px;
+  flex-grow: 1;
+}

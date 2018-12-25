@@ -1,0 +1,24 @@
+<div class="doimatkhau">
+  <div class="backgroundloading">
+    <div class="header">
+      <h2>Đổi Mật Khẩu</h2>
+    </div>
+    <div class="body">
+      <p>Mật khẩu cũ:</p><input type="password" name="Mật khẩu cũ" value="" style="margin-top: 20px; width: 355px;"><br>
+      <p>Mật khẩu mới:</p><input type="password" name="Mật khẩu mới" value="" style="width: 342px;"><br>
+      <p>Nhập lại mật khẩu:</p><input type="password" name="Nhập lại mật khẩu" value="" style="width: 317px;"><br>
+      <input type="button" name="" value="Đồng Ý" style="margin-left: 120px;">
+      <input type="button" name="" value="Hủy" style="margin-left: 40px;">
+      <script type="text/javascript">
+        $('.doimatkhau input[value="Hủy"]').on( 'click' , function functionName() {
+          $('.doimatkhau input[type="password"]')[0].value = '';
+          $('.doimatkhau input[type="password"]')[1].value = '';
+          $('.doimatkhau input[type="password"]')[2].value = '';
+          $('.doimatkhau').hide();
+        } );
+      </script>
+    </div>
+    <div class="footer">
+    </div>
+  </div>
+</div>

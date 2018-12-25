@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Quản lý học sinh | Trang Chủ </title>    
+    <script src="lib/jquery.js"></script>
+    <script src="lib/jquery.cookie.js"></script>
+    <script src="socket.io/socket.io.js"></script>
+    <script src="lib/select2/select2.min.js"></script>
+    <script src="lib/n2vi.min.js"></script>
+    <script src="lib/webcam.min.js"></script>
+    <!-- <script src="lib/mudim.js"></script> -->
+    <link rel="shortcut icon" href="img/icon.ico">
+    <link rel="stylesheet" href="lib/select2/select2.min.css"/>
+    <link rel="stylesheet" href="lib/react-select/react-select.css">
+    <link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="home/style_home.css">
+    <link rel="stylesheet" type="text/css" href="home/style_phieuthu.css">
+    <script>
+      if (typeof window.__REACT_DEVTOOLS_GLOBAL_HOOK__ === 'object') {
+          __REACT_DEVTOOLS_GLOBAL_HOOK__.inject = function() {
+            console.log('We locked React DEVTOOLS');
+          };
+      }
+
+      if ( window.location.protocol == 'http:' ) {
+        var router = window.location.href.toString();
+        router = router.replace('http', 'https');
+        window.location.href = router;
+      }
+      window.addEventListener('keydown', (event) => {
+          const keyCode = event.which;
+          if (event.shiftKey
+              && event.ctrlKey
+              && (keyCode == 9 || keyCode == 73 || keyCode == 105)) {
+                  event.preventDefault();
+          }
+      });
+      $.cookie('userid', '<%= username %>');
+    </script>
+  </head>
+  <body>
+    <div class="backgroundimg"></div>
+    <% include loading%>
+    <% include successed%>
+    <% include khuvucselection%>
+    <% include doimatkhau%>
+    <!-- React tools -->
+    <div id="filterhouston-react"></div>
+    <div id="alert-notification-react"></div>
+    <div id="home-react"></div>
+    <div id="connect-info-react"></div>
+    <!-- React Form -->
+    <div id="form-react"></div>
+    <div id="body-react"></div>
+    <!-- Calendar setting -->
+    <div id="calendarsettup-react"></div>
+    <!-- React Notification -->
+    <div id="form-system-notification"></div>
+    <div id="notification-react"></div>
+    <!-- module reacjs render in server -->
+    <script src="bundle.js"></script>
+  </body>
+</html>

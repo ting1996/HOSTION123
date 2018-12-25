@@ -1,0 +1,34 @@
+.menu_right_click_conten{
+  width: 210px;
+  background: #000;
+  color: #fff;
+  position:absolute;
+  z-index: 3;
+  display: none;
+  box-shadow: 0 0 10px #713C3C;
+}
+.menu_right_click_conten ul{
+  list-style: none;
+  padding: 0;
+  margin:0;
+}
+
+.menu_right_click_conten ul button{
+  text-align: left;
+  border: none;
+  width: 100%;
+  padding: 0;
+  background-color: #F04D44;
+  font-weight: bold;
+  color: #fff;
+}
+
+.menu_right_click_conten ul button:hover{
+  background-color: #F7BA4B;
+  color: #444343;
+}
+
+.menu_right_click_conten ul li{
+  width: 88%;
+  padding: 6%;
+}
