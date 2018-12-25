@@ -136,7 +136,10 @@ class Calendar extends React.Component{
 
   callBackDataFormDatabase ( rows, hanhdong, dulieuguive ) {
   }
-
+  componentDidUpdate(preState,preProps)
+  {
+    
+  }
   componentDidMount () {
     let that = this;
     let socket = this.props.socket;
@@ -209,6 +212,8 @@ class Calendar extends React.Component{
   }
 
   localCalendar (batdau, ketthuc, data) {
+    console.log("localCalendar");
+    
     let x = 0;
     let array = [];
     for (let index = 6; index < 24; index++) {
@@ -276,7 +281,7 @@ class Calendar extends React.Component{
 
           for (let index = startrow; index < endrow; index++) {
             if(rowscallback[index] != null)
-              rowscallback[index][index][val['Thứ']] = val['Mã Lớp']+'!'+(endrow-startrow);
+              rowscallback[index][index][val['Thứ']] = val['Mã Lớp']+'!'+(endrow-startrow)+"!"+(index-startrow);
           }
           rowscallback[startrow][startrow][val['Thứ']] = val['Mã Lớp'] + '!'+(endrow-startrow)+'!'+draggable+'!';
         }
@@ -296,7 +301,7 @@ class Calendar extends React.Component{
         console.log(v.thoiluongday+v.giobatdauchuyentoi)
         for(let index = v.giobatdauchuyentoi;index<(parseInt(v.thoiluongday)+parseInt(v.giobatdauchuyentoi));index++){
           if(rowscallback[index] != null)
-                rowscallback[index][index][ngaychuyentoi.getDay()+1] = v.malop+ '!'+v.thoiluongday;
+                rowscallback[index][index][ngaychuyentoi.getDay()+1] = v.malop+ '!'+v.thoiluongday+"!"+(index-parseInt(v.giobatdauchuyentoi));
         }
         rowscallback[v.giobatdauchuyentoi][v.giobatdauchuyentoi][ngaychuyentoi.getDay()+1] = v.malop + '!'+v.thoiluongday+'!true!';
       }
@@ -499,6 +504,7 @@ class Calendar extends React.Component{
             rows: rowscallback,
             isSwitchwClass:true,
             _value:_value,
+            dragging:false,
           };
         });
       }.bind(this),0.2)
@@ -542,7 +548,8 @@ class Calendar extends React.Component{
             _x:locatex,
             _y:locatey,
             rows: rowscallback,
-            isSwitchwClass:false
+            isSwitchwClass:false,
+            dragging:false,
           };
         });
       }.bind(this),0.2)
@@ -555,6 +562,8 @@ class Calendar extends React.Component{
   }
   dragStart(e)
   {
+    console.log(this.state.dragging,"this.state.dragging");
+    
     console.log(e.target.dataset.v.split('!'));
     console.log(e.target.dataset.v.split('!')[1],"e.target.dataset.v.split('!')[1]");
      for(let i = 0;i<e.target.dataset.v.split('!')[1];i++)
@@ -584,21 +593,15 @@ class Calendar extends React.Component{
      let temp = document.createElement("DIV");
      e.dataTransfer.setDragImage(temp, 0, 0);
      let lenght = e.target.dataset.v.split('!')[1];
-     let rows = this.state.rows;
+     let relocatex = parseInt(e.target.dataset.v.split('!')[2]);
+     
      let locatex = parseInt(e.target.dataset.locatex);
      let locatey = parseInt(e.target.dataset.locatey);
+     if(relocatex>=1&&relocatex<=10)
+     {
+       locatex = locatex - relocatex;
+     }
      
-     if(!rows[locatex][locatex][locatey].endsWith("!"))
-      {
-        console.log("true");
-        
-          while(rows[locatex-1][locatex-1][locatey].split("!")[0]==e.target.dataset.v.split('!')[0])
-        {
-          locatex--;
-          if(rows[locatex][locatex][locatey].endsWith("!"))
-            break;
-        }
-      }
      console.log(locatex,"locatex");
      
      setTimeout(function(){ 
@@ -606,7 +609,7 @@ class Calendar extends React.Component{
      let _rowsbackup = JSON.parse(JSON.stringify(rowscallback));
      console.log(rowscallback===_rowsbackup);
      
-     
+     console.log(locatex,"locatex,setTimeout");
     for(let i = 0;i<lenght;i++){
       rowscallback[locatex+i][locatex+i][locatey]+="@";
     }
@@ -621,7 +624,7 @@ class Calendar extends React.Component{
         dragging:true,
       };
     });
-    }.bind(this), 20);
+    }.bind(this), 40);
    
     
     
