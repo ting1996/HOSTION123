@@ -1,0 +1,16 @@
+.body {
+    /* position: absolute;
+    width: 100%;
+    top: 47.5px; */
+    /* margin-bottom: 47.5px; */
+}
+
+.body select,
+.body input {
+    padding: 6px;
+    width: 100%;
+    border: 1px solid rgb(204, 204, 204);
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}

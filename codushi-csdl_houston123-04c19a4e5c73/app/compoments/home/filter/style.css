@@ -1,0 +1,72 @@
+.background {
+    position: absolute;
+    width: 100%;
+    background-color: #fff;
+}
+
+.filters {
+    display: flex;
+    /* flex-wrap: wrap; */
+    /* justify-content: center; */
+    overflow-x: auto;
+}
+
+.child {
+    padding: 5px 10px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;    
+}
+
+.button {
+    border-radius: 4px;
+    background-color: #f46c1d;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 16px;
+    padding: 8px;
+    width: fit-content;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+    user-select: none;
+}
+  
+.button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+}
+  
+.button a {
+    right: -20px;
+    opacity: 0;
+    transition: 0.5s;
+} 
+  
+.button:hover span {
+    padding-right: 15px;
+}
+
+.button:hover a {
+    opacity: 1;
+    right: 0;
+}
+
+.close {
+    color: white;
+    font-weight: bold;
+    width: 100%;
+    background-color: #0747a6;
+    bottom: 0;
+    text-align: center;
+    border-bottom: 1px solid #888;
+    user-select: none;
+}
+
+.close:active {
+    text-shadow: 0 0 4px #535353;
+}

@@ -1,0 +1,34 @@
+.rows {
+    display: grid;
+    grid-template-columns: 40px auto 150px 100px 100px 40px;
+}
+
+.rows:hover {
+    background: #3399ff !important;
+}
+
+.header {
+    display: grid;
+    grid-template-columns: 40px auto 150px 100px 100px 40px;
+    font-weight: bold;
+    overflow-y: scroll;
+    background: lightslategrey;
+}
+
+
+.rows div,
+.header div {
+    border-right: 1px solid #888;
+    border-bottom: 1px solid #888;
+}
+
+.baocaorows {
+    display: grid;
+    grid-template-columns: 30% 60% 10%;
+    border: 1px solid #888;
+    margin: 5px 5px;
+}
+
+.baocaorows:hover {
+    background: #3399ff !important;
+}

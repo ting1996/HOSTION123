@@ -1,0 +1,49 @@
+(node:11940) UnhandledPromiseRejectionWarning: Error: Something failed
+    at Promise (C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\server.js:1322:11)
+    at new Promise (<anonymous>)
+    at C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\server.js:1321:3
+    at Layer.handle [as handle_request] (C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\node_modules\express\lib\router\route.js:137:13)
+    at Route.dispatch (C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\node_modules\express\lib\router\route.js:112:3)
+    at Layer.handle [as handle_request] (C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\node_modules\express\lib\router\index.js:281:22
+    at Function.process_params (C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\node_modules\express\lib\router\index.js:335:12)
+    at next (C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\node_modules\express\lib\router\index.js:275:10)
+(node:11940) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 1)
+(node:11940) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+(node:11940) UnhandledPromiseRejectionWarning: Error: Something failed
+    at Promise (C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\server.js:1322:11)
+    at new Promise (<anonymous>)
+    at C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\server.js:1321:3
+    at Layer.handle [as handle_request] (C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\node_modules\express\lib\router\route.js:137:13)
+    at Route.dispatch (C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\node_modules\express\lib\router\route.js:112:3)
+    at Layer.handle [as handle_request] (C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\node_modules\express\lib\router\index.js:281:22
+    at Function.process_params (C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\node_modules\express\lib\router\index.js:335:12)
+    at next (C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\node_modules\express\lib\router\index.js:275:10)
+(node:11940) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 2)
+(node:11940) UnhandledPromiseRejectionWarning: Error: Something failed
+    at Promise (C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\server.js:1322:11)
+    at new Promise (<anonymous>)
+    at C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\server.js:1321:3
+    at Layer.handle [as handle_request] (C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\node_modules\express\lib\router\route.js:137:13)
+    at Route.dispatch (C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\node_modules\express\lib\router\route.js:112:3)
+    at Layer.handle [as handle_request] (C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\node_modules\express\lib\router\index.js:281:22
+    at Function.process_params (C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\node_modules\express\lib\router\index.js:335:12)
+    at next (C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\node_modules\express\lib\router\index.js:275:10)
+(node:11940) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 3)
+(node:11940) UnhandledPromiseRejectionWarning: Error: Something failed
+    at Promise (C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\server.js:1322:11)
+    at new Promise (<anonymous>)
+    at C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\server.js:1321:3
+    at Layer.handle [as handle_request] (C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\node_modules\express\lib\router\route.js:137:13)
+    at Route.dispatch (C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\node_modules\express\lib\router\route.js:112:3)
+    at Layer.handle [as handle_request] (C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\node_modules\express\lib\router\index.js:281:22
+    at Function.process_params (C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\node_modules\express\lib\router\index.js:335:12)
+    at next (C:\Users\johnd\Dropbox\SERVER-QUANLYHOCSINH\node_modules\express\lib\router\index.js:275:10)
+(node:11940) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 4)

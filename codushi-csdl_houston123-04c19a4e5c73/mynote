@@ -1,0 +1,1 @@
+CONVERT_TZ(CURDATE(), @@session.time_zone,\'+07:00\')

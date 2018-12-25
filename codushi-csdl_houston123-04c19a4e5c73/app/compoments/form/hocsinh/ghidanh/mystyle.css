@@ -1,0 +1,41 @@
+.button {
+    width: auto !important;
+    height: 36px !important;
+    background: white !important;
+    color: black !important;
+    border: 1px solid !important;
+}
+
+.dongy {
+    width: 100% !important;
+    background: lightblue !important;
+}
+
+.huy {
+    width: 100% !important;
+    background: #ffabab !important;
+}
+
+.buttonHasClass {
+    background: lightblue !important;
+}
+
+.button:hover {
+    background: gray !important;
+}
+
+.selectGhiDanh .buttonSelect {
+    text-align: center;
+    padding: 5px 16px;
+    margin: 10px;
+    font-weight: bold;
+}
+
+.selectGhiDanh .buttonSelect div {
+    border-radius: 20px;
+    transition: background-color 0.3s;
+}
+
+.selectGhiDanh .buttonSelect:hover div{
+    background: rgba(142, 0, 30, 0.7);
+}

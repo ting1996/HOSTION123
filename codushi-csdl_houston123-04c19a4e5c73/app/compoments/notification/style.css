@@ -1,0 +1,116 @@
+.container {
+  height: 100%;
+}
+
+.dailynotification_background {
+  position: fixed;
+  top: 0;
+  height: 100%;
+  right: -400px;
+  width: 400px;
+  z-index: 2;
+  transition: 0.3s;
+  background: #ffb13dc0;
+}
+
+.dailynotification_contents {
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+}
+
+.dailynotification_button_outside {
+
+}
+
+.dailynotification_button_outside .btnshowhide {
+  position: absolute;
+  bottom: 55px;
+  left: -40px;
+  background: #20b2aa6b;
+  color: white;
+  padding: 10px 11px;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  box-shadow: -1px 1px 8px rgba(136, 136, 136, 0.56);
+}
+
+.dailynotification_button_outside .btnshowhide:hover {
+  background: lightseagreen;
+}
+
+.dailynotification_notes {
+  margin: 5px;
+  margin-top: 20px;
+}
+
+.dailynotification_notes:first-child {
+  margin-top: 5px;
+}
+
+.dailynotification_notes .header {
+  padding: 13px 0px;
+  text-align: center;
+  font-size: large;
+  background: #343a40;
+  color: white;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  cursor: default;
+}
+
+.dailynotification_notes .header:hover {
+  background: #666;
+}
+
+.dailynotification_notes .body {
+  background: whitesmoke;
+  margin-bottom: 5px;
+  padding: 5px 0px;
+}
+
+.dailynotification_notes .body:last-child {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.dailynotification_notes .showmore {
+  background: #0000006b;
+  color: white;
+  border-radius: 20px;
+  padding: 5px 10px;
+  cursor: pointer;
+  width: fit-content;
+  transition: 0.2s;
+}
+
+.dailynotification_notes .showmore:hover {
+  background: #000000a8;
+  font-weight: bold;
+}
+
+@media only screen and (max-width: 1000px) {
+  .container {
+    position: fixed;
+    background: #252525b0;
+    width: 100%;
+    right: -100%;
+    top: 0;
+  }
+
+  .dailynotification_button_outside .btnshowhide {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .dailynotification_background {
+    width: 250px;
+    right: -100%;
+  }
+  
+  .dailynotification_notes .header {
+    padding: 10px 0px;
+    font-size: medium;
+  }
+}

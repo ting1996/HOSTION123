@@ -1,0 +1,51 @@
+.header {
+    /* background: #ffe7b8; */
+    background: #0747a6;
+    color: white;
+    font-weight: bold;
+    user-select: none;
+}
+
+.header > div {
+    padding: 5px;
+    border-right: 1px solid #888;
+}
+
+.header > div:last-child {
+    border-right: 0px;
+}
+
+.row > div {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border-right: 1px solid #888;
+    background-color: inherit;
+}
+
+.row > div > span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.row > div:last-child {
+    border-right: 0px;
+}
+
+.row:nth-child(odd) {
+    background-color: rgb(173, 173, 173);
+}
+
+.parent:nth-child(odd){
+    background-color: rgb(251, 210, 88);
+}
+  
+.row:nth-child(even){
+    background-color: #f2f2f2;
+}
+
+.row:hover {
+    color: white;
+    background-color: #3399ff;
+}

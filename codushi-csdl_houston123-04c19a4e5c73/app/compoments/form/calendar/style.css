@@ -1,0 +1,210 @@
+.tr {
+    display: grid;
+    grid-template-columns: 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;
+    width: 100%;
+    height: 15px;
+    font-size: 12px;
+    /* float: left; */
+}
+
+.tr:first-child {
+    height: 40px;
+    font-size: inherit;
+}
+.trshadow
+{
+    display: grid;
+    grid-template-columns: 12.5%;
+    width: 65%;
+    height: 15px;
+    font-size: 12px;
+}
+.column,
+.fistrow {
+    /* width: 11.9%; */
+    height: 100%;
+    text-align: center;
+    color: #666;
+    background-color: #ddd;
+    border: none;
+    border-left: 1px solid #888;
+    float: left;
+}
+
+.column {
+    padding-top: 5px;
+    margin: 0;
+    border-top: 1px solid #888;
+}
+
+.row,
+.fistrow,
+{
+    margin: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.rowshadow
+{
+    height: 100%;
+    color: #777;
+    background: #eee;
+    border: none;
+    border-left: 1px solid #888;
+    border-top: 1px solid #888;
+    white-space: normal;
+    word-wrap: break-word;
+    float: left;
+    cursor: pointer;
+}
+.row
+{
+    /* width: 11.9%; */
+    height: 100%;
+    color: #777;
+    background: #eee;
+    border: none;
+    border-left: 1px solid #888;
+    border-top: 1px solid #888;
+    white-space: normal;
+    word-wrap: break-word;
+    float: left;
+    cursor: pointer;
+}
+
+
+.column:last-child,
+.row:last-child
+{
+    border-right: 1px solid #888;
+}
+
+.rowisbusy
+{
+    background-color: #e9ccf9;
+    border-top: 1px solid #e9ccf9;
+    color: blue !important;
+    font-weight: bold;
+    white-space: nowrap;
+}
+.rowisselected
+{
+    background-color: #F42851 !important;
+}
+.covertext {
+    border-top: 5px solid #7200b5;
+    position: relative;
+}
+
+.hover {
+    background-color: #f46c1d;
+}
+
+.error {
+    width: 100%;
+    height: 100%;
+    color: white;
+    font-size: 20px;
+    border: red solid 2px;
+    border-radius: 20px;
+    background-color: rgb(255, 0, 0);
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+.error p {
+    margin: 20px 20px 20px 20px;
+}
+
+.error input[type="button"]{
+    width: 80%;
+}
+
+/*-----Setting Calendar-----*/
+.backgroundsettup {
+    position: fixed;
+    z-index: 3;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.backgroundsettup :global(.settup_body) {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -150px;
+    margin-left: -250px;
+    width: 500px;
+    height: 300px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation: mymove 0.5s ease-out; /* Safari 4.0 - 8.0 */
+    animation: mymove 0.5s ease-out;
+}
+  
+/* Add Animation */
+@-webkit-keyframes mymove {
+    from {top:-300px; opacity:0}
+    to {top:50%; opacity:1}
+}
+
+@keyframes mymove {
+    from {top:-300px; opacity:0}
+    to {top:50%; opacity:1}
+}
+
+.backgroundsettup :global(.header) {
+    top : 0;
+    position: absolute;
+    width: 100%;
+    height: 50px;
+    background-color: #c6552b;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+}
+
+.backgroundsettup :global(.header) h2{
+    margin-top: 10px;
+    color: white;
+    text-align: center;
+}
+
+.backgroundsettup :global(.header) img{
+    height: 45px;
+    width: 45px;
+    margin: 0;
+    margin-top: 5px;
+    margin-left: 30px;
+    float: left;
+    margin-right: -75px;
+}
+
+.backgroundsettup :global(.body) {
+    top : 50px;
+    position: absolute;
+    width: 100%;
+    height: 230px;
+    background-color: rgb(249, 231, 224);
+}
+
+.backgroundsettup :global(.body) input[type="button"] {
+    height: 30px;
+}
+
+.backgroundsettup :global(.body) input[type="button"]:hover {
+    background-color: rgba(142, 0, 30, 0.7);
+}
+
+.backgroundsettup :global(.footer) {
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    background-color: #c6552b;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+}

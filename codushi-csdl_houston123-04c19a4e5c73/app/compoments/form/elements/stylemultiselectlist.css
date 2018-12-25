@@ -1,0 +1,10 @@
+.options {
+    padding: 5px 15px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.options:hover {
+    background: #007eff;
+    color: white;
+}

@@ -1,0 +1,30 @@
+.form {
+    font-size: 1.25rem;
+    color: #0f3c4b;
+    background-color: #c8dadf;
+    position: relative;
+    padding: 50px 20px;
+    outline: 2px dashed #92b0b3;
+    outline-offset: -10px;
+    text-align: center;
+    -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
+    transition: outline-offset .15s ease-in-out, background-color .15s linear;
+}
+
+.input {
+    display: none;
+}
+
+.is_drag_over {
+    outline-offset: -20px;
+    outline-color: #c8dadf;
+    background: white;
+}
+
+.selectfile:hover {
+    cursor: pointer;
+}
+
+.selectfile:hover .choose{
+    color: #39bfd3;
+}

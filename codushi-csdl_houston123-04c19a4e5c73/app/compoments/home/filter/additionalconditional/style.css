@@ -1,0 +1,11 @@
+.container {
+    
+}
+
+.item{
+    padding: 5px 10px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+}

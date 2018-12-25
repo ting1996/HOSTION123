@@ -1,0 +1,50 @@
+.menu {
+
+}
+
+.option {
+    text-align: left;
+    padding: 17px 0;
+    padding-left: 20px;
+    font-size: larger;
+}
+
+.option:hover {
+    background: #c2e0ff;
+    color: blue;
+}
+
+.selected {
+    text-align: left;
+    padding: 17px 0;
+    padding-left: 20px;
+    font-size: larger;
+    background: #007eff;
+    color: white;
+}
+
+.content {
+    box-shadow: -2px 0px 8px -3px #ccc;
+    border-left: 0.5px solid #ccc;
+}
+
+.tabContent {
+    width: 100%;
+    height: 700px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.tabContent input {
+    padding: 4px;
+    width: 100%;
+    border: 1px solid rgb(204, 204, 204);
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.editBox {
+    grid-column-start: 1;
+    grid-column-end: 7;
+}

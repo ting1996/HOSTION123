@@ -1,0 +1,98 @@
+.notification-note {
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid #44198e;
+    border-radius: 5px;
+    border-bottom: 30px solid #44198e;
+    padding-bottom: 5px;
+  }
+  
+  .notification-note-can {
+    border: 1px solid #e2c800;
+    border-bottom: 30px solid #e2c800;
+  }
+  
+  .notification-note-khancap {
+    border: 1px solid red;
+    border-bottom: 30px solid red;
+  }
+  
+  .notification-note-khongcan {
+    border: 1px solid #0078e2;
+    border-bottom: 30px solid #0078e2;
+  }
+  
+  .notification-note input[type="button"] {
+    position: relative;
+    float: right;
+    top: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 5px;
+  }
+  
+  .notification-list {
+    position: fixed;
+    background-color: #fff;
+    width: 300px;
+    border: 3px solid #8e001e;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    right: 20px;
+    border-top: 40px solid #8e001e;
+    top: calc(100% - 65px);
+    z-index: 1;
+    bottom: 24px;
+    -webkit-transition: top 0.5s ease-out;
+    transition: top 0.5s ease-out;
+  }
+  
+  .notification-list:hover {
+    top: calc(100% - 370px);
+  }
+  
+  .notification-list
+  .notification-header 
+  h1 {
+    padding: 0;
+    margin: 0;
+    margin-top: -30px;
+    padding-bottom: 5px;
+    text-align: center;
+    width: 100%;
+    font-size: 20px;
+    color: white;
+  }
+  
+  .notification-list 
+  .notification-header 
+  img[alt="notification-icon"] {
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    margin-top: -34px;
+    margin-left: 25px;
+    border: 1px solid #000;
+    border-radius: 100%;
+  }
+  
+  .notification-list 
+  .notification-header 
+  a {
+    position: absolute;
+    margin-top: -45px;
+    margin-left: 48px;
+    border: 1px solid Tomato;
+    background-color: Tomato;
+    padding: 2px;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+  }
+  
+  .notification-list 
+  .notification-body {
+    margin-top: 3px;
+    max-height: 300px;
+    overflow-y: auto;
+  }

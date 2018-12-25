@@ -1,0 +1,78 @@
+.container {
+    height: 100%;
+    z-index: 2;
+}
+
+.background {
+    color: white;
+    user-select: none;
+    background: #f46c1d;
+    height: inherit;
+    overflow-y: auto;
+}
+
+.branch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 0px;
+}
+
+.root {
+
+}
+
+.root .title {
+    border-bottom: 1px solid;
+}
+
+.root > div {
+    padding: 5px;
+}
+
+.root .button {
+    margin: 5px;
+    padding: 3px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.root .button:hover {
+    background: #2525252e;
+}
+
+.listChildButton {
+    display: none;
+    position: absolute;
+    margin-top: -5px;
+    margin-left: 20px;
+    background: rgba(40, 40, 40, 0.75);
+    box-shadow: 1px 1px 6px 0px rgba(0, 0, 0, 0.65);
+    border-radius: 5px;
+    padding: 2px;
+}
+
+.parentButton:hover .listChildButton {
+    display: block;
+}
+
+.listChildButton .button:hover {
+    background: #ffffff3e;
+}
+
+@media only screen and (max-width: 1000px) {
+    .container {
+        position: absolute;
+        background: #252525b0;
+        width: 100%;
+        left: -100%;
+        top: 0;
+    }
+
+    .background {
+        position: absolute;
+        width: 250px;
+        left: -100%;
+        transition: 0.3s;
+    }
+}

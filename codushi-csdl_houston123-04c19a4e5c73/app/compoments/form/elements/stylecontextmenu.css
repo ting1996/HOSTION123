@@ -1,0 +1,20 @@
+.contextmenu {
+    position: fixed;
+    background: #000;
+    color: #fff;
+    font-weight: bold;
+    z-index: 1;
+    box-shadow: 0 0 10px #713C3C;
+    user-select: none;
+}
+  
+.contextmenu .button {
+    cursor: pointer;
+    padding: 10px 15px;
+    background: #F04D44;
+}
+  
+.contextmenu .button:hover {
+    background-color: #F7BA4B;
+    color: #444343;
+}

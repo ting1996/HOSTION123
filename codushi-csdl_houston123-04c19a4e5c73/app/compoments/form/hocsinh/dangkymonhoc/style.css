@@ -1,0 +1,47 @@
+.button {
+    width: auto;
+    background: white;
+    color: black;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.buttonHasClass {
+    background: cyan;
+}
+
+.forceClass {
+    background: lightgreen;
+}
+
+.button:hover {
+    background: #c2e0ff;
+}
+
+.buttonDelete {
+    display: table;
+    height: 100%;
+    background: #fcb1b1;
+    color: black;
+    border: 1px solid #ccc;
+    border-left: none;
+    cursor: pointer;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.buttonDelete:hover {
+    background: lightcoral;
+}
+
+.dongy {
+    width: 100% !important;
+    background: lightblue !important;
+}
+
+.huy {
+    width: 100% !important;
+    background: #ffabab !important;
+}

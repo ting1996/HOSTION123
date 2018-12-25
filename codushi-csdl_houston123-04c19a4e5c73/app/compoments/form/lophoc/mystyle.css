@@ -1,0 +1,36 @@
+.girdcontainer {
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 40% 60%;
+}
+
+.ulstyle {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #888;
+    height: 370px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.ulstyle > li {
+    padding: 5px;
+    margin: 5px;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.ulstyle > li:not(.inclass) {
+    background: royalblue;
+}
+
+.ulstyle > li:hover {
+    background: skyblue;
+}
+
+.inclass {
+    background: #e14141;
+}

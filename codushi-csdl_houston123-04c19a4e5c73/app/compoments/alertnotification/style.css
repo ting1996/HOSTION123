@@ -1,0 +1,29 @@
+.body {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 4;
+}
+
+.note {
+    width: 300px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+    display: grid;
+    grid-template-columns: 15% 70% 15%;
+    text-align: center;
+}
+
+.warning {
+    background: #f6f6c8;
+}
+
+.error {
+    background: #f3b6b6;
+}
+
+.information {
+    background: #c0eac0;
+}

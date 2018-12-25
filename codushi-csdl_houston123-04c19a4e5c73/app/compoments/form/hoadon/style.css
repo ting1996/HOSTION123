@@ -1,0 +1,10 @@
+.buttonFilter {
+    cursor: pointer;
+    color: #8e001e;
+    transition: 0.2s;
+}
+
+.buttonFilter:hover {
+    color: #f46c1d;
+    font-size: xx-large;
+}

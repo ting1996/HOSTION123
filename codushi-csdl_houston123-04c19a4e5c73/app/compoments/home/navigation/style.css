@@ -1,0 +1,134 @@
+.container {
+    height: 40px;
+    display: grid;
+    grid-template-columns: 40% 20% 40%;
+    background: rgb(244, 245, 247);
+    user-select: none;
+    white-space: nowrap;
+    box-shadow: 0px 1px 4px #444;
+    position: relative;
+    z-index: 1;
+}
+
+.left {
+    display: flex;
+    justify-content: flex-start;
+    height: inherit;
+}
+
+.right {
+    display: flex;
+    justify-content: flex-end;
+    height: inherit;
+}
+
+.right > div,
+.left > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+}
+
+.left .menu {
+    display: none;
+}
+
+.right .notification {
+    display: none;
+}
+
+.middle {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.middleEffect {
+    display: flex;
+    align-items: center;
+    background: rgb(208, 208, 208);
+    margin: 3px;
+    padding: 3px;
+}
+
+.search {
+    margin-right: 0px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    padding-left: 5px;
+}
+
+.searchInput {
+    width: 50px;
+    margin: 0px 5px;
+    transition: 0.3s;
+}
+
+.searchInput:focus {
+    width: 150px;
+}
+
+.pageStatus {
+    margin-left: 0px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding-right: 10px;
+    font-weight: bold;
+}
+
+.button {
+    margin: 5px;
+    padding: 2px;
+    border-radius: 3px;
+}
+
+.button:hover {
+    background: #2525252e;
+}
+
+.menuUser {
+    /* display: none; */
+    position: absolute;
+    visibility: hidden;
+    background: #f4f5f7;
+    top: 40px;
+    right: 10px;
+    border-radius: 3px;
+    box-shadow: -1px 1px 4px #0000004a;
+    opacity: 0;
+    transform: translateY(-2em);
+    transition: 0.3s;
+}
+
+.userfn {
+}
+
+.userfn:hover .menuUser {
+    /* display: block; */
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0%);
+    /* top: 40px; */
+}
+
+
+@media only screen and (max-width: 1000px) {
+    .left .menu,
+    .right .notification {
+        display: flex;
+    }
+
+    .searchInput {
+        width: 20px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .text {
+        display: none;
+    }
+
+    .searchInput:focus {
+        width: 100px;
+    }
+}

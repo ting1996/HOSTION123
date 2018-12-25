@@ -1,0 +1,45 @@
+.bangdiem > div {
+    padding: 3px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    text-align: left;
+}
+
+.listdata {
+    margin: 5px;
+    padding: 3px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.total {
+    border-top: 1px dashed #ccc;
+    margin-top: 5px;
+    padding-top: 3px;
+}
+
+.button {
+    padding: 3px;
+    margin: 5px;
+    border-radius: 5px;
+    background: gray;
+    cursor: pointer;
+    user-select: none;
+}
+
+.button:hover {
+    box-shadow: inset 2px 2px 2px 0px #ccc;
+}
+
+.button:active {
+    box-shadow: inset 2px 2px 2px 0px #333;
+}
+
+.buttonIsEnable {
+    box-shadow: inset 2px 2px 2px 0px #333;
+    background: #3ea200;
+    color: white;
+}
