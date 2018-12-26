@@ -289,13 +289,14 @@ class Popupsualichday extends React.Component {
             
             this.sualichday.resetCalendar()
         }
+        this.calendar.setState({x:0,y:0,_x:0,_y:0,value:"",_value:"",dragging:false});
         this.props.popupoff();
     }
 
     close () {
         try {
             
-            this.calendar.setState({rows:this.calendar.state._rows});
+            this.calendar.setState({rows:this.calendar.state._rows,x:0,y:0,_x:0,_y:0,dragging:false});
             
             this.props.popupoff();
             

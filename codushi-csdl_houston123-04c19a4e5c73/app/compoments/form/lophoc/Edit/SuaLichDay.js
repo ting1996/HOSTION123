@@ -209,9 +209,10 @@ class SuaLichDay extends React.Component {
                     v.giobatdautruocdo == giobatdautruocdo&&
                     v.malop == malop)
                     return false;
+                console.log()
                 if(v.ngaytruocdo.slice(0,10)==ngaychuyentoi.toLocaleDateString('zh-Hans-CN').replace(/\//g,'-')&&
-                    v.giobatdautruocdo == giobatdauchuyentoi&&
-                    v.malop == this.calendar.state._value.split('!')[0])
+                    v.giobatdautruocdo == giobatdauchuyentoi
+                    )
                     return false;
                 
             }
@@ -309,8 +310,13 @@ class SuaLichDay extends React.Component {
                 }
                 if(isSwitched)
                     continue;
-                console.log(giobatdauchuyentoi)
+                
                 console.log("3")
+                console.log(startrow<=giobatdauchuyentoi)
+                console.log(endrow-1>=giobatdauchuyentoi)
+                console.log(startrow)
+                console.log(giobatdauchuyentoi)
+                console.log(endrow)
                 if(startrow<=giobatdauchuyentoi&&(endrow-1)>=giobatdauchuyentoi)
                 {
                     console.log("3")
@@ -323,6 +329,11 @@ class SuaLichDay extends React.Component {
                 }
                 console.log(giobatdauchuyentoi)
                 console.log("4")
+                console.log(giobatdauchuyentoi<=startrow)
+                console.log(gioketthucchuyentoi-1>=startrow)
+                console.log(giobatdauchuyentoi)
+                console.log(startrow)
+                console.log(gioketthucchuyentoi)
                 if(giobatdauchuyentoi<=startrow&&gioketthucchuyentoi-1>=startrow)
                 {
                     console.log("4")
@@ -497,6 +508,14 @@ class SuaLichDay extends React.Component {
         this.setState({arrayChangedSchedule:array});
         this.resetCalendar()
     }
+    deleteShadow(e)
+    {
+        
+        
+        if(e.nativeEvent.target.dataset.v==null||
+            e.nativeEvent.target.dataset.v=="")
+            this.calendar.onMouseOff()
+    }
     popupon()
     {
         this.setState({showpopup: true});
@@ -588,7 +607,7 @@ class SuaLichDay extends React.Component {
         rangedate += firstday + ' đến ' + lastday;
         let arrayLichChuyen = this.state.arrayChangedSchedule;
         return (
-            <div className={style.formstyle} ref="background">
+            <div  onMouseMove={this.deleteShadow.bind(this)} className={style.formstyle} ref="background">
                 <div className="form_body" ref="body" style={{'width': '1100px'}}>
                     <div className="header">
                         <h2>Thông Tin Lớp Học</h2>
@@ -623,7 +642,7 @@ class SuaLichDay extends React.Component {
                         <div style={{
                             'display': 'grid',
                             'grid-template-columns': '35% 65%'
-                        }}>
+                        }} >
                             <div style={{"padding": "0", }}>
                                 <fieldset style={{"padding": "0", }}>
                                     <legend>Danh Sách Các Lịch Học Đã Chuyển: </legend>

@@ -39,6 +39,8 @@ class Cell extends React.Component {
             phut = 30;
         }
         this.setState({ title: ('0' + gio).slice(-2) + ':' + ('0' + phut).slice(-2) });
+        
+        
     }
 
     componentWillUnmount() {
@@ -48,17 +50,33 @@ class Cell extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (this.props.cellisclick == true && this.state.fisttime == null) {
-            this.setState({
-                classCell: style.row + ' ' + style.hover + ' cellisclick',
-                fisttime: '',
-            });        
+            if(this.props.value==null)
+                this.setState({ classCell: style.row + ' ' + style.hover + ' cellisclick',
+                fisttime: '',});
+            else
+                this.setState({ classCell: style.row + ' ' + style.hoverred + ' cellisclick',
+                fisttime: '',});   
         }
+        if(this.props.cellisclick == false && this.state.fisttime =="")
+            this.setState({ classCell: style.row,
+            fisttime: '1',});
+        if(this.props.cellisclick == true && this.state.fisttime =="1")
+            if(this.props.value==null)
+                this.setState({ classCell: style.row + ' ' + style.hover + ' cellisclick',
+                fisttime: '',});
+            else
+                this.setState({ classCell: style.row + ' ' + style.hoverred + ' cellisclick',
+                fisttime: '',});
+        
     }
 
     onMouseDown () {
         try
         {if (this.state.classCell == style.row && !this.props.disablechoose == true) {
-            this.setState({ classCell: style.row + ' ' + style.hover + ' cellisclick'});
+            if(this.props.value==null)
+                this.setState({ classCell: style.row + ' ' + style.hover + ' cellisclick'});
+            else
+                this.setState({ classCell: style.row + ' ' + style.hoverred + ' cellisclick'});
             if(this.props.onChangeEdit!=null)
             {
                 let array = this.props.calendar.state.arrayEdit;
@@ -71,10 +89,15 @@ class Cell extends React.Component {
             }
         } else {
             this.setState({ classCell: style.row });
+            if(this.props.value!=null)
+            {
+                let arrayDeleteLichChuyen = this.props.calendar.state.arrayDeleteLichChuyen;
+                arrayDeleteLichChuyen.push({x:this.props.tieude,y:this.props.gio})
+                this.props.calendar.setState({arrayDeleteLichChuyen:arrayDeleteLichChuyen})
+            }
             if(this.props.onChangeEdit!=null)
             {
                 let array = this.props.calendar.state.arrayEdit;
-                array = this.props.calendar.state.arrayEdit;
                 array.push({x:this.props.tieude,y:this.props.gio})
                 this.props.calendar.setState({arrayEdit:array})
             }
@@ -83,6 +106,8 @@ class Cell extends React.Component {
         }
         if(this.props.onChangeEdit!=null)
             this.props.onChangeEdit()
+        if(this.props.onChangeDelete!=null)
+            this.props.onChangeDelete()
         isOnClick = true;
 
     }
@@ -91,12 +116,17 @@ class Cell extends React.Component {
         isOnClick = false;
     }
 
-    onMouseEnter () {
+    onMouseEnter (e) {
         if (isOnClick == true && cntrlIsPressed == true && !this.props.disablechoose == true) {
-            this.setState({ classCell: style.row + ' ' + style.hover + ' cellisclick'});
+            if(this.props.value==null)
+                this.setState({ classCell: style.row + ' ' + style.hover + ' cellisclick'});
+            else
+                this.setState({ classCell: style.row + ' ' + style.hoverred + ' cellisclick'});
+            
             
         }
-        this.props.onMouseOff()
+        if(this.props.onMouseEnter!=null)
+        this.props.onMouseEnter(e)
     }
 
     allowDrop(event)
@@ -107,7 +137,10 @@ class Cell extends React.Component {
              
     }
     
+    
     render () {
+        
+        
         return (
             <td             
                 className={this.state.classCell}
@@ -119,6 +152,7 @@ class Cell extends React.Component {
                 onDrop = {this.props.ondrop}
                 data-locatex={this.props.locatex}
                 data-locatey={this.props.locatey}
+                data-v ={this.props.value}
                 
             >{this.props.children}</td>                           
         )

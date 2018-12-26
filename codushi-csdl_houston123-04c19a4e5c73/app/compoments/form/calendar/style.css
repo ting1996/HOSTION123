@@ -99,6 +99,9 @@
 .hover {
     background-color: #f46c1d;
 }
+.hoverred{
+    background-color: #F42851;
+}
 
 .error {
     width: 100%;

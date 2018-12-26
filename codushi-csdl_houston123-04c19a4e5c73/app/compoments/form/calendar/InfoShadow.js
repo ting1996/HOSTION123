@@ -14,6 +14,8 @@ class InfoShadow extends React.Component {
         super(props);
 
         this.state = {
+            x:-100,
+            y:-100,
             
         }
         
@@ -23,6 +25,7 @@ class InfoShadow extends React.Component {
 
     componentDidMount () {
         
+        
     }
 
     componentWillUnmount() {
@@ -30,17 +33,10 @@ class InfoShadow extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-       
-    }
-
-    
-    render () {
-        let ngaybatdau = new Date(this.props.ngaybatdau)
-        let stringngaybatdau =("0"+ngaybatdau.getDate()).slice(-2)+"/"+("0"+(ngaybatdau.getMonth()+1)).slice(-2)+"/"+ngaybatdau.getFullYear();
-        let ngayketthuc = new Date(this.props.ngayketthuc)
-        let stringngayketthuc =("0"+ngayketthuc.getDate()).slice(-2)+"/"+("0"+(ngayketthuc.getMonth()+1)).slice(-2)+"/"+ngayketthuc.getFullYear();
+        
         let x;
         let y;
+
         if(isNumber(this.props.pageXY.X))
         {
             x = this.props.pageXY.X+10;
@@ -58,11 +54,52 @@ class InfoShadow extends React.Component {
                 }
             }
         }
+        if(this.state.x !=x||this.state.y!=y)
+            this.setState({x:x,y:y})
+    }
+    onMouseMove(e)
+    {
+        console.log("onMouseMove");
+        
+        
+        this.props.suicide()
+    }
+    
+    render () {
+        
+        
         return (
-            <div ref='shadow' style = {{"background-color":"white","position":"fixed","top":(y)+"px","left":(x)+"px"}}>
-                <p>{this.props.ten}<br/>
-                    {"Ngày Bắt Đầu: "+stringngaybatdau}<br/>
-                    {"Ngày Kết Thúc: "+stringngayketthuc}</p>
+            <div ref='shadow' style = {{"background-color":"white","position":"fixed","top":(this.state.y)+"px","left":(this.state.x)+"px"}} onMouseMove ={this.onMouseMove.bind(this)}>
+                <p style = {{"margin":0}}>{this.props.ten}<br/></p>
+                {
+                   (function()
+                    {
+                        
+                        
+                        if(this.props.ngaybatdau.split("!").length==1)
+                        {
+                            return(<p>{this.props.ngaybatdau}<br/>
+                                {this.props.ngayketthuc}
+                                </p>   
+                            )
+                        }
+                        else
+                        {
+                            let callback;
+                          
+                            callback=this.props.ngaybatdau.split("!").map(function(v)
+                                    {
+                                        if(v!="")
+                                            return(<li key={v.toString()}>{v}</li>)                      
+                                    }
+                            )
+                            return(<div style = {{"margin":0}}><ul style = {{"margin":0}}>{callback}</ul>
+                            <p style = {{"margin":0}}>{this.props.ngayketthuc}</p>
+                            </div>)                                                         
+                        }
+                    }.bind(this))()
+                }
+                
             </div>                           
         )
     }

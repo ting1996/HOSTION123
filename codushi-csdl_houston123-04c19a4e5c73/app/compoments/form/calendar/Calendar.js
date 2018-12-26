@@ -5,7 +5,9 @@ import classnames from 'classnames';
 import Cell from './Cell.js';
 import Error from './Error.js'
 import InfoShadow from './InfoShadow.js'
+import DragShadow from './DragShadow.js'
 var timeshadow;
+var skip =0;
 class Calendar extends React.Component{
   constructor (props) {
     super(props);
@@ -35,9 +37,11 @@ class Calendar extends React.Component{
       ngayketthuc:'',
       showInfo:false,
       dragging:false,
-      pageXY:{},    
+      arrayDeleteLichChuyen:[],
+      pageXY:{},
+      showDrag:false,
+      callback_dragshadow:[],    
     };
-
     this.resetLich = this.resetLich.bind(this);
     this.emailChange = this.emailChange.bind(this);
     this.callBackGoogleApi = this.callBackGoogleApi.bind(this);
@@ -136,10 +140,7 @@ class Calendar extends React.Component{
 
   callBackDataFormDatabase ( rows, hanhdong, dulieuguive ) {
   }
-  componentDidUpdate(preState,preProps)
-  {
-    
-  }
+
   componentDidMount () {
     let that = this;
     let socket = this.props.socket;
@@ -212,8 +213,6 @@ class Calendar extends React.Component{
   }
 
   localCalendar (batdau, ketthuc, data) {
-    console.log("localCalendar");
-    
     let x = 0;
     let array = [];
     for (let index = 6; index < 24; index++) {
@@ -232,7 +231,7 @@ class Calendar extends React.Component{
       x = x + 2;
     }
     let arrayLichChuyen = this.props.arrayChangedSchedule;
-    console.log(arrayLichChuyen)
+    
     let ngaybatdau = new Date(batdau);
     let ngayketthuc = new Date(ketthuc);
     let thuhientai = ngaybatdau.getDay() + 1;
@@ -281,7 +280,7 @@ class Calendar extends React.Component{
 
           for (let index = startrow; index < endrow; index++) {
             if(rowscallback[index] != null)
-              rowscallback[index][index][val['Thứ']] = val['Mã Lớp']+'!'+(endrow-startrow)+"!"+(index-startrow);
+              rowscallback[index][index][val['Thứ']] = val['Mã Lớp']+ '!'+(endrow-startrow)+"!"+(index-startrow);
           }
           rowscallback[startrow][startrow][val['Thứ']] = val['Mã Lớp'] + '!'+(endrow-startrow)+'!'+draggable+'!';
         }
@@ -292,16 +291,13 @@ class Calendar extends React.Component{
     {
       let ngaychuyentoi = new Date(v.ngaychuyentoi)
       ngaychuyentoi.setHours(0)
-      console.log("5")
-      console.log(ngaychuyentoi)
-      console.log(ngaydautuan)
+      
       if(ngaychuyentoi-ngaydautuan<=518400000&&ngaychuyentoi-ngaydautuan>=0)
       {
-        console.log(v.giobatdauchuyentoi)
-        console.log(v.thoiluongday+v.giobatdauchuyentoi)
+       
         for(let index = v.giobatdauchuyentoi;index<(parseInt(v.thoiluongday)+parseInt(v.giobatdauchuyentoi));index++){
           if(rowscallback[index] != null)
-                rowscallback[index][index][ngaychuyentoi.getDay()+1] = v.malop+ '!'+v.thoiluongday+"!"+(index-parseInt(v.giobatdauchuyentoi));
+                rowscallback[index][index][ngaychuyentoi.getDay()+1] = v.malop+ '!'+v.thoiluongday+ '!'+(index-parseInt(v.giobatdauchuyentoi));
         }
         rowscallback[v.giobatdauchuyentoi][v.giobatdauchuyentoi][ngaychuyentoi.getDay()+1] = v.malop + '!'+v.thoiluongday+'!true!';
       }
@@ -312,7 +308,7 @@ class Calendar extends React.Component{
   }
 
   showFullLocalCalendar (data,malop) {
-    console.log("on change click")
+    
     let x = 0;
     let array = [];
     let arrayLichChuyen = this.props.arrayChangedSchedule;
@@ -333,39 +329,60 @@ class Calendar extends React.Component{
     }
     
     let rowscallback = array; 
-
-    for(let v of arrayLichChuyen)
-    {
-      console.log(v,"v arrayLichChuyen")
-      let ngaychuyentoi = new Date(v.ngaychuyentoi)
-      ngaychuyentoi.setHours(0)
-      let ngaytruocdo = new Date(v.ngaytruocdo)
-      ngaytruocdo.setHours(0)
-      let arrayEdit =[];
-      if(v.malop == malop)
-        arrayEdit = this.state.arrayEdit;
-      for (let index = v.giobatdauchuyentoi; index <(parseInt(v.thoiluongday)+parseInt(v.giobatdauchuyentoi)); index++) 
+    if(malop!=null)
+      for(let v of arrayLichChuyen)
       {
+        
+        let ngaychuyentoi = new Date(v.ngaychuyentoi)
+        ngaychuyentoi.setHours(0)
+        let ngaytruocdo = new Date(v.ngaytruocdo)
+        ngaytruocdo.setHours(0)
+        let arrayEdit =[];
+        if(v.malop == malop)
+          arrayEdit = this.state.arrayEdit;
         let blockable = false;
-        console.log(index,"index")
-        for(let val of arrayEdit)
+        if( new Date($(this.refs.ngaybatdau).val())>ngaychuyentoi||
+            new Date($(this.refs.ngayketthuc).val())<ngaychuyentoi)
+            {
+              blockable =true;
+              break;
+            }
+        for (let index = v.giobatdauchuyentoi; index <(parseInt(v.thoiluongday)+parseInt(v.giobatdauchuyentoi)); index++) 
         {
-          console.log(val,"val arrayEdit");
-          console.log(v.giobatdautruocdo+index-v.giobatdauchuyentoi,"v.giobatdautruocdo+index-v.giobatdauchuyentoi");
-          console.log(ngaytruocdo.getDay()+1,"ngaytruocdo.getDay()+1");
           
           
-          if(val.x == (v.giobatdautruocdo+index-v.giobatdauchuyentoi)&&val.y == ngaytruocdo.getDay()+1)
+          for(let val of arrayEdit)
           {
-            blockable = true;
-            break;
+            
+            
+            
+            if(val.x == (v.giobatdautruocdo+index-v.giobatdauchuyentoi)&&val.y == ngaytruocdo.getDay()+1)
+            {
+              blockable = true;
+              break;
+            }
           }
+          if(blockable) break;
+          
         }
-        console.log(blockable,"blockable")
-        if(rowscallback[index] != null&&!blockable)
-          rowscallback[index][index][ngaychuyentoi.getDay()+1] = "@";
+        for(let val of this.state.arrayDeleteLichChuyen)
+        { 
+          if (val.y == ngaychuyentoi.getDay()+1&&
+              val.x>=v.giobatdauchuyentoi &&
+              val.x<=(parseInt(v.thoiluongday)+parseInt(v.giobatdauchuyentoi)-1))
+            {
+              blockable =true;
+              break;
+            }
+        }
+        if(!blockable)
+          for (let index = v.giobatdauchuyentoi; index <(parseInt(v.thoiluongday)+parseInt(v.giobatdauchuyentoi)); index++) 
+          {
+            if(rowscallback[index] != null&&!blockable)
+            rowscallback[index][index][ngaychuyentoi.getDay()+1] 
+            = v.malop+"!"+v.giobatdautruocdo+"!"+(ngaytruocdo.getDay()+1)+"!"+"@";
+          }
       }
-    }
     for (let val of data) {
       if (val['Giờ Bắt Đầu'] != null && val['Giờ Kết Thúc'] != null) {
         let offset= -6;
@@ -376,6 +393,30 @@ class Calendar extends React.Component{
         let endrow = (parseInt(val['Giờ Kết Thúc'].split(':')[0]) + offset) * 2;
         if (val['Giờ Kết Thúc'].split(':')[1] >= 30) {
           endrow++;
+        }
+        if( (new Date($(this.refs.ngaybatdau).val())<new Date(val['Ngày Bắt Đầu'])&&
+            new Date($(this.refs.ngayketthuc).val())<new Date(val['Ngày Bắt Đầu']))||
+            (new Date($(this.refs.ngaybatdau).val())>new Date(val['Ngày Kết Thúc'])&&
+            new Date($(this.refs.ngayketthuc).val())>new Date(val['Ngày Kết Thúc'])))
+            {
+              continue;
+            }
+        console.log((new Date($(this.refs.ngayketthuc).val())-new Date($(this.refs.ngaybatdau).val())));
+            
+        if((new Date($(this.refs.ngayketthuc).val())-new Date($(this.refs.ngaybatdau).val()))<=518400000)
+        {
+          let ref_ngaybatdau = new Date($(this.refs.ngaybatdau).val())
+          let ref_ngayketthuc = new Date($(this.refs.ngayketthuc).val())
+          if(val["Thứ"]>=ref_ngaybatdau.getDay()+1)
+          {
+            ref_ngaybatdau.setDate(ref_ngaybatdau.getDate()+val["Thứ"]-ref_ngaybatdau.getDay()-1)
+          }
+          else
+          {
+            ref_ngaybatdau.setDate(ref_ngaybatdau.getDate()+7+val["Thứ"]-ref_ngaybatdau.getDay()-1)
+          }
+          if(ref_ngaybatdau>ref_ngayketthuc)
+            continue;
         }
         for (let index = startrow; index < endrow; index++) {
           if(rowscallback[index] != null)
@@ -435,24 +476,62 @@ class Calendar extends React.Component{
       {
         infoLich.ten =v['name'];
         infoLich.lop = v['Lớp'];
-        infoLich.ngaybatdau = v['Ngày Bắt Đầu'];
-        infoLich.ngayketthuc=v['Ngày Kết Thúc'];
+
+        let ngaybatdau = new Date(v['Ngày Bắt Đầu'])
+        let stringngaybatdau =("0"+ngaybatdau.getDate()).slice(-2)+"/"+("0"+(ngaybatdau.getMonth()+1)).slice(-2)+"/"+ngaybatdau.getFullYear();
+        let ngayketthuc = new Date(v['Ngày Kết Thúc'])
+        let stringngayketthuc =("0"+ngayketthuc.getDate()).slice(-2)+"/"+("0"+(ngayketthuc.getMonth()+1)).slice(-2)+"/"+ngayketthuc.getFullYear();
+        infoLich.ngaybatdau = "Ngày Bắt Đầu: "+stringngaybatdau;
+        infoLich.ngayketthuc="Ngày Kết Thúc: "+stringngayketthuc;
         //infoLich
         break;
       }
-    } 
+    }
+    if(e.target.dataset.v.endsWith("@"))
+    {
+      infoLich.lop += " - " +e.target.dataset.v.split('!')[0]
+      infoLich.ngaybatdau="";
+      infoLich.ngayketthuc="";
+      for(let v of this.props.arrayChangedSchedule)
+      {
+        
+       
+        if(v.malop == e.target.dataset.v.split('!')[0]&&
+          v.giobatdautruocdo == e.target.dataset.v.split('!')[1]&&
+          ((new Date (v.ngaytruocdo)).getDay()+1)==e.target.dataset.v.split('!')[2])
+        {
+          let gio = parseInt(parseInt(v.giobatdautruocdo)/2) +6;
+          let phut= parseInt(v.giobatdautruocdo)%2?"30":"00"
+          let giotruocdo = ("0"+gio).slice(-2)+":"+phut
+
+          let gio2 = parseInt(parseInt(v.giobatdauchuyentoi)/2) +6;
+          let phut2= parseInt(v.giobatdauchuyentoi)%2?"30":"00"
+          let giochuyentoi = ("0"+gio2).slice(-2)+":"+phut2
+
+          let ngaybatdau = new Date(v.ngaychuyentoi)
+          let stringngaybatdau =("0"+ngaybatdau.getDate()).slice(-2)+"/"+("0"+(ngaybatdau.getMonth()+1)).slice(-2)+"/"+ngaybatdau.getFullYear();
+          let ngayketthuc = new Date(v.ngaytruocdo)
+          let stringngayketthuc =("0"+ngayketthuc.getDate()).slice(-2)+"/"+("0"+(ngayketthuc.getMonth()+1)).slice(-2)+"/"+ngayketthuc.getFullYear();
+
+          infoLich.ngaybatdau +="Mới: "+ stringngaybatdau +"-"+giochuyentoi+"!";
+          infoLich.ngaybatdau +="Cũ: "+stringngayketthuc+"-"+giotruocdo+"!";
+          
+        }
+      }
+      infoLich.ngayketthuc="Warning: Nếu bỏ sẽ mất hết các lịch thay đổi của ngày này.";
+      
+    }
     this.setState({tenlop:infoLich.ten+" - "+infoLich.lop,ngaybatdau:infoLich.ngaybatdau,ngayketthuc:infoLich.ngayketthuc,showInfo:true})
 
   }
   dropclass(e)
   {
     let value =  this.state.value
-    console.log(e.target.dataset.v);
-    console.log(value);
+    
     
     if(e.target.dataset.v.endsWith("!") && (e.target.dataset.v+'@') != value)
     {
-      console.log(e.target.dataset.v);
+      
       
       e.preventDefault();
       let lenght = this.state.value.split('!')[1];
@@ -504,11 +583,12 @@ class Calendar extends React.Component{
             rows: rowscallback,
             isSwitchwClass:true,
             _value:_value,
-            dragging:false,
+            dragging:true,
+            showDrag:false,
           };
         });
       }.bind(this),0.2)
-      console.log("finish");
+      
       setTimeout(function(){
         this.props.popupon();
       }.bind(this),3)
@@ -531,7 +611,7 @@ class Calendar extends React.Component{
         if(rowscallback[locatex+i][locatex+i][locatey]!=""&&
           !rowscallback[locatex+i][locatex+i][locatey].endsWith("@"))
           {
-            console.log("abc");
+           
             return 0;
           }
           
@@ -549,12 +629,13 @@ class Calendar extends React.Component{
             _y:locatey,
             rows: rowscallback,
             isSwitchwClass:false,
-            dragging:false,
+            dragging:true,
+            showDrag:false,
           };
         });
       }.bind(this),0.2)
       setTimeout(function(){
-        console.log("cba");
+       
         this.props.popupon();
       }.bind(this),3)
     
@@ -562,54 +643,70 @@ class Calendar extends React.Component{
   }
   dragStart(e)
   {
-    console.log(this.state.dragging,"this.state.dragging");
+    console.log("dragStart");
     
-    console.log(e.target.dataset.v.split('!'));
-    console.log(e.target.dataset.v.split('!')[1],"e.target.dataset.v.split('!')[1]");
-     for(let i = 0;i<e.target.dataset.v.split('!')[1];i++)
-     {
-         let temp = document.createElement("TR");
-         let att = document.createAttribute("class");       // Create a "class" attribute
-         att.value = style.trshadow;                           // Set the value of the class attribute
-         temp.setAttributeNode(att);  
-         document.getElementById("dragShadow").appendChild(temp);
-         for(let j=0;j<1;j++)
-         {
-          let yourclass = classnames({
-          [style.rowshadow]: 'rowshadow',
-          [style.rowisbusy]: 'rowisbusy',
-          });
-          let temp1 = document.createElement("TD");
+    
+    //  for(let i = 0;i<e.target.dataset.v.split('!')[1];i++)
+    //  {
+    //      let temp = document.createElement("TR");
+    //      let att = document.createAttribute("class");       // Create a "class" attribute
+    //      att.value = style.trshadow;                           // Set the value of the class attribute
+    //      temp.setAttributeNode(att);  
+    //      document.getElementById("dragShadow").appendChild(temp);
+    //      for(let j=0;j<1;j++)
+    //      {
+    //       let yourclass = classnames({
+    //       [style.rowshadow]: 'rowshadow',
+    //       [style.rowisbusy]: 'rowisbusy',
+    //       });
+    //       let temp1 = document.createElement("TD");
         
-          let att = document.createAttribute("class");       // Create a "class" attribute
-          att.value = yourclass;                           // Set the value of the class attribute
-          temp1.setAttributeNode(att);
+    //       let att = document.createAttribute("class");       // Create a "class" attribute
+    //       att.value = yourclass;                           // Set the value of the class attribute
+    //       temp1.setAttributeNode(att);
           
-          temp.appendChild(temp1);
-          if (i==0)
-          temp1.appendChild(document.createTextNode(e.target.dataset.v.split('!')[0]));
-         }
-     }
-     let temp = document.createElement("DIV");
-     e.dataTransfer.setDragImage(temp, 0, 0);
+    //       temp.appendChild(temp1);
+    //       if (i==0)
+    //       temp1.appendChild(document.createTextNode(e.target.dataset.v.split('!')[0]));
+    //      }
+    //  }
+    //  
+    console.log(e.target.dataset.v.split('!')[1]);
+    console.log(e.target.dataset.v.split('!')[0]);
+    
+    let callback =[];
+    let yourclass = classnames({
+        [style.rowshadow]: 'rowshadow',
+        [style.rowisbusy]: 'rowisbusy',
+        });
+    for(let i = 0;i<e.target.dataset.v.split('!')[1];i++)
+    {
+        let label=""
+        let temp;
+        if (i==0)
+        {
+          let height = 20*parseInt(e.target.dataset.v.split('!')[1])-15
+          label = e.target.dataset.v.split('!')[0];
+          temp = <tr key = {i} class ={yourclass} style={{"height":height+"px"}}>
+                  <th key ={i+10}>{label}</th>            
+              </tr>
+        }
+        
+        callback.push(temp)
+    }
+    console.log(callback);
+    
+      e.dataTransfer.setDragImage(document.getElementById("dragShadow"), 0, 0);
+     console.log("shadow");
      let lenght = e.target.dataset.v.split('!')[1];
-     let relocatex = parseInt(e.target.dataset.v.split('!')[2]);
-     
      let locatex = parseInt(e.target.dataset.locatex);
      let locatey = parseInt(e.target.dataset.locatey);
-     if(relocatex>=1&&relocatex<=10)
-     {
-       locatex = locatex - relocatex;
-     }
      
-     console.log(locatex,"locatex");
-     
-     setTimeout(function(){ 
      let rowscallback = [...this.state.rows];
-     let _rowsbackup = JSON.parse(JSON.stringify(rowscallback));
-     console.log(rowscallback===_rowsbackup);
+     let _rowsbackup = JSON.parse(JSON.stringify(this.state.rows));
+    
      
-     console.log(locatex,"locatex,setTimeout");
+     
     for(let i = 0;i<lenght;i++){
       rowscallback[locatex+i][locatex+i][locatey]+="@";
     }
@@ -622,9 +719,11 @@ class Calendar extends React.Component{
         y:locatey,
         value:rowscallback[locatex][locatex][locatey],
         dragging:true,
+        showDrag:true,
+        callback_dragshadow:callback,
       };
     });
-    }.bind(this), 40);
+    console.log("setstate");
    
     
     
@@ -632,35 +731,45 @@ class Calendar extends React.Component{
   dragging(e)
   {
     
-    let temp = "width: 100%;position:fixed;top:"+(e.nativeEvent.clientY+5)+"px;left:"+(e.nativeEvent.clientX+5-20)+"px";
-    document.getElementById("dragShadow").setAttribute("style",temp)
+    // let temp = "width: 100%;position:fixed;top:"+(e.nativeEvent.clientY+5)+"px;left:"+(e.nativeEvent.clientX+5-20)+"px";
+    // document.getElementById("dragShadow").setAttribute("style",temp)
+    console.log(e.nativeEvent.pageX,e.nativeEvent.pageY);
+    if (skip == 5)
+    {
+      this.setState({pageXY:{X:e.nativeEvent.pageX,Y:e.nativeEvent.pageY}});
+      skip = 0;
+    }
+    skip++
+    
     
   }
   dragEnd(e)
   {
+    console.log("dragEnd");
+    
     document.getElementById("dragShadow").innerHTML="";
     let _rowsbackup = JSON.parse(JSON.stringify(this.state._rows));
     this.setState(function(state, props) {
       return {
         rows: _rowsbackup,
+        showDrag:false,
         dragging:false,
       };
     });
-    
-    
+  }
+   
     
     /* this.setState(function(state, props) {
       return {
         rows:state._rows.slice()
       };
-    }); */
-  }
+    }); */ 
+  
   allowDrop(e)
   {
-    if(e.target.dataset.v.endsWith("!"))
-    {
+    
       e.preventDefault();
-    }
+    
   }
   render () {
     let hide = 'grid';
@@ -689,7 +798,7 @@ class Calendar extends React.Component{
         <div id ="infoShadow" style={{'width': '100%','position':'fixed','top':'0px','left':'0px'}}></div>
         <table id ="dragShadow" style={{'width': '100%','position':'fixed','top':'-100px','left':'-100px'}}>
         </table>
-        <table style={{'width': '100%','-webkit-user-select': 'none'}}>
+        <table   style={{'width': '100%','-webkit-user-select': 'none'}} >
           <tr className={style.tr}>
             {this.state.column.map((e, i) => (
               <th key={i} className={style.column}>{e}</th>
@@ -721,10 +830,11 @@ class Calendar extends React.Component{
                           tieude={index}
                           locatex ={index}
                           locatey = {i}
+                          cellisclick={false}
                           disablechoose={disable_choose} 
                           allowdrop = {allowdrop}
                           ondrop = {this.drop}
-                          onMouseOff = {this.onMouseOff.bind(this)}>
+                          >
                           {v}
                         </Cell>
                       );
@@ -732,13 +842,14 @@ class Calendar extends React.Component{
                       let yourclass;
                       let value;
                       let draggable;
-                      
+                      let locatex;
                       if (!v.endsWith('!')) {
                         yourclass = classnames({
                           [style.row]: 'row',
                           [style.rowisbusy]: 'rowisbusy',
                         });
                         value = null;
+                        locatex = index - parseInt(v.split('!')[2])
                         draggable = "true";
                         if(v.endsWith('@'))
                         {
@@ -757,12 +868,12 @@ class Calendar extends React.Component{
                           [style.covertext]: 'covertext',
                         });
                         value = v.split('!')[0];
-                        
-                        draggable =v.split('!')[2];
+                        locatex =index
+                        draggable ="true";
                       }
-                      if (this.props.action == 'edit' && v.split('!')[0] == this.props.data['Mã Lớp']) {
+                      if (this.props.action == 'edit' && v.split('!')[0] == this.props.data['Mã Lớp']&&!v.endsWith("@")) {
                         return (
-                          <Cell key={i} gio={i} tieude={index} cellisclick={true} onMouseOff = {this.onMouseOff.bind(this)}  onChangeEdit = {this.props.onChangeEdit.bind(this)} calendar ={this}></Cell>
+                          <Cell key={i} gio={i} tieude={index} cellisclick={true}  onChangeEdit = {this.props.onChangeEdit.bind(this)} calendar ={this}></Cell>
                         );
                       }
                       else if(this.props.action == 'd-edit')
@@ -778,7 +889,7 @@ class Calendar extends React.Component{
                           onDrag = {this.dragging}
                           onDragEnd = {this.dragEnd}
                           onDragOver = {this.allowDrop}
-                          data-locatex={index}
+                          data-locatex={locatex}
                           data-locatey={i}
                           data-v={v}
                           onDrop={this.dropclass}
@@ -791,9 +902,23 @@ class Calendar extends React.Component{
                       }
                       else if(this.props.action == 'edit' && v.endsWith('@'))
                       {
+                        
+                        
                         return (
-                          <td key={i} className={yourclass} value={v}>{value}</td>
-                        ); 
+        
+                          
+                        <Cell key={i} 
+                              gio={i} 
+                              tieude={index} 
+                              cellisclick={true} 
+                              data-v ={v} value={v}
+                              onMouseEnter = {this.onMouseEnter.bind(this)}
+                              onChangeDelete = {this.props.onChangeEdit.bind(this)}
+                              onMouseMove = {this.onMouseMove.bind(this)}
+                              calendar={this}
+                              ></Cell>
+                        )
+                         
                       }
                        else {
                         return (
@@ -817,9 +942,20 @@ class Calendar extends React.Component{
                       ten ={this.state.tenlop} 
                       ngaybatdau = {this.state.ngaybatdau}
                       ngayketthuc= {this.state.ngayketthuc}
-                      pageXY = {this.state.pageXY}/>
+                      pageXY = {this.state.pageXY}
+                      suicide ={this.setState.bind(this,{showInfo:false})}/>
                     );
             }
+            if(this.state.showDrag)
+            {
+              
+              return(<DragShadow
+                      pageXY = {this.state.pageXY}
+                      v={this.state.value}
+                      callback ={this.state.callback_dragshadow}
+                      />)
+            }
+
           }.bind(this))()
         }
       </div>;

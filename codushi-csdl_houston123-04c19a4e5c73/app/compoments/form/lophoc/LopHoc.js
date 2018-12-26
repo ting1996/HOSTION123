@@ -7,7 +7,6 @@ import Select from 'react-select';
 import Lop from '../elements/Lop';
 import Button from '../elements/Button';
 var ReactDOM = require('react-dom');
-var lichhoc;
 let time_countdown2 = 0;
 function thongbaothanhcong() {
     $('.successed_function').show();
@@ -58,7 +57,7 @@ class LopHoc extends React.Component {
             hocsinhtronglop: [],
             listidEvent: [],
             maphonghoc: $('.khuvuc').attr('value') + 'P001',
-
+            lichhoc:[],
             malopold: null,
             lopold: null,
             monhocold: null,
@@ -254,8 +253,12 @@ class LopHoc extends React.Component {
             if (dulieuguive != null) {
                 switch (dulieuguive.fn) {
                     case 'form_lophoc_loadLocalCalendar': {
-                        this.calendar.showFullLocalCalendar(rows,this.props.data['Mã Lớp'])
-                        lichhoc = rows;
+                        this.setState({lichhoc:rows})
+                        if(this.props.action == "edit")
+                            this.calendar.showFullLocalCalendar(rows,this.props.data['Mã Lớp'])
+                        else
+                            this.calendar.showFullLocalCalendar(rows,null)
+                        
                     } break;
                     case 'lophoc_danhsachgiaovien': {
                             let options = [];
@@ -468,6 +471,12 @@ class LopHoc extends React.Component {
     }
 
     componentDidMount () {
+        $(this.calendar.refs.ngaybatdau).on( "change", function(){
+            this.resetCalendar()
+        }.bind(this) )
+        $(this.calendar.refs.ngayketthuc).on( "change", function(){
+            this.resetCalendar()
+        }.bind(this) )
         let query;
         window.addEventListener("resize", this.changeSize);
         this.changeSize();
@@ -521,6 +530,8 @@ class LopHoc extends React.Component {
     }
 
     componentWillUnmount() {
+        $(this.calendar.refs.ngaybatdau).off( "change")
+        $(this.calendar.refs.ngayketthuc).off( "change")
         window.removeEventListener("resize", this.changeSize);
         this.props.socket.off('googleapicallback', this.callBackGoogleApi);
         this.props.socket.off('tra-ve-du-lieu-tu-database', this.callBackDataFormDatabase);
@@ -662,7 +673,7 @@ class LopHoc extends React.Component {
     }
     resetCalendar()
     {
-        this.calendar.showFullLocalCalendar(lichhoc,this.props.data['Mã Lớp'])
+        this.calendar.showFullLocalCalendar(this.state.lichhoc,this.props.data['Mã Lớp'])
     }
     onClickChuaCoLop (data, element) {
         let array = this.state.hocsinhchuacolop;
@@ -1040,7 +1051,15 @@ class LopHoc extends React.Component {
             ReactDOM.unmountComponentAtNode(document.getElementById('form-react'));
         }
     }
-
+    deleteShadow(e)
+    {
+        console.log(e.nativeEvent.target.dataset.v==null);
+        console.log(e.target.parentElement.clientWidth);
+        
+        if(e.nativeEvent.target.dataset.v==null||
+            e.nativeEvent.target.dataset.v=="")
+            this.calendar.onMouseOff()
+    }
     close () {
         ReactDOM.unmountComponentAtNode(document.getElementById('form-react'));
     }
@@ -1059,7 +1078,7 @@ class LopHoc extends React.Component {
         }
 
         return (
-            <div className={style.formstyle} ref="background">
+            <div  onMouseMove={this.deleteShadow.bind(this)} className={style.formstyle} ref="background">
                 <div className="form_body" ref="body" style={{'width': '1100px'}}>
                     <div className="header">
                         <h2>{title}</h2>
@@ -1228,7 +1247,7 @@ class LopHoc extends React.Component {
                                     data={this.props.data}
                                     arrayChangedSchedule = {this.state.arrayChangedSchedule}
                                     onChangeEdit = {this.resetCalendar.bind(this)}
-                                    infoLichHoc ={lichhoc}
+                                    infoLichHoc ={this.state.lichhoc}
                                 />
                                 </div>
                             </div>
