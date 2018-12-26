@@ -194,160 +194,295 @@ class SuaLichDay extends React.Component {
     }
     checkDuplicate(mode,malop,ngaytruocdo,giobatdautruocdo,ngaychuyentoi,giobatdauchuyentoi,thoiluongday)
     {
-        
-        if(this.calendar.state.isSwitchwClass&&mode == "mottuan")
-            return true;
-        
-        let thulichhoc = ngaychuyentoi.getDay()
-        for (let v of this.state.arrayChangedSchedule)
+        if(mode =="nhieutuan")
         {
-            if(mode == "nhieutuan")
+            let thulichhoc = ngaychuyentoi.getDay()
+            for (let v of this.state.arrayChangedSchedule)
             {
-                console.log(v.ngaytruocdo.slice(0,10),"v.ngaytruocdo.slice(0,10)")
-                console.log(ngaytruocdo.toISOString().slice(0,10),"ngaytruocdo.toISOString().slice(0,10)")
-                if(v.ngaytruocdo.slice(0,10)==ngaytruocdo.toLocaleDateString('zh-Hans-CN').replace(/\//g,'-')&&
+                //Xem ngày được chuyển ở các tuần khác đã bị chuyển chưa
+                console.log("a");
+                
+                if  (new Date(v.ngaytruocdo.slice(0,10)).getDate() == ngaytruocdo.getDate()&&
+                    new Date(v.ngaytruocdo.slice(0,10)).getMonth() == ngaytruocdo.getMonth()&&
+                    new Date(v.ngaytruocdo.slice(0,10)).getFullYear() == ngaytruocdo.getFullYear()&&
                     v.giobatdautruocdo == giobatdautruocdo&&
                     v.malop == malop)
                     return false;
-                console.log()
-                if(v.ngaytruocdo.slice(0,10)==ngaychuyentoi.toLocaleDateString('zh-Hans-CN').replace(/\//g,'-')&&
+                //
+                console.log("b");
+                if  (new Date(v.ngaytruocdo.slice(0,10)).getDate() == ngaychuyentoi.getDate()&&
+                    new Date(v.ngaytruocdo.slice(0,10)).getMonth() == ngaychuyentoi.getMonth()&&
+                    new Date(v.ngaytruocdo.slice(0,10)).getFullYear() == ngaychuyentoi.getFullYear()&&
                     v.giobatdautruocdo == giobatdauchuyentoi
                     )
                     return false;
-                
-            }
-            console.log(v.ngaychuyentoi)
-            console.log(ngaychuyentoi)
-            if(v.ngaychuyentoi.slice(0,10)==ngaychuyentoi.toLocaleDateString('zh-Hans-CN').replace(/\//g,'-'))
-            {
-                let gioketthucchuyentoi = parseInt(giobatdauchuyentoi)+parseInt(thoiluongday);
-                let vgioketthucchuyentoi = parseInt(v.giobatdauchuyentoi)+ parseInt(v.thoiluongday)
-                console.log(v);
-                console.log(ngaytruocdo.toLocaleDateString('zh-Hans-CN').replace(/\//g,'-'));
-                console.log(giobatdautruocdo)
-                if (v.malop == malop&&giobatdauchuyentoi<=v.giobatdauchuyentoi&&gioketthucchuyentoi-1>=v.giobatdauchuyentoi)
-                    continue;
-                console.log("1")
-                if(v.giobatdauchuyentoi<=giobatdauchuyentoi&&vgioketthucchuyentoi-1>=giobatdauchuyentoi) 
+                    
+                //Nếu ngày chuyển tới trùng với các ngày lịch thay đổi
+                if  (new Date(v.ngaychuyentoi.slice(0,10)).getDate() == ngaychuyentoi.getDate()&&
+                    new Date(v.ngaychuyentoi.slice(0,10)).getMonth() == ngaychuyentoi.getMonth()&&
+                    new Date(v.ngaychuyentoi.slice(0,10)).getFullYear() == ngaychuyentoi.getFullYear())
                 {
+                    let gioketthucchuyentoi = parseInt(giobatdauchuyentoi)+parseInt(thoiluongday);
+                    let vgioketthucchuyentoi = parseInt(v.giobatdauchuyentoi)+ parseInt(v.thoiluongday)
+                    console.log("c");
+                    if (v.malop == malop&&giobatdauchuyentoi<=v.giobatdauchuyentoi&&gioketthucchuyentoi-1>=v.giobatdauchuyentoi)
+                        continue;
                     console.log("1")
-                    console.log(v.giobatdauchuyentoi<=giobatdauchuyentoi)
-                    console.log(vgioketthucchuyentoi>=giobatdauchuyentoi)
-                    console.log(v.giobatdauchuyentoi)
-                    console.log(giobatdauchuyentoi)
-                    console.log(vgioketthucchuyentoi)
-                    return false;
-                }
-                console.log("2")
-                if(giobatdauchuyentoi<=v.giobatdauchuyentoi&&gioketthucchuyentoi-1>=v.giobatdauchuyentoi)
-                {
+                    //Xem có bị trùng giờ không
+                    if(v.giobatdauchuyentoi<=giobatdauchuyentoi&&vgioketthucchuyentoi-1>=giobatdauchuyentoi) 
+                    {
+                        console.log("1")
+                        
+                        return false;
+                    }
                     console.log("2")
-                    console.log(giobatdauchuyentoi<=v.giobatdauchuyentoi)
-                    console.log(gioketthucchuyentoi>=v.giobatdauchuyentoi)
-                    console.log(giobatdauchuyentoi)
-                    console.log(v.giobatdauchuyentoi)
-                    console.log(gioketthucchuyentoi-1)
-                    return false;
-                } 
-            }
-        }
-        
-        thulichhoc = thulichhoc+1
-        for(let val of this.state.lichhoc)
-        {   
-            ngaychuyentoi.setHours(0);
-            if((new Date(val['Ngày Bắt Đầu'])>ngaychuyentoi||new Date(val['Ngày Kết Thúc'])<ngaychuyentoi)&&val['Mã Lớp']==malop)
-            {
-                console.log(val);
-                return false;
-            }
-                   
-            if (val['Thứ'] == thulichhoc)
-            {
-                
-                
-                if(new Date(val['Ngày Bắt Đầu'])>ngaychuyentoi||new Date(val['Ngày Kết Thúc'])<ngaychuyentoi)
-                    continue;
-                
-                var offset = -6;
-                let startrow = (parseInt(val['Giờ Bắt Đầu'].split(':')[0]) + offset) * 2;
-                if (val['Giờ Bắt Đầu'].split(':')[1] >= 30) {
-                startrow++;
+                    if(giobatdauchuyentoi<=v.giobatdauchuyentoi&&gioketthucchuyentoi-1>=v.giobatdauchuyentoi)
+                    {
+                        console.log("2")
+                        return false;
+                    } 
                 }
-                let endrow = (parseInt(val['Giờ Kết Thúc'].split(':')[0]) + offset) * 2;
-                if (val['Giờ Kết Thúc'].split(':')[1] >= 30) {
-                endrow++;
-                }
-                if(mode == "nhieutuan"&&this.calendar.state.isSwitchwClass)
+            }
+            thulichhoc = thulichhoc+1
+            for(let val of this.state.lichhoc)
+            {   
+                ngaychuyentoi.setHours(0);
+                //Nếu quá ngày bắt đầu hoặc kết thúc 
+                if((new Date(val['Ngày Bắt Đầu'])>ngaychuyentoi||new Date(val['Ngày Kết Thúc'])<ngaychuyentoi)&&val['Mã Lớp']==malop)
                 {
-                    console.log("cactuan skip")
-                    console.log(val['Mã Lớp'])
-                    console.log(this.calendar.state._value.split('!')[0])
-                    if(val['Mã Lớp']==this.calendar.state._value.split('!')[0]&&
-                        startrow==giobatdauchuyentoi&&
-                        endrow-startrow==this.calendar.state._value.split('!')[1])
+                    return false;
+                }
+                //Trùng thứ
+                if (val['Thứ'] == thulichhoc)
+                {
+                    
+                    //Nếu quá ngày bắt đầu hoặc kết thúc khác mã lớp
+                    if(new Date(val['Ngày Bắt Đầu'])>ngaychuyentoi||new Date(val['Ngày Kết Thúc'])<ngaychuyentoi)
                         continue;
                     
-                }
-                if (ngaytruocdo.getDay()+1 == val['Thứ']&&
-                    giobatdautruocdo == startrow &&
-                    thoiluongday == endrow-startrow&&
-                    malop == val['Mã Lớp'])
-                {
-                    return true;
-                }
-                let isSwitched = false;
-                console.log(giobatdauchuyentoi)
-                let gioketthucchuyentoi = parseInt(giobatdauchuyentoi)+parseInt(thoiluongday);
-                for(let v of this.state.arrayChangedSchedule)
-                {
-                    if (val['Thứ'] == new Date(v.ngaytruocdo).getDay()+1&&
-                        startrow==v.giobatdautruocdo)
-                    {
-                        isSwitched = true;
-                        break;
+                    var offset = -6;
+                    let startrow = (parseInt(val['Giờ Bắt Đầu'].split(':')[0]) + offset) * 2;
+                    if (val['Giờ Bắt Đầu'].split(':')[1] >= 30) {
+                    startrow++;
                     }
-                }
-                if(isSwitched)
-                    continue;
+                    let endrow = (parseInt(val['Giờ Kết Thúc'].split(':')[0]) + offset) * 2;
+                    if (val['Giờ Kết Thúc'].split(':')[1] >= 30) {
+                    endrow++;
+                    }
+                    let isSkip = false;
+                    ngaychuyentoi.setHours(7);
+                    for(let v of this.state.arrayChangedSchedule)
+                    {
+                        console.log(new Date(v.ngaytruocdo.slice(0,10)) == ngaychuyentoi);
+                        console.log(new Date(v.ngaytruocdo.slice(0,10)));
+                        console.log(ngaychuyentoi);
+                        
+                        
+                        
+                        if(v.malop == val['Mã Lớp']&&
+                            startrow == v.giobatdautruocdo&&
+                            new Date(v.ngaytruocdo.slice(0,10)).getDate() == ngaychuyentoi.getDate()&&
+                            new Date(v.ngaytruocdo.slice(0,10)).getMonth() == ngaychuyentoi.getMonth()&&
+                            new Date(v.ngaytruocdo.slice(0,10)).getFullYear() == ngaychuyentoi.getFullYear())
+                            {
+                                console.log("aaaaaaaaaaaaa");
+                                
+                                isSkip = true;
+                                break;
+                            }
+                    }
+                    if(isSkip)
+                        continue;
+
+                    if(this.calendar.state.isSwitchwClass)
+                    {
+                        if(val['Mã Lớp']==this.calendar.state._value.split('!')[0]&&
+                            startrow==giobatdauchuyentoi&&
+                            endrow-startrow==this.calendar.state._value.split('!')[1])
+                            continue;
+                        
+                    }
+                    //Nếu chỉnh lịch trên lịch trước đó
+                    if (ngaytruocdo.getDay()+1 == val['Thứ']&&
+                        giobatdautruocdo == startrow &&
+                        thoiluongday == endrow-startrow&&
+                        malop == val['Mã Lớp'])
+                    {
+                        return true;
+                    }
+                    
+                    let gioketthucchuyentoi = parseInt(giobatdauchuyentoi)+parseInt(thoiluongday);
+                    //Xem 
+                    if(this.calendar.state.isSwitchwClass) 
+                    {
+                        let isSwitched = false;
+                        for(let v of this.state.arrayChangedSchedule)
+                        {
+                            if (val['Thứ'] == new Date(v.ngaytruocdo).getDay()+1&&
+                                startrow==v.giobatdautruocdo)
+                            {
+                                isSwitched = true;
+                                break;
+                            }
+                        }
+                        if(isSwitched)
+                            continue;
+                    }
+                     //Xem các lịch có trùng nhau không   
+                    console.log("3")
+                    if(startrow<=giobatdauchuyentoi&&(endrow-1)>=giobatdauchuyentoi)
+                    {
+                        console.log("3")
+                        return false;
+                    }
+                    console.log("4")
+                    if(giobatdauchuyentoi<=startrow&&gioketthucchuyentoi-1>=startrow)
+                    {
+                        console.log("4")
+                        return false;
+                    }       
+                }   
+            }
+            return true;
+        }
+        else
+        {    
+            if(this.calendar.state.isSwitchwClass&&mode == "mottuan")
+                return true;
+            
+            let thulichhoc = ngaychuyentoi.getDay()
+            for (let v of this.state.arrayChangedSchedule)
+            {
                 
-                console.log("3")
-                console.log(startrow<=giobatdauchuyentoi)
-                console.log(endrow-1>=giobatdauchuyentoi)
-                console.log(startrow)
-                console.log(giobatdauchuyentoi)
-                console.log(endrow)
-                if(startrow<=giobatdauchuyentoi&&(endrow-1)>=giobatdauchuyentoi)
+                if  (new Date(v.ngaytruocdo.slice(0,10)).getDate() == ngaytruocdo.getDate()&&
+                    new Date(v.ngaytruocdo.slice(0,10)).getMonth() == ngaytruocdo.getMonth()&&
+                    new Date(v.ngaytruocdo.slice(0,10)).getFullYear() == ngaytruocdo.getFullYear()&&
+                    v.giobatdautruocdo == giobatdautruocdo&&
+                    v.malop == malop)
+                    return false;
+                
+                if  (new Date(v.ngaytruocdo.slice(0,10)).getDate() == ngaychuyentoi.getDate()&&
+                    new Date(v.ngaytruocdo.slice(0,10)).getMonth() == ngaychuyentoi.getMonth()&&
+                    new Date(v.ngaytruocdo.slice(0,10)).getFullYear() == ngaychuyentoi.getFullYear()&&
+                    v.giobatdautruocdo == giobatdauchuyentoi
+                    )
+                    return false;
+
+                if  (new Date(v.ngaychuyentoi.slice(0,10)).getDate() == ngaychuyentoi.getDate()&&
+                    new Date(v.ngaychuyentoi.slice(0,10)).getMonth() == ngaychuyentoi.getMonth()&&
+                    new Date(v.ngaychuyentoi.slice(0,10)).getFullYear() == ngaychuyentoi.getFullYear())
                 {
+                    let gioketthucchuyentoi = parseInt(giobatdauchuyentoi)+parseInt(thoiluongday);
+                    let vgioketthucchuyentoi = parseInt(v.giobatdauchuyentoi)+ parseInt(v.thoiluongday)
+                    if (v.malop == malop&&giobatdauchuyentoi<=v.giobatdauchuyentoi&&gioketthucchuyentoi-1>=v.giobatdauchuyentoi)
+                        continue;
+                    if(v.giobatdauchuyentoi<=giobatdauchuyentoi&&vgioketthucchuyentoi-1>=giobatdauchuyentoi) 
+                    {
+                        return false;
+                    }
+                    if(giobatdauchuyentoi<=v.giobatdauchuyentoi&&gioketthucchuyentoi-1>=v.giobatdauchuyentoi)
+                    {
+                        return false;
+                    } 
+                }
+            }
+            
+            thulichhoc = thulichhoc+1
+            for(let val of this.state.lichhoc)
+            {   
+                ngaychuyentoi.setHours(0);
+                if((new Date(val['Ngày Bắt Đầu'])>ngaychuyentoi||new Date(val['Ngày Kết Thúc'])<ngaychuyentoi)&&val['Mã Lớp']==malop)
+                {
+                    console.log(val);
+                    return false;
+                }
+                    
+                if (val['Thứ'] == thulichhoc)
+                {
+                    
+                    
+                    if(new Date(val['Ngày Bắt Đầu'])>ngaychuyentoi||new Date(val['Ngày Kết Thúc'])<ngaychuyentoi)
+                        continue;
+                    
+                    var offset = -6;
+                    let startrow = (parseInt(val['Giờ Bắt Đầu'].split(':')[0]) + offset) * 2;
+                    if (val['Giờ Bắt Đầu'].split(':')[1] >= 30) {
+                    startrow++;
+                    }
+                    let endrow = (parseInt(val['Giờ Kết Thúc'].split(':')[0]) + offset) * 2;
+                    if (val['Giờ Kết Thúc'].split(':')[1] >= 30) {
+                    endrow++;
+                    }
+                    if(mode == "nhieutuan"&&this.calendar.state.isSwitchwClass)
+                    {
+                        console.log("cactuan skip")
+                        console.log(val['Mã Lớp'])
+                        console.log(this.calendar.state._value.split('!')[0])
+                        if(val['Mã Lớp']==this.calendar.state._value.split('!')[0]&&
+                            startrow==giobatdauchuyentoi&&
+                            endrow-startrow==this.calendar.state._value.split('!')[1])
+                            continue;
+                        
+                    }
+                    if (ngaytruocdo.getDay()+1 == val['Thứ']&&
+                        giobatdautruocdo == startrow &&
+                        thoiluongday == endrow-startrow&&
+                        malop == val['Mã Lớp'])
+                    {
+                        return true;
+                    }
+                    let isSwitched = false;
+                    console.log(giobatdauchuyentoi)
+                    let gioketthucchuyentoi = parseInt(giobatdauchuyentoi)+parseInt(thoiluongday);
+                    for(let v of this.state.arrayChangedSchedule)
+                    {
+                        if (val['Thứ'] == new Date(v.ngaytruocdo).getDay()+1&&
+                            startrow==v.giobatdautruocdo)
+                        {
+                            isSwitched = true;
+                            break;
+                        }
+                    }
+                    if(isSwitched)
+                        continue;
+                    
                     console.log("3")
                     console.log(startrow<=giobatdauchuyentoi)
-                    console.log(endrow>=giobatdauchuyentoi)
+                    console.log(endrow-1>=giobatdauchuyentoi)
                     console.log(startrow)
                     console.log(giobatdauchuyentoi)
                     console.log(endrow)
-                    return false;
-                }
-                console.log(giobatdauchuyentoi)
-                console.log("4")
-                console.log(giobatdauchuyentoi<=startrow)
-                console.log(gioketthucchuyentoi-1>=startrow)
-                console.log(giobatdauchuyentoi)
-                console.log(startrow)
-                console.log(gioketthucchuyentoi)
-                if(giobatdauchuyentoi<=startrow&&gioketthucchuyentoi-1>=startrow)
-                {
+                    if(startrow<=giobatdauchuyentoi&&(endrow-1)>=giobatdauchuyentoi)
+                    {
+                        console.log("3")
+                        console.log(startrow<=giobatdauchuyentoi)
+                        console.log(endrow>=giobatdauchuyentoi)
+                        console.log(startrow)
+                        console.log(giobatdauchuyentoi)
+                        console.log(endrow)
+                        return false;
+                    }
+                    console.log(giobatdauchuyentoi)
                     console.log("4")
                     console.log(giobatdauchuyentoi<=startrow)
-                    console.log(gioketthucchuyentoi>=startrow)
+                    console.log(gioketthucchuyentoi-1>=startrow)
                     console.log(giobatdauchuyentoi)
                     console.log(startrow)
                     console.log(gioketthucchuyentoi)
-                    return false;
-                }       
-            }   
+                    if(giobatdauchuyentoi<=startrow&&gioketthucchuyentoi-1>=startrow)
+                    {
+                        console.log("4")
+                        console.log(giobatdauchuyentoi<=startrow)
+                        console.log(gioketthucchuyentoi>=startrow)
+                        console.log(giobatdauchuyentoi)
+                        console.log(startrow)
+                        console.log(gioketthucchuyentoi)
+                        return false;
+                    }       
+                }   
+            }
+            return true;
         }
-        console.log(giobatdauchuyentoi)
-        return true;
     }
     resetCalendar()
     {

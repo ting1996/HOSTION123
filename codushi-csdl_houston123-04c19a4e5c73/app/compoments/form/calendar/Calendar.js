@@ -36,6 +36,7 @@ class Calendar extends React.Component{
       ngaybatdau:'',
       ngayketthuc:'',
       showInfo:false,
+      isShowInfo:false,
       dragging:false,
       arrayDeleteLichChuyen:[],
       pageXY:{},
@@ -162,14 +163,20 @@ class Calendar extends React.Component{
 
     socket.on('googleapicallback', this.callBackGoogleApi);
     socket.on('tra-ve-du-lieu-tu-database', this.callBackDataFormDatabase);
-    
-    
+    let self = this
+    $("#check_box_infoshadow").on("change",function(){
+      if($(this).prop('checked'))
+        self.setState({isShowInfo:true})
+      else
+        self.setState({isShowInfo:false})
+    })
     
   }
   
   componentWillUnmount() {
     this.props.socket.off('googleapicallback', this.callBackGoogleApi);
     this.props.socket.off('tra-ve-du-lieu-tu-database', this.callBackDataFormDatabase);
+    $("#check_box_infoshadow").off("change")
   }
 
   emailChange (e) {
@@ -264,9 +271,14 @@ class Calendar extends React.Component{
         {
           if (v.malop == val['Mã Lớp'] &&
               v.thoiluongday == endrow-startrow&&
-              new Date(v.ngaytruocdo)-ngaylichhoc.setHours(7)==0&&
+              new Date(v.ngaytruocdo).getDate()==ngaylichhoc.getDate()&&
+              new Date(v.ngaytruocdo).getMonth()==ngaylichhoc.getMonth()&&
+              new Date(v.ngaytruocdo).getFullYear()==ngaylichhoc.getFullYear()&&
               v.giobatdautruocdo == startrow)
               {
+                console.log(" drawable",v.ngaytruocdo);
+                console.log(" drawable",ngaylichhoc);
+                
                 drawable = false;
                 break;
               }
@@ -934,9 +946,12 @@ class Calendar extends React.Component{
             })
           }
         </table>
+        <div style ={{"float":"right"}}>
+        <label  style ={{"width":"25%"}} for="check_box_infoshadow">Show infomation shadow:</label><input style ={{"position":"relative","float":"right","top":"0px"}} type="checkbox" id="check_box_infoshadow" />
+        </div>
         {
           (function(){
-            if(this.state.showInfo&&!this.state.dragging)
+            if(this.state.showInfo&&!this.state.dragging&&this.state.isShowInfo)
             {
               return(<InfoShadow 
                       ten ={this.state.tenlop} 

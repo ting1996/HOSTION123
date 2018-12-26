@@ -258,32 +258,34 @@ class Popupsualichday extends React.Component {
                 if (lichthaydoi.giobatdautruocdo != lichthaydoi.giobatdauchuyentoi||
                     lichthaydoi.ngaytruocdo      != lichthaydoi.ngaychuyentoi)
                     array.push(lichthaydoi);
-
-                    let lichthaydoi2 = {
-                        malop:this.calendar.state._value.split('!')[0],
-                        ngaychuyentoi:ngaydautuantruocdo.toLocaleDateString('zh-Hans-CN').replace(/\//g,'-'),
-                        giobatdauchuyentoi:this.calendar.state.x,
-                        ngaytruocdo:ngaydautuanchuyentoi.toLocaleDateString('zh-Hans-CN').replace(/\//g,'-'),
-                        giobatdautruocdo:this.calendar.state._x,
-                        thoiluongday:this.calendar.state._value.split('!')[1],
-                    }
-                    for(let [i, v] of array.entries())
+                if(this.calendar.state.isSwitchwClass)
                     {
-                            
-                        if (v.giobatdauchuyentoi == lichthaydoi2.giobatdautruocdo&&
-                            v.ngaychuyentoi      == lichthaydoi2.ngaytruocdo&&
-                            v.thoiluongday       == lichthaydoi2.thoiluongday&&
-                            v.malop              == lichthaydoi2.malop)
-                        {
-                            lichthaydoi2.giobatdautruocdo = v.giobatdautruocdo;
-                            lichthaydoi2.ngaytruocdo      = v.ngaytruocdo;
-                            array.splice(i,1);
-                            break;
+                        let lichthaydoi2 = {
+                            malop:this.calendar.state._value.split('!')[0],
+                            ngaychuyentoi:ngaydautuantruocdo.toLocaleDateString('zh-Hans-CN').replace(/\//g,'-'),
+                            giobatdauchuyentoi:this.calendar.state.x,
+                            ngaytruocdo:ngaydautuanchuyentoi.toLocaleDateString('zh-Hans-CN').replace(/\//g,'-'),
+                            giobatdautruocdo:this.calendar.state._x,
+                            thoiluongday:this.calendar.state._value.split('!')[1],
                         }
+                        for(let [i, v] of array.entries())
+                        {
+                                
+                            if (v.giobatdauchuyentoi == lichthaydoi2.giobatdautruocdo&&
+                                v.ngaychuyentoi      == lichthaydoi2.ngaytruocdo&&
+                                v.thoiluongday       == lichthaydoi2.thoiluongday&&
+                                v.malop              == lichthaydoi2.malop)
+                            {
+                                lichthaydoi2.giobatdautruocdo = v.giobatdautruocdo;
+                                lichthaydoi2.ngaytruocdo      = v.ngaytruocdo;
+                                array.splice(i,1);
+                                break;
+                            }
+                        }
+                        if (lichthaydoi2.giobatdautruocdo != lichthaydoi2.giobatdauchuyentoi||
+                            lichthaydoi2.ngaytruocdo      != lichthaydoi2.ngaychuyentoi)
+                            array.push(lichthaydoi2);
                     }
-                    if (lichthaydoi2.giobatdautruocdo != lichthaydoi2.giobatdauchuyentoi||
-                        lichthaydoi2.ngaytruocdo      != lichthaydoi2.ngaychuyentoi)
-                        array.push(lichthaydoi2);
             }
             this.sualichday.setState({arrayChangedSchedule:array});
             
@@ -354,17 +356,20 @@ class Popupsualichday extends React.Component {
                                     let stringfirstday;
                                     let stringlastday;
                                     let listweek=[];
-                                    let maxday = new Date(this.props.ngayketthuc);
-                                    for(let v of this.sualichday.state.lichhoc)
-                                    {
-                                        if((v['Mã Lớp']==this.calendar.state.value.split('!')[0]||v['Mã Lớp']==this.calendar.state._value.split('!')[0])&&maxday>new Date(v['Ngày Kết Thúc']))
+                                    let maxday = null;
+                                    
+                                    if(this.calendar.state.isSwitchwClass)
+                                        for(let v of this.sualichday.state.lichhoc)
                                         {
-                                            maxday = new Date(v['Ngày Kết Thúc'])
+                        
+                                            if((v['Mã Lớp']==this.calendar.state.value.split('!')[0]||v['Mã Lớp']==this.calendar.state._value.split('!')[0])&&(maxday>new Date(v['Ngày Kết Thúc'])||maxday==null))
+                                            {
+                                                maxday = new Date(v['Ngày Kết Thúc'])
+                                            }
                                         }
-                                    }
-                                    let string =maxday.toLocaleDateString('zh-Hans-CN');
-                                    maxday = new Date(string.split('/')[0],parseInt(string.split('/')[1])-1,string.split('/')[2])
-                                    console.log("max day",maxday)
+                                    //let string =maxday.toLocaleDateString('zh-Hans-CN');
+                                    //maxday = new Date(string.split('/')[0],parseInt(string.split('/')[1])-1,string.split('/')[2])
+                                    console.log("max day2",maxday)
                                     console.log("first day",firstday)        
                                     lastday.setDate(lastday.getDate()+6);
                                     while(firstday<=maxday)
@@ -378,6 +383,8 @@ class Popupsualichday extends React.Component {
                                         ngaychuyentoi.setDate(ngaychuyentoi.getDate()+this.calendar.state._y-1);
                                         let ngaytruocdo = new Date(firstday);
                                         ngaytruocdo.setDate(ngaytruocdo.getDate()+this.calendar.state.y-1);
+                                        if(ngaychuyentoi>maxday)
+                                         break;
                                         console.log("cactuan check")
                                         console.log(ngaytruocdo)
                                         console.log(ngaychuyentoi)
