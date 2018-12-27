@@ -368,19 +368,19 @@ class SuaLichDay extends React.Component {
             for (let v of this.state.arrayChangedSchedule)
             {
                 
-                if  (new Date(v.ngaytruocdo.slice(0,10)).getDate() == ngaytruocdo.getDate()&&
-                    new Date(v.ngaytruocdo.slice(0,10)).getMonth() == ngaytruocdo.getMonth()&&
-                    new Date(v.ngaytruocdo.slice(0,10)).getFullYear() == ngaytruocdo.getFullYear()&&
-                    v.giobatdautruocdo == giobatdautruocdo&&
-                    v.malop == malop)
-                    return false;
+                // if  (new Date(v.ngaytruocdo.slice(0,10)).getDate() == ngaytruocdo.getDate()&&
+                //     new Date(v.ngaytruocdo.slice(0,10)).getMonth() == ngaytruocdo.getMonth()&&
+                //     new Date(v.ngaytruocdo.slice(0,10)).getFullYear() == ngaytruocdo.getFullYear()&&
+                //     v.giobatdautruocdo == giobatdautruocdo&&
+                //     v.malop == malop)
+                //     return false;
                 
-                if  (new Date(v.ngaytruocdo.slice(0,10)).getDate() == ngaychuyentoi.getDate()&&
-                    new Date(v.ngaytruocdo.slice(0,10)).getMonth() == ngaychuyentoi.getMonth()&&
-                    new Date(v.ngaytruocdo.slice(0,10)).getFullYear() == ngaychuyentoi.getFullYear()&&
-                    v.giobatdautruocdo == giobatdauchuyentoi
-                    )
-                    return false;
+                // if  (new Date(v.ngaytruocdo.slice(0,10)).getDate() == ngaychuyentoi.getDate()&&
+                //     new Date(v.ngaytruocdo.slice(0,10)).getMonth() == ngaychuyentoi.getMonth()&&
+                //     new Date(v.ngaytruocdo.slice(0,10)).getFullYear() == ngaychuyentoi.getFullYear()&&
+                //     v.giobatdautruocdo == giobatdauchuyentoi
+                //     )
+                //     return false;
 
                 if  (new Date(v.ngaychuyentoi.slice(0,10)).getDate() == ngaychuyentoi.getDate()&&
                     new Date(v.ngaychuyentoi.slice(0,10)).getMonth() == ngaychuyentoi.getMonth()&&

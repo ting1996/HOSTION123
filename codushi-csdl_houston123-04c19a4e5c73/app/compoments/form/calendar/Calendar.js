@@ -6,7 +6,7 @@ import Cell from './Cell.js';
 import Error from './Error.js'
 import InfoShadow from './InfoShadow.js'
 import DragShadow from './DragShadow.js'
-var timeshadow;
+var timedrag;
 var skip =0;
 class Calendar extends React.Component{
   constructor (props) {
@@ -33,8 +33,8 @@ class Calendar extends React.Component{
       //{mã lớp, ngày chuyển tới,giờ bắt đầu chuyển tới,ngày trước đó,giờ bắt đầu trước đó,thời lượng dạy}
       isSwitchwClass:Boolean,
       tenlop:'',
-      ngaybatdau:'',
-      ngayketthuc:'',
+      info1:'',
+      info2:'',
       showInfo:false,
       isShowInfo:false,
       dragging:false,
@@ -456,13 +456,6 @@ class Calendar extends React.Component{
       }
     }
   }
-
-  onMouseDown()
-  {
-    
-    
-  }
-
   onMouseOff(e)
   {
 
@@ -490,8 +483,8 @@ class Calendar extends React.Component{
         let stringngaybatdau =("0"+ngaybatdau.getDate()).slice(-2)+"/"+("0"+(ngaybatdau.getMonth()+1)).slice(-2)+"/"+ngaybatdau.getFullYear();
         let ngayketthuc = new Date(v['Ngày Kết Thúc'])
         let stringngayketthuc =("0"+ngayketthuc.getDate()).slice(-2)+"/"+("0"+(ngayketthuc.getMonth()+1)).slice(-2)+"/"+ngayketthuc.getFullYear();
-        infoLich.ngaybatdau = "Ngày Bắt Đầu: "+stringngaybatdau;
-        infoLich.ngayketthuc="Ngày Kết Thúc: "+stringngayketthuc;
+        infoLich.info1 = "Ngày Bắt Đầu: "+stringngaybatdau;
+        infoLich.info2="Ngày Kết Thúc: "+stringngayketthuc;
         //infoLich
         break;
       }
@@ -499,8 +492,8 @@ class Calendar extends React.Component{
     if(e.target.dataset.v.endsWith("@"))
     {
       infoLich.lop += " - " +e.target.dataset.v.split('!')[0]
-      infoLich.ngaybatdau="";
-      infoLich.ngayketthuc="";
+      infoLich.info1="";
+      infoLich.info2="";
       for(let v of this.props.arrayChangedSchedule)
       {
         
@@ -522,15 +515,15 @@ class Calendar extends React.Component{
           let ngayketthuc = new Date(v.ngaytruocdo)
           let stringngayketthuc =("0"+ngayketthuc.getDate()).slice(-2)+"/"+("0"+(ngayketthuc.getMonth()+1)).slice(-2)+"/"+ngayketthuc.getFullYear();
 
-          infoLich.ngaybatdau +="Mới: "+ stringngaybatdau +"-"+giochuyentoi+"!";
-          infoLich.ngaybatdau +="Cũ: "+stringngayketthuc+"-"+giotruocdo+"!";
+          infoLich.info1 +="Mới: "+ stringngaybatdau +"-"+giochuyentoi+"!";
+          infoLich.info1 +="Cũ: "+stringngayketthuc+"-"+giotruocdo+"!";
           
         }
       }
-      infoLich.ngayketthuc="Cảnh báo: Nếu bỏ sẽ mất hết các lịch thay đổi của ngày này.";
+      infoLich.info2="Cảnh báo: Nếu bỏ sẽ mất hết các lịch thay đổi của ngày này.";
       
     }
-    this.setState({tenlop:infoLich.ten+" - "+infoLich.lop,ngaybatdau:infoLich.ngaybatdau,ngayketthuc:infoLich.ngayketthuc,showInfo:true})
+    this.setState({tenlop:infoLich.ten+" - "+infoLich.lop,info1:infoLich.info1,info2:infoLich.info2,showInfo:true})
 
   }
   dropclass(e)
@@ -652,39 +645,8 @@ class Calendar extends React.Component{
     
    
   }
-  dragStart(e)
+  onMouseDown(e)
   {
-    console.log("dragStart");
-    
-    
-    //  for(let i = 0;i<e.target.dataset.v.split('!')[1];i++)
-    //  {
-    //      let temp = document.createElement("TR");
-    //      let att = document.createAttribute("class");       // Create a "class" attribute
-    //      att.value = style.trshadow;                           // Set the value of the class attribute
-    //      temp.setAttributeNode(att);  
-    //      document.getElementById("dragShadow").appendChild(temp);
-    //      for(let j=0;j<1;j++)
-    //      {
-    //       let yourclass = classnames({
-    //       [style.rowshadow]: 'rowshadow',
-    //       [style.rowisbusy]: 'rowisbusy',
-    //       });
-    //       let temp1 = document.createElement("TD");
-        
-    //       let att = document.createAttribute("class");       // Create a "class" attribute
-    //       att.value = yourclass;                           // Set the value of the class attribute
-    //       temp1.setAttributeNode(att);
-          
-    //       temp.appendChild(temp1);
-    //       if (i==0)
-    //       temp1.appendChild(document.createTextNode(e.target.dataset.v.split('!')[0]));
-    //      }
-    //  }
-    //  
-    console.log(e.target.dataset.v.split('!')[1]);
-    console.log(e.target.dataset.v.split('!')[0]);
-    
     let callback =[];
     let yourclass = classnames({
         [style.rowshadow]: 'rowshadow',
@@ -705,81 +667,80 @@ class Calendar extends React.Component{
         
         callback.push(temp)
     }
+    let _rowsbackup = JSON.parse(JSON.stringify(this.state.rows));
     console.log(callback);
-    
-      e.dataTransfer.setDragImage(document.getElementById("dragShadow"), 0, 0);
+    this.setState({showDrag:true,
+                  _rows:_rowsbackup,
+                  callback_dragshadow:callback,
+                  dragging:true,})
+  }
+  dragStart(e)
+  {
+    console.log("dragStart");
+    e.dataTransfer.setDragImage(document.getElementById("dragShadow"), 0, 0);
      console.log("shadow");
      let lenght = e.target.dataset.v.split('!')[1];
      let locatex = parseInt(e.target.dataset.locatex);
      let locatey = parseInt(e.target.dataset.locatey);
      
      let rowscallback = [...this.state.rows];
-     let _rowsbackup = JSON.parse(JSON.stringify(this.state.rows));
-    
-     
-     
+
     for(let i = 0;i<lenght;i++){
       rowscallback[locatex+i][locatex+i][locatey]+="@";
     }
     
     this.setState(function(state, props) {
       return {
-        _rows:_rowsbackup,
         rows: rowscallback,
         x:locatex,
         y:locatey,
-        value:rowscallback[locatex][locatex][locatey],
-        dragging:true,
-        showDrag:true,
-        callback_dragshadow:callback,
+        value:rowscallback[locatex][locatex][locatey],     
       };
-    });
-    console.log("setstate");
-   
-    
-    
+    });  
   }
   dragging(e)
   {
-    
-    // let temp = "width: 100%;position:fixed;top:"+(e.nativeEvent.clientY+5)+"px;left:"+(e.nativeEvent.clientX+5-20)+"px";
-    // document.getElementById("dragShadow").setAttribute("style",temp)
-    console.log(e.nativeEvent.pageX,e.nativeEvent.pageY);
-    if (skip == 5)
+    if (skip ==4)
     {
       this.setState({pageXY:{X:e.nativeEvent.pageX,Y:e.nativeEvent.pageY}});
       skip = 0;
     }
     skip++
     
+  }
+  onMouseUpDrag()
+  {
+    console.log("onMouseUpDrag");
     
+    let _rowsbackup = JSON.parse(JSON.stringify(this.state._rows));
+    this.setState(function(state, props) {
+      return {
+        showDrag:false,
+        dragging:false,
+        rows: _rowsbackup,
+      };
+    });
   }
   dragEnd(e)
   {
     console.log("dragEnd");
-    
-    document.getElementById("dragShadow").innerHTML="";
     let _rowsbackup = JSON.parse(JSON.stringify(this.state._rows));
     this.setState(function(state, props) {
       return {
-        rows: _rowsbackup,
         showDrag:false,
         dragging:false,
+        rows: _rowsbackup,
       };
     });
+
+    
   }
    
-    
-    /* this.setState(function(state, props) {
-      return {
-        rows:state._rows.slice()
-      };
-    }); */ 
   
   allowDrop(e)
   {
     
-      e.preventDefault();
+    e.preventDefault();
     
   }
   render () {
@@ -900,7 +861,10 @@ class Calendar extends React.Component{
                           className={yourclass} 
                           draggable = {draggable}
                           onDragStart = {this.dragStart} 
+                          onMouseDown = {this.onMouseDown.bind(this)} 
                           onDrag = {this.dragging}
+                          
+                          onMouseUp ={this.onMouseUpDrag.bind(this)}
                           onDragEnd = {this.dragEnd}
                           onDragOver = {this.allowDrop}
                           data-locatex={locatex}
@@ -957,8 +921,8 @@ class Calendar extends React.Component{
             {
               return(<InfoShadow 
                       ten ={this.state.tenlop} 
-                      ngaybatdau = {this.state.ngaybatdau}
-                      ngayketthuc= {this.state.ngayketthuc}
+                      info1 = {this.state.info1}
+                      info2= {this.state.info2}
                       pageXY = {this.state.pageXY}
                       suicide ={this.setState.bind(this,{showInfo:false})}/>
                     );

@@ -214,6 +214,38 @@ class Popupsualichday extends React.Component {
                     lichthaydoi2.ngaytruocdo      != lichthaydoi2.ngaychuyentoi)
                     array.push(lichthaydoi2);
             }
+            for(let i = 0; i < array.length; i++)
+            {
+                for(let j = i + 1; j < array.length; j++)
+                {
+                    console.log(array[i].malop == array[j].malop);
+                    console.log(array[i].ngaychuyentoi == array[j].ngaytruocdo);
+                    console.log(array[i].giobatdauchuyentoi == array[j].giobatdautruocdo);
+                    
+                    if  (array[i].malop == array[j].malop &&
+                        array[i].ngaychuyentoi == array[j].ngaytruocdo &&
+                        array[i].giobatdauchuyentoi == array[j].giobatdautruocdo)
+                    {
+                        array[i].ngaychuyentoi =  array[j].ngaychuyentoi
+                        array[i].giobatdauchuyentoi =  array[j].giobatdauchuyentoi
+                        array.splice(j,1);
+                        break;
+                    }
+                    console.log(array[i].ngaytruocdo == array[j].ngaychuyentoi);
+                    console.log(array[i].giobatdautruocdo == array[j].giobatdauchuyentoi);
+                    
+                    
+                    if  (array[i].malop == array[j].malop &&
+                        array[i].ngaytruocdo == array[j].ngaychuyentoi &&
+                        array[i].giobatdautruocdo == array[j].giobatdauchuyentoi)
+                    {
+                        array[j].ngaychuyentoi =  array[i].ngaychuyentoi
+                        array[j].giobatdauchuyentoi =  array[i].giobatdauchuyentoi
+                        array.splice(i,1);
+                        break;
+                    }
+                }
+            }
             this.sualichday.setState({arrayChangedSchedule:array});
             
             this.sualichday.resetCalendar()
@@ -286,6 +318,38 @@ class Popupsualichday extends React.Component {
                             lichthaydoi2.ngaytruocdo      != lichthaydoi2.ngaychuyentoi)
                             array.push(lichthaydoi2);
                     }
+            }
+            for(let i = 0; i < array.length; i++)
+            {
+                for(let j = i + 1; j < array.length; j++)
+                {
+                    console.log(array[i].malop == array[j].malop);
+                    console.log(array[i].ngaychuyentoi == array[j].ngaytruocdo);
+                    console.log(array[i].giobatdauchuyentoi == array[j].giobatdautruocdo);
+                    
+                    if  (array[i].malop == array[j].malop &&
+                        array[i].ngaychuyentoi == array[j].ngaytruocdo &&
+                        array[i].giobatdauchuyentoi == array[j].giobatdautruocdo)
+                    {
+                        array[i].ngaychuyentoi =  array[j].ngaychuyentoi
+                        array[i].giobatdauchuyentoi =  array[j].giobatdauchuyentoi
+                        array.splice(j,1);
+                        break;
+                    }
+                    console.log(array[i].ngaytruocdo == array[j].ngaychuyentoi);
+                    console.log(array[i].giobatdautruocdo == array[j].giobatdauchuyentoi);
+                    
+                    
+                    if  (array[i].malop == array[j].malop &&
+                        array[i].ngaytruocdo == array[j].ngaychuyentoi &&
+                        array[i].giobatdautruocdo == array[j].giobatdauchuyentoi)
+                    {
+                        array[j].ngaychuyentoi =  array[i].ngaychuyentoi
+                        array[j].giobatdauchuyentoi =  array[i].giobatdauchuyentoi
+                        array.splice(i,1);
+                        break;
+                    }
+                }
             }
             this.sualichday.setState({arrayChangedSchedule:array});
             

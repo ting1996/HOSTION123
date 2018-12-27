@@ -75,10 +75,10 @@ class InfoShadow extends React.Component {
                     {
                         
                         
-                        if(this.props.ngaybatdau.split("!").length==1)
+                        if(this.props.info1.split("!").length==1)
                         {
-                            return(<p>{this.props.ngaybatdau}<br/>
-                                {this.props.ngayketthuc}
+                            return(<p>{this.props.info1}<br/>
+                                {this.props.info2}
                                 </p>   
                             )
                         }
@@ -86,14 +86,14 @@ class InfoShadow extends React.Component {
                         {
                             let callback;
                           
-                            callback=this.props.ngaybatdau.split("!").map(function(v)
+                            callback=this.props.info1.split("!").map(function(v)
                                     {
                                         if(v!="")
                                             return(<li key={v.toString()}>{v}</li>)                      
                                     }
                             )
                             return(<div style = {{"margin":0}}><ul style = {{"margin":0}}>{callback}</ul>
-                            <p style = {{"margin":0}}>{this.props.ngayketthuc}</p>
+                            <p style = {{"margin":0}}>{this.props.info2}</p>
                             </div>)                                                         
                         }
                     }.bind(this))()

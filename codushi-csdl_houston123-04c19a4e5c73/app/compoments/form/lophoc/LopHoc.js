@@ -1052,10 +1052,7 @@ class LopHoc extends React.Component {
         }
     }
     deleteShadow(e)
-    {
-        console.log(e.nativeEvent.target.dataset.v==null);
-        console.log(e.target.parentElement.clientWidth);
-        
+    {   
         if(e.nativeEvent.target.dataset.v==null||
             e.nativeEvent.target.dataset.v=="")
             this.calendar.onMouseOff()
