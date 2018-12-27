@@ -92,8 +92,10 @@
     background-color: #F42851 !important;
 }
 .covertext {
-    border-top: 5px solid #7200b5;
+    border-top: 3px solid #7200b5;
     position: relative;
+    height: 15px;
+    top: -3px
 }
 
 .hover {

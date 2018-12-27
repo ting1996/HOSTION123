@@ -59,7 +59,6 @@ class InfoShadow extends React.Component {
     }
     onMouseMove(e)
     {
-        console.log("onMouseMove");
         
         
         this.props.suicide()

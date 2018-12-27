@@ -365,9 +365,6 @@ class Calendar extends React.Component{
           
           for(let val of arrayEdit)
           {
-            
-            
-            
             if(val.x == (v.giobatdautruocdo+index-v.giobatdauchuyentoi)&&val.y == ngaytruocdo.getDay()+1)
             {
               blockable = true;
@@ -530,7 +527,7 @@ class Calendar extends React.Component{
           
         }
       }
-      infoLich.ngayketthuc="Warning: Nếu bỏ sẽ mất hết các lịch thay đổi của ngày này.";
+      infoLich.ngayketthuc="Cảnh báo: Nếu bỏ sẽ mất hết các lịch thay đổi của ngày này.";
       
     }
     this.setState({tenlop:infoLich.ten+" - "+infoLich.lop,ngaybatdau:infoLich.ngaybatdau,ngayketthuc:infoLich.ngayketthuc,showInfo:true})
@@ -540,8 +537,8 @@ class Calendar extends React.Component{
   {
     let value =  this.state.value
     
-    
-    if(e.target.dataset.v.endsWith("!") && (e.target.dataset.v+'@') != value)
+    console.log("dropclass");
+    if((e.target.dataset.v+'@') != value)
     {
       
       
@@ -609,6 +606,8 @@ class Calendar extends React.Component{
   }
   drop(e)
   {     
+    console.log("drop");
+    
       e.preventDefault();
       document.getElementById("dragShadow").innerHTML="";
       let lenght = this.state.value.split('!')[1];
@@ -838,7 +837,8 @@ class Calendar extends React.Component{
                       }
                       return (
                         <Cell 
-                          key={i} 
+                          key={i}
+                          gio={i} 
                           tieude={index}
                           locatex ={index}
                           locatey = {i}
@@ -846,6 +846,8 @@ class Calendar extends React.Component{
                           disablechoose={disable_choose} 
                           allowdrop = {allowdrop}
                           ondrop = {this.drop}
+                          onChangeDelete = {this.props.onChangeEdit!=null?this.props.onChangeEdit.bind(this):null}
+                          calendar={this}
                           >
                           {v}
                         </Cell>
@@ -947,7 +949,7 @@ class Calendar extends React.Component{
           }
         </table>
         <div style ={{"float":"right"}}>
-        <label  style ={{"width":"25%"}} for="check_box_infoshadow">Show infomation shadow:</label><input style ={{"position":"relative","float":"right","top":"0px"}} type="checkbox" id="check_box_infoshadow" />
+        <label  style ={{"width":"25%"}} for="check_box_infoshadow">Hiện thị thông tin:</label><input style ={{"position":"relative","float":"right","top":"0px"}} type="checkbox" id="check_box_infoshadow" />
         </div>
         {
           (function(){

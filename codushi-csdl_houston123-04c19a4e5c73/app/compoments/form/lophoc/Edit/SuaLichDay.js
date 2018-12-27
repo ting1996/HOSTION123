@@ -348,7 +348,21 @@ class SuaLichDay extends React.Component {
         else
         {    
             if(this.calendar.state.isSwitchwClass&&mode == "mottuan")
+            {
+                for(let val of this.state.lichhoc)
+                {   
+                    ngaychuyentoi.setHours(0);
+                    ngaytruocdo.setHours(0);
+                    if(((new Date(val['Ngày Bắt Đầu'])>ngaychuyentoi||new Date(val['Ngày Kết Thúc'])<ngaychuyentoi)&&
+                        val['Mã Lớp']==malop)||(val['Mã Lớp']==this.calendar.state._value.split("!")[0]&&
+                        (new Date(val['Ngày Bắt Đầu'])>ngaytruocdo||new Date(val['Ngày Kết Thúc'])<ngaytruocdo)))
+                    {
+                        console.log(val,"val ngay");
+                        return false;
+                    }               
+                }
                 return true;
+            }     
             
             let thulichhoc = ngaychuyentoi.getDay()
             for (let v of this.state.arrayChangedSchedule)
@@ -644,9 +658,7 @@ class SuaLichDay extends React.Component {
         this.resetCalendar()
     }
     deleteShadow(e)
-    {
-        
-        
+    { 
         if(e.nativeEvent.target.dataset.v==null||
             e.nativeEvent.target.dataset.v=="")
             this.calendar.onMouseOff()

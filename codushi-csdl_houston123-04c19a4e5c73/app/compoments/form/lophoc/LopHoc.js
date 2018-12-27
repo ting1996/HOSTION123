@@ -673,7 +673,7 @@ class LopHoc extends React.Component {
     }
     resetCalendar()
     {
-        this.calendar.showFullLocalCalendar(this.state.lichhoc,this.props.data['Mã Lớp'])
+        this.calendar.showFullLocalCalendar(this.state.lichhoc,this.props.data!=null?this.props.data['Mã Lớp']:null)
     }
     onClickChuaCoLop (data, element) {
         let array = this.state.hocsinhchuacolop;

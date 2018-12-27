@@ -13,6 +13,7 @@ class Cell extends React.Component {
             classCell: style.row,
             title: '',
             fisttime: null,
+            isBlock:false,
         }
         this.allowDrop =this.allowDrop.bind(this);
     }
@@ -39,7 +40,7 @@ class Cell extends React.Component {
             phut = 30;
         }
         this.setState({ title: ('0' + gio).slice(-2) + ':' + ('0' + phut).slice(-2) });
-        
+    
         
     }
 
@@ -49,34 +50,50 @@ class Cell extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
+        if(this.props.value!=null&&this.state.fisttime == null)
+        {
+            console.log("setstateBlock");
+            console.log(this.props.value);
+            
+            this.setState({isBlock:true})
+        }
         if (this.props.cellisclick == true && this.state.fisttime == null) {
             if(this.props.value==null)
                 this.setState({ classCell: style.row + ' ' + style.hover + ' cellisclick',
                 fisttime: '',});
             else
-                this.setState({ classCell: style.row + ' ' + style.hoverred + ' cellisclick',
+                this.setState({ classCell: style.row + ' ' + style.hoverred + ' cellblock',
                 fisttime: '',});   
         }
-        if(this.props.cellisclick == false && this.state.fisttime =="")
+        
+        if(this.props.cellisclick == false && this.state.fisttime ==""&&this.state.isBlock&&
+            this.state.classCell!=style.row + ' ' + style.hover + ' cellisclick')
             this.setState({ classCell: style.row,
             fisttime: '1',});
-        if(this.props.cellisclick == true && this.state.fisttime =="1")
+        if(this.props.cellisclick == false && this.state.fisttime ==""&&this.state.isBlock)
+        {
+            console.log(prevProps);
+            console.log(this.props);
+            
+            
+            this.setState({fisttime: '1',});
+        }
+        if(this.props.cellisclick == true && this.state.fisttime =="1"&&this.state.isBlock)
             if(this.props.value==null)
                 this.setState({ classCell: style.row + ' ' + style.hover + ' cellisclick',
                 fisttime: '',});
             else
-                this.setState({ classCell: style.row + ' ' + style.hoverred + ' cellisclick',
+                this.setState({ classCell: style.row + ' ' + style.hoverred + ' cellblock',
                 fisttime: '',});
         
     }
 
     onMouseDown () {
+        console.log(this.state.isBlock,"isBlock");
+        
         try
-        {if (this.state.classCell == style.row && !this.props.disablechoose == true) {
-            if(this.props.value==null)
-                this.setState({ classCell: style.row + ' ' + style.hover + ' cellisclick'});
-            else
-                this.setState({ classCell: style.row + ' ' + style.hoverred + ' cellisclick'});
+        {if ((this.state.classCell == style.row||this.state.classCell == style.row + ' ' + style.hoverred + ' cellblock' )&& !this.props.disablechoose == true) {
+            this.setState({ classCell: style.row + ' ' + style.hover + ' cellisclick'});
             if(this.props.onChangeEdit!=null)
             {
                 let array = this.props.calendar.state.arrayEdit;
@@ -87,13 +104,37 @@ class Cell extends React.Component {
                 }
                 this.props.calendar.setState({arrayEdit:array})
             }
-        } else {
-            this.setState({ classCell: style.row });
-            if(this.props.value!=null)
+            if(this.state.isBlock)
             {
+                // let array = this.props.calendar.state.arrayDeleteLichChuyen;
+                // for(let [i,v] of array.entries())
+                // {
+                //     if(v.x == this.props.tieude && v.y == this.props.gio)
+                //         array.splice(i,1);
+                // }
+                // this.props.calendar.setState({arrayDeleteLichChuyen:array})
+
                 let arrayDeleteLichChuyen = this.props.calendar.state.arrayDeleteLichChuyen;
                 arrayDeleteLichChuyen.push({x:this.props.tieude,y:this.props.gio})
                 this.props.calendar.setState({arrayDeleteLichChuyen:arrayDeleteLichChuyen})
+            }
+        } else {
+            console.log(this.state.isBlock,"isBlock");
+            if(this.state.isBlock&&this.props.value!=null)
+                this.setState({ classCell: style.row + ' ' + style.hoverred + ' cellblock'});
+            else
+                this.setState({ classCell: style.row });
+            if(this.state.isBlock)
+            {
+                let array = this.props.calendar.state.arrayDeleteLichChuyen;
+                for(let [i,v] of array.entries())
+                {
+                    if(v.x == this.props.tieude && v.y == this.props.gio)
+                        array.splice(i,1);
+                }
+                console.log(array);
+                
+                this.props.calendar.setState({arrayDeleteLichChuyen:array})
             }
             if(this.props.onChangeEdit!=null)
             {
@@ -121,7 +162,7 @@ class Cell extends React.Component {
             if(this.props.value==null)
                 this.setState({ classCell: style.row + ' ' + style.hover + ' cellisclick'});
             else
-                this.setState({ classCell: style.row + ' ' + style.hoverred + ' cellisclick'});
+                this.setState({ classCell: style.row + ' ' + style.hoverred + ' cellblock'});
             
             
         }
@@ -136,7 +177,11 @@ class Cell extends React.Component {
         
              
     }
-    
+    onMouseMove(e)
+    {
+        if(this.props.onMouseMove)
+        this.props.onMouseMove(e);
+    }
     
     render () {
         
@@ -153,6 +198,7 @@ class Cell extends React.Component {
                 data-locatex={this.props.locatex}
                 data-locatey={this.props.locatey}
                 data-v ={this.props.value}
+                onMouseMove ={this.onMouseMove.bind(this)}
                 
             >{this.props.children}</td>                           
         )
