@@ -1,6 +1,6 @@
 import React from 'react';
 import style from './style.css';
-import { isNumber } from 'util';
+import { isNumber, log } from 'util';
 {/* <InfoShadow 
                       ten ={this.state.tenlop} 
                       ngaybatdau = {this.state.ngaybatdau}
@@ -69,31 +69,49 @@ class InfoShadow extends React.Component {
         
         return (
             <div ref='shadow' style = {{"background-color":"white","position":"fixed","top":(this.state.y)+"px","left":(this.state.x)+"px"}} onMouseMove ={this.onMouseMove.bind(this)}>
-                <p style = {{"margin":0}}>{this.props.ten}<br/></p>
+               
                 {
                    (function()
                     {
+                        console.log(this.props.info1.split("@")[1] == null);
                         
-                        
-                        if(this.props.info1.split("!").length==1)
+                        if(this.props.info1.split("@")[1] == null)
                         {
-                            return(<p>{this.props.info1}<br/>
+                            return( [<p style = {{"margin":0}}>{this.props.ten}<br/></p>,
+                            <p>{this.props.info1}<br/>
                                 {this.props.info2}
-                                </p>   
+                             </p>]  
                             )
                         }
                         else
                         {
-                            let callback;
-                          
-                            callback=this.props.info1.split("!").map(function(v)
-                                    {
-                                        if(v!="")
-                                            return(<li key={v.toString()}>{v}</li>)                      
-                                    }
-                            )
-                            return(<div style = {{"margin":0}}><ul style = {{"margin":0}}>{callback}</ul>
-                            <p style = {{"margin":0}}>{this.props.info2}</p>
+                            
+                            let callback=[];
+                            for(let [ i , v ] of this.props.info1.split('@').entries())
+                            {
+                                if(v == '')
+                                    break;
+                                let head;
+                                let info;
+                                head = <p style = {{"margin":0}}>{v}<br/></p>
+                                info = <ul style = {{"margin":0}}>
+                                        <li key={i}>{this.props.info2.split('@')[i].split('!')[0]}</li>
+                                        <li key={i+20}>{this.props.info2.split('@')[i].split('!')[1]}</li>
+                                        </ul>
+                                callback.push(head)
+                                callback.push(info)
+                            }
+                            console.log(callback);
+                                                    
+                            // callback=this.props.info1.split("!").map(function(v)
+                            //         {
+                            //             if(v!="")
+                            //                 return(<li key={v.toString()}>{v}</li>)                      
+                            //         }
+                            // )
+                            return(<div style = {{"margin":0}}>
+                            {callback}
+                            <p style = {{"margin":0}}>Cảnh báo: Nếu bỏ sẽ mất hết các lịch thay đổi của ngày này.</p>
                             </div>)                                                         
                         }
                     }.bind(this))()

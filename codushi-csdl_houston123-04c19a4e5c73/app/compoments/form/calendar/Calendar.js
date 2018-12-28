@@ -389,7 +389,7 @@ class Calendar extends React.Component{
           {
             if(rowscallback[index] != null&&!blockable)
             rowscallback[index][index][ngaychuyentoi.getDay()+1] 
-            = v.malop+"!"+v.giobatdautruocdo+"!"+(ngaytruocdo.getDay()+1)+"!"+"@";
+            += v.malop+"!"+v.giobatdautruocdo+"!"+(ngaytruocdo.getDay()+1)+"!"+"@";
           }
       }
     for (let val of data) {
@@ -491,36 +491,52 @@ class Calendar extends React.Component{
     }
     if(e.target.dataset.v.endsWith("@"))
     {
-      infoLich.lop += " - " +e.target.dataset.v.split('!')[0]
+      infoLich.ten = "";
+      infoLich.lop = "";
+      //Các mã lớp
       infoLich.info1="";
+      //Các ngày bị chuyển từng mã lớp
       infoLich.info2="";
-      for(let v of this.props.arrayChangedSchedule)
+      for(let val of e.target.dataset.v.split('@'))
       {
+        if(val == '')
+          break;
+        //Chèn tên
+        let temp_tenlopma = "";
+        for(let v of this.props.infoLichHoc)
+          if(v['Mã Lớp']==val.split('!')[0])
+          {
+            temp_tenlopma = v['name'] + " - " + v['Lớp'] + " - " + v['Mã Lớp'];
+            break; 
+          }
+        infoLich.info1 += temp_tenlopma + "@"
         
-       
-        if(v.malop == e.target.dataset.v.split('!')[0]&&
-          v.giobatdautruocdo == e.target.dataset.v.split('!')[1]&&
-          ((new Date (v.ngaytruocdo)).getDay()+1)==e.target.dataset.v.split('!')[2])
+        for(let v of this.props.arrayChangedSchedule)
         {
-          let gio = parseInt(parseInt(v.giobatdautruocdo)/2) +6;
-          let phut= parseInt(v.giobatdautruocdo)%2?"30":"00"
-          let giotruocdo = ("0"+gio).slice(-2)+":"+phut
+          if(v.malop == val.split('!')[0]&&
+            v.giobatdautruocdo == val.split('!')[1]&&
+            ((new Date (v.ngaytruocdo)).getDay()+1)==val.split('!')[2])
+          {
+            let gio = parseInt(parseInt(v.giobatdautruocdo)/2) +6;
+            let phut= parseInt(v.giobatdautruocdo)%2?"30":"00"
+            let giotruocdo = ("0"+gio).slice(-2)+":"+phut
 
-          let gio2 = parseInt(parseInt(v.giobatdauchuyentoi)/2) +6;
-          let phut2= parseInt(v.giobatdauchuyentoi)%2?"30":"00"
-          let giochuyentoi = ("0"+gio2).slice(-2)+":"+phut2
+            let gio2 = parseInt(parseInt(v.giobatdauchuyentoi)/2) +6;
+            let phut2= parseInt(v.giobatdauchuyentoi)%2?"30":"00"
+            let giochuyentoi = ("0"+gio2).slice(-2)+":"+phut2
 
-          let ngaybatdau = new Date(v.ngaychuyentoi)
-          let stringngaybatdau =("0"+ngaybatdau.getDate()).slice(-2)+"/"+("0"+(ngaybatdau.getMonth()+1)).slice(-2)+"/"+ngaybatdau.getFullYear();
-          let ngayketthuc = new Date(v.ngaytruocdo)
-          let stringngayketthuc =("0"+ngayketthuc.getDate()).slice(-2)+"/"+("0"+(ngayketthuc.getMonth()+1)).slice(-2)+"/"+ngayketthuc.getFullYear();
+            let ngaybatdau = new Date(v.ngaychuyentoi)
+            let stringngaybatdau =("0"+ngaybatdau.getDate()).slice(-2)+"/"+("0"+(ngaybatdau.getMonth()+1)).slice(-2)+"/"+ngaybatdau.getFullYear();
+            let ngayketthuc = new Date(v.ngaytruocdo)
+            let stringngayketthuc =("0"+ngayketthuc.getDate()).slice(-2)+"/"+("0"+(ngayketthuc.getMonth()+1)).slice(-2)+"/"+ngayketthuc.getFullYear();
 
-          infoLich.info1 +="Mới: "+ stringngaybatdau +"-"+giochuyentoi+"!";
-          infoLich.info1 +="Cũ: "+stringngayketthuc+"-"+giotruocdo+"!";
-          
+            infoLich.info2 +="Mới: "+ stringngaybatdau +"-"+giochuyentoi+"!";
+            infoLich.info2 +="Cũ: "+stringngayketthuc+"-"+giotruocdo+"!@";
+            break;
+          }
         }
       }
-      infoLich.info2="Cảnh báo: Nếu bỏ sẽ mất hết các lịch thay đổi của ngày này.";
+      //infoLich.info2="Cảnh báo: Nếu bỏ sẽ mất hết các lịch thay đổi của ngày này.";
       
     }
     this.setState({tenlop:infoLich.ten+" - "+infoLich.lop,info1:infoLich.info1,info2:infoLich.info2,showInfo:true})

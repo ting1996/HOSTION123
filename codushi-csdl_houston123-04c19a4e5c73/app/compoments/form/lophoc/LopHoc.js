@@ -6,6 +6,10 @@ import Calendar from '../calendar/Calendar.js';
 import Select from 'react-select';
 import Lop from '../elements/Lop';
 import Button from '../elements/Button';
+
+import Toggle from './Toggle.js'
+import "./styles_switch.css"
+
 var ReactDOM = require('react-dom');
 let time_countdown2 = 0;
 function thongbaothanhcong() {
@@ -69,6 +73,7 @@ class LopHoc extends React.Component {
             arrayChangedSchedule:[],
             btnDisable: false,
             isFromGoogle: false,
+            checkedSwitch:false,
         }
         this.callBackGoogleApi = this.callBackGoogleApi.bind(this);
         this.callBackDataFormDatabase = this.callBackDataFormDatabase.bind(this);
@@ -1079,6 +1084,12 @@ class LopHoc extends React.Component {
                 <div className="form_body" ref="body" style={{'width': '1100px'}}>
                     <div className="header">
                         <h2>{title}</h2>
+                        <Toggle label="Left"
+                            checked={this.state.checkedSwitch}
+                            theme="square"
+                            label_right="Right"
+                            style={{"float":"right"}}
+                            onToggle={value => { this.setState( { checkedSwitch : !this.state.checkedSwitch } )}}/>
                     </div>
                     <div className="body">
                         {title2}
